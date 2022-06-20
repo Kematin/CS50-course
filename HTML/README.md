@@ -21,3 +21,10 @@
     <span>&lt;title&gt;</span>Name of the page<span>&lt;/title&gt;</span>
 <span>&lt;/head&gt;</span>
 </pre>
+
+<p>Внутри тега body, очевидно, находятся элементы видные пользователю например заголовок 
+<pre>&lt;h1&gt;Text&lt;/h1&gt;</pre>
+</p>
+
+<p>Структура HTML документа напоминает дерево и называется <b>Document Object model (DOM)</b></p>
+<p><img src="content/photo.png" alt=""></p>
