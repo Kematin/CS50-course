@@ -4,20 +4,20 @@
 Страница состоит из элементов называемых тегами которые образуются фигурными скобками</p>
 
 <pre>
-<span><tag></span>information<span></tag></span>
+<span>&lt;tag&gt;</span>information<span>&lt;/tag&gt;</span>
 </pre>
 
 <p>Так-же теги имеют атрибуты для большей информации внутри фигурных скобок</p>
 
 <pre>
-<span><tag atribute_1, attribute_n></span>information<span></tag></span>
+<span>&lt;tag atribute-1, attribute-n&gt;</span>information<span>&lt;/tag&gt;</span>
 </pre>
 
 <p>Внутри глобального тега head находится информация невидная пользователю, но
 при этом данный тег передает информацию браузеру например устанавливаем имя страницы</p>
 
 <pre>
-<span><head></span>
-    <span><title></span>Name of the page<span></title></span>
-<span></head></span>
+<span>&lt;head&gt;</span>
+    <span>&lt;title&gt;</span>Name of the page<span>&lt;/title&gt;</span>
+<span>&lt;/head&gt;</span>
 </pre>
