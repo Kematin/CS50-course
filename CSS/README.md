@@ -49,3 +49,20 @@ span {
     &lt;link rel="stylesheet" href="style.html"
 &lt;/head&gt;
 </pre>
+
+Стили определённых элементов можно привязывать по id
+<pre>
+&lt;head&gt;
+    &lt;style&gt;
+        #Text {
+            color: red;
+            font-family: Arial;
+            text-align: center
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+.
+.
+&lt;p id="Text"&gt;Text 1&lt;/p&gt; <strong>Красный цвет, Arial по центру</strong>
+&lt;p&gt;Text 2&lt;/p&gt; <strong>Обычный текст</strong>
+</pre>
