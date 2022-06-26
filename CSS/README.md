@@ -33,3 +33,19 @@
 &lt;h1&gt;Heading 1&lt;/h1&gt; <strong>Будет красного цвета в центре</strong>
 &lt;h1&gt;Heading 2&lt;/h1&gt; <strong>Будет красного цвета в центре</strong>
 </pre>
+
+Чтобы использовать наш стиль на нескольких сайтах, можно его занести в отдельный файл
+и уже внутри тега `<style>` указать его
+> style.css
+<pre>
+span {
+    color: lightblue;
+    text-align: center;
+}
+</pre>
+> style.html
+<pre>
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="style.html"
+&lt;/head&gt;
+</pre>
