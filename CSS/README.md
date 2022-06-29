@@ -66,3 +66,58 @@ span {
 &lt;p id="Text"&gt;Text 1&lt;/p&gt; <strong>Красный цвет, Arial по центру</strong>
 &lt;p&gt;Text 2&lt;/p&gt; <strong>Обычный текст</strong>
 </pre>
+
+Т.к. <strong>id это уникальный</strong> атрибут мы не можем использовать один и тот же id на 2-ух и более элементов.
+Данную проблему решают <strong>классы</strong>
+
+<pre>
+&lt;head&gt;
+    &lt;style&gt;
+        .baz {
+            color: red;
+            text-align: center
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+.
+.
+&lt;p class="baz"&gt;Text 1&lt;/p&gt; <strong>Зелёный текст по центру</strong>
+&lt;p class="baz"&gt;Text 2&lt;/p&gt; <strong>Зелёный текст по центру</strong>
+&lt;p&gt;Text 3&lt;/p&gt; <strong>Обычный текст</strong>
+</pre>
+
+Для каждого элемента есть приоритет в приобретении стиля. Например в данном примере
+элемент h1 перекрасится в синий цвет несмотря на то что красный цвет указан для всех
+элементов h1
+
+<pre>
+&lt;head&gt;
+    &lt;style&gt;
+        h1 {
+            color: red;
+        }
+        #foo {
+            color: blue;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+.
+.
+&lt;h1 id="foo"&gt;Text&lt;h1&gt;
+</pre>
+
+<h3>Таблица приоритетов</h3>
+<ol>
+    <li>
+        <h4>Inline</h4>
+    </li>
+    <li>
+        <h4>Id</h4>
+    </li>
+    <li>
+        <h4>Class</h4>
+    </li>
+    <li>
+        <h4>Type</h4>
+    </li>
+</ol>
