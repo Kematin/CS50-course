@@ -49,3 +49,43 @@
 но и например размер определённого div
 
 <h3 style="text-align: center">Flexbox</h3>
+<strong>Flexbox</strong> - представляет собой модель веб-макета CSS 3. Это способ компановки элементов
+в зависимости от разрешения экрана.
+<pre>
+&lt;head&gt;
+    &lt;style&gt;
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+</pre>
+
+> display: flex - объявляем flexbox для элемента
+
+> flex-wrap: wrap - метод компановки (перенос элемента на следующую строку)
+
+<h3 style="text-align: center">Grid</h3>
+<strong>Grid layout</strong> - функция CSS 3, позволяющая с легкостью создавать макеты сеток
+на веб странице.
+<pre>
+&lt;head&gt;
+    &lt;style&gt;
+        #grid {
+            display: grid;
+            grid-column-grap: 30px;
+            grid-row-grap: 15px;
+            grid-template-columns: 300px 120px 800px auto;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+</pre>
+
+> display: grid - объявляем grid компановку
+
+> grid-column-grap: 30px - расстояние между столбцами
+
+> grid-row-grap: 15px - расстояние между строками
+
+> grid-template-columns: ... - сколько будет столбцов в строчке и их размеры (4 шт в данном примере)
