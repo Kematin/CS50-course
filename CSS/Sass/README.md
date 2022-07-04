@@ -38,4 +38,29 @@ scss файл, что очень неудобно.
 
 > *Команда не асинхронная и мы не сможем пользоваться окном терминала пока не прекратим процесс.*
 
-Так-же sass имеет более лёгкий синтакс что показано в файле `nesting.scss`
+Так-же sass имеет более лёгкий синтакс что показано в файле `nesting.scss`.
+
+<h3>Наследование</h3>
+Данный язык имеет наследование в коде.
+
+<pre>
+%text {
+    color: blue;
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+}
+
+#element-1 {
+    @extend %text;
+    background-color: blue;
+}
+
+#element-2 {
+    @extend %text;
+    background-color: red;
+}
+</pre>
+
+> %text {...} - создание стиля для наследования
+> <br>@extend %text - наследование стиля
