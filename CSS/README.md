@@ -121,3 +121,11 @@ span {
         <h4>Type</h4>
     </li>
 </ol>
+
+<h3>Bootstrap</h3>
+<strong>Bootstrap</strong> - это бесплатный CSS-фреймворк с открытым исходным кодом.
+Он содержит шаблоны дизайна на основе HTML, CSS и JavaScript для типографики, 
+форм, кнопок, навигации и других компонентов интерфейса.
+
+> Пример использование в папке `Bootstrap`
+<br>Так-же документация доступна по ссылке -> <a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/">ТЫК</a>
