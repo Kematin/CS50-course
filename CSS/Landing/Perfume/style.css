@@ -1,37 +1,85 @@
 #header {
-  font-family: Caviar Dreams;
-  background-color: #AF5E81; }
+    position: absolute;
+    top: -10px;
+    left: -8px;
+    width: 100%;
+    height: 55px;
+    font-family: Caviar Dreams;
+    background-color: #AF5E81; 
+    border: 5px solid #AF5E81;
+}
 
-#footer {
-  width: auto;
-  background-color: blue; }
 
 .button-buy button {
-  position: relative;
-  left: 1300px;
-  background-color: white;
-  font-size: 13px;
-  width: 80px;
-  height: 30px;
-  color: #AF5E81;
-  border: 0px solid transparent;
-  border-radius: 7px; }
+    top: 15px;
+    position: relative;
+    left: 1300px;
+    background-color: white;
+    font-size: 13px;
+    width: 80px;
+    height: 30px;
+    color: #AF5E81;
+    border: 0px solid transparent;
+    border-radius: 7px; 
+}
+
+.button-buy button:hover {
+    background-color: #e3dfe7;
+}
+
+.button-buy button:active {
+    font-weight: bold;
+    color: #de5e95;
+}
 
 .search input::-webkit-input-placeholder {
-  color: white;
-  font-family: Caviar Dreams;
-  font-size: 17px;
-  text-left: 5px; }
-.search input {
-  position: relative;
-  left: 1100px;
-  top: -30px;
-  background-color: transparent;
-  color: white;
-  height: 25px;
-  width: 160px;
-  border: 3px solid white;
-  border-radius: 7px;
-  font-size: 17px; }
+    color: white;
+    font-family: Caviar Dreams;
+    font-size: 17px;
+}
 
-/*# sourceMappingURL=style.css.map */
+.search input {
+    position: relative;
+    left: 1100px;
+    top: -15px;
+    background-color: transparent;
+    color: white;
+    height: 23px;
+    width: 160px;
+    border: 3px solid white;
+    border-radius: 7px;
+    font-size: 17px; 
+}
+
+.small-logo img {
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin-left: 45%;
+    margin-top: -53px;
+}
+
+.panel-text pre {
+    font-family: Caviar Dreams;
+    color: white;
+    margin: 5px;
+    font-size: 16px;
+    position: relative;
+    top: -53px;
+    left: 200px;
+}
+
+.header h1 {
+    font-family: Caviar Dreams;
+    position: relative;
+    top: 60px;
+    left: 39%;
+    font-weight: 1000;
+}
+
+.size-image {
+    width: 200px;
+    height: 200px;
+    border: 0px solid black;
+    border-radius: 3px;
+}
