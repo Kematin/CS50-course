@@ -81,5 +81,70 @@
     width: 200px;
     height: 200px;
     border: 0px solid black;
-    border-radius: 3px;
+    border-radius: 5px;
+}
+
+.perfume {
+    font-family: Caviar Dreams;
+    position: relative;
+    left: 400px;
+    top: 80px;
+    margin-bottom: 1em;
+}
+.perfume-1, .perfume-2, .perfume-3 {
+    width: 750px;
+    height: 230px;
+}
+
+.perfume-2, .perfume-3 {
+    margin-top: 30px
+}
+
+.perfume-1 h3, .perfume-3 h3, .perfume-1 span, .perfume-3 span {
+    position: relative;
+    left: 240px;
+    bottom: 210px;
+}
+
+.text {
+    width: 500px;
+    height: 100px;
+}
+
+.transparent-button-buy {
+    position: relative;
+    left: 500px;
+    bottom: 100px;
+    color: #AF5E81;
+    font-size: 13px;
+    width: 80px;
+    height: 30px;
+    border-radius: 7px; 
+
+    background-color: transparent;
+    border: 2px solid #AF5E81;
+}
+
+.transparent-button-buy:hover {
+    border: 2px solid #d8b0c2;
+    color: #d8b0c2;
+}
+
+.transparent-button-buy:active {
+    color: #de5e95;
+    font-weight: bold;
+    border: 2px solid #de5e95;
+}
+
+
+.perfume-1 button, .perfume-3 button{
+    position: relative;
+    left: 238px;
+    top: -180px
+}
+
+.perfume-1 .href-more, .perfume-3 .href-more {
+    position: relative;
+    left: 340px;
+    top: -222px;
 }
