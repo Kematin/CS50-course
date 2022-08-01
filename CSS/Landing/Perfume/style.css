@@ -148,3 +148,57 @@
     left: 340px;
     top: -222px;
 }
+
+.perfume-2 img {
+    position: relative;
+    left: 530px;
+}
+
+.perfume-2 h3, .perfume-2 .text {
+    position: relative;
+    bottom: 210px;
+    text-align: right;
+}
+
+.perfume-2 h3 {
+    right: 250px;
+}
+
+.perfume-2 .panel {
+    position: relative;
+    bottom: 100px;
+    right: 80px;
+}
+
+.perfume-2 p {
+    position: relative;
+    left: 390px;
+    bottom: 143px
+}
+
+.button-not-transparent button {
+    font-family: Caviar Dreams;
+    font-weight: bold;
+    font-size: 15px;
+    position: relative;
+    left: 240px;
+    top: 50px;
+    width: 200px;
+    height: 40px;
+
+    color: white;
+    background-color: #AF5E81;
+    border: 0px solid black;
+    border-radius: 8px;
+}
+
+.button-not-transparent button:hover {
+    border: 2px solid #d8b0c2;
+    color: #d8b0c2;
+}
+
+.button-not-transparent button:active {
+    background-color: #c397aa;
+    border: 2px solid #ac3568;
+    color: #ac3568;
+}
