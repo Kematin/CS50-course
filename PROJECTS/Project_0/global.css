@@ -9,21 +9,36 @@ body {
     font-size: 10px;
 }
 
-#head {
+
+#head .text p {
     position: absolute;
-    left: 40%;
-    top: 20%;
+    top: -100px;
+    font-size: 100px;
+}
+
+#head .text span {
+    position: absolute;
+    top: 90px;
+    left: 90px;
+    color: #efca57;
+    font-size: 30px;
+}
+
+.search > form {
+    position: absolute;
+    top: 200px;
 }
 
 .search > p {
+    font-size: 25px;
+    font-weight: bold;
     position: absolute;
-    top: -60%;
-    font-size: 100px;
+    top: 150px;
 }
 
 input[type="submit"] {
     position: absolute;
-    top: 230px;
+    left: 71%;
     height: 35px;
     width: 150px;
     border: 1px solid #efca57;
@@ -33,17 +48,7 @@ input[type="submit"] {
     font-weight: bold;
 }
 
-#search-button {
-    right: 290px;
-}
-
-#lucky-button {
-    right: 110px
-}
-
 input[type="text"] {
-    margin-top: 150px;
-    margin-left: -140px;
     padding: 10px;
     border: 2px solid white;
     border-radius: 20px;
@@ -52,6 +57,10 @@ input[type="text"] {
     font-size: 15px;
     height: 15px;
     width: 530px;
+}
+
+input[type="text"]::placeholder {
+    color: #fff3c5;
 }
 
 input[type="text"]:hover {
@@ -66,13 +75,23 @@ input[type="text"]:active {
 .block-hrefs {
     position: absolute;
     font-size: 18px;
-    left: 1200px;
+    left: 1300px;
     top: -5px;
     margin-left: 5px;
-    color:
 }
 
 .block-hrefs a {
     margin: 10px;
     color: #fff3c5;
+}
+
+.how-it-work {
+    position: absolute;
+    left: 570px;
+    top: 150px;
+}
+
+.how-it-work p {
+    font-size: 25px;
+    font-weight: bold;
 }

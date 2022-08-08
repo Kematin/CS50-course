@@ -2,31 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Google Search</title>
+    <title>Google Advanced Search</title>
     <link rel="stylesheet" href="global.css">
 </head>
 <body>
     <div id="head">
-        <div class="search">
+        <div class="text">
+            <span>Advanced Search</span>
             <p>Kookle</p>
+        </div>
+        <div class="search">
+            <p>Find page with:</p>
             <form action="https://www.google.com/search">
-                <input type="text" name="q">
-                <input id="search-button" type="submit" value="Google Search">
+                <p><input type="text" name="as_q" placeholder="All these words"></p>
+                <p><input type="text" name="as_epq" placeholder="This exact word or phrase"></p>
+                <p><input type="text" name="as_oq" placeholder="Any of these words"></p>
+                <p><input type="text" name="as_eq"placeholder="None of these words"></p>
+                <p><input id="search-button" type="submit" value="Google Search"></p>
             </form>
         </div>
-        <div class="feel_lucky">
-            <form action="https://www.google.com/doodles">
-                <input id="lucky-button" type="submit" value="I`m Feeling lucky">
-            </form>
+        <div class="how-it-work">
+            <p>How it works in a normal search</p>
+            <span>Enter keywords: Ivan Fyodorovich Kruzenshtern<br><br><br></span>
+            <span>Put the word combination in quotation marks: "the book of Ivan Kruzenshtern".<br><br><br></span>
+            <span>Insert the OR operator between the words: man OR steamer<br><br><br></span>
+            <span>Put a minus sign in front of the words: - steamer, - "book about a steamer"</span>
         </div>
+       </div>
     </div>
     <div id="painting">
         <span>By Kem</span>
     </div>
     <div class="block-hrefs">
         <p>
-            <a href="image_find.html">Search Images</a>
-            <a href="global_find.html">Advanced Search</a>
+            <a href="index.html">Back To Google Search</a>
         </p>
     </div>
 </body>
