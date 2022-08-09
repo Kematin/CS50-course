@@ -38,9 +38,35 @@ Content-Type: text/html
 
 - Project
     - Project
-        - __init__.py
+        - \_\_init\_\_.py
         - asgi.py
         - settings.py
         - urls.py
         - wsgi.py
     - manage.py
+
+Для начала мы можем запустить наш сервер командой: `python3 manage.py runserver` и перейдя по ссылке
+убедиться что наш сервер создан и вполне нормально работает.
+
+После всех этих действий можно создать наше веб приложение на django.<br>
+`python manage.py startapp APP_NAME`. Появится данная структура
+
+- APP\_NAME
+    - migrations
+        - \_\_init\_\_.py
+    - \_\_init\_\_.py
+    - admin.py
+    - apps.py
+    - models.py
+    - tests.py
+    - views.py
+
+Так-же надо добавить наше приложение в настройки django. В файле `settings.py` находим строку
+`INSTALLED_APPS` и добавляем в список название нашего приложения.
+
+Пока разберем views.py
+
+### Routes
+
+В Файле views.py будет распологаться информация видная пользователю в зависимости от его прав.
+Т.е. например для обычного пользователя будет обычный сайт, а для админа секретная кнопка.
