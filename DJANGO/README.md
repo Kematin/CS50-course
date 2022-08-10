@@ -68,5 +68,46 @@ Content-Type: text/html
 
 ### Routes
 
-В Файле views.py будет распологаться информация видная пользователю в зависимости от его прав.
-Т.е. например для обычного пользователя будет обычный сайт, а для админа секретная кнопка.
+В Файле views.py будут распологаться все условные маршруты сайта, т.е. то что идет после слеша. 
+Например site.ru/page2 или site.ru/hello.
+
+##### Чтобы создать ответвления на нашем сайте нужно выполнить следующие действия.
+
+- Создать файл urls.py в приложении.
+- Добавить функцию в views.py.
+- Добавить наш файл urls.py в основной, который находится в директории проекта.
+
+##### Как это выглядет в коде
+
+> Project/App/views.py
+```python
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def content(request):
+    return HttpResponse("Cool text")
+```
+
+> Project/App/urls.py
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('page1', views.content, name='content')    
+]
+```
+
+Project/Project/urls.py
+```python
+from django.contrib import admin
+from django.urls import include, path
+
+# Первый аргумент path это ответвление сайта (site.com/page/page1).
+# Второй аргумент это импортирование из директории приложения модуля с именем urls.
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('page/', include('APP_NAME.urls'))
+]
+```
