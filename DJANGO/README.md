@@ -98,7 +98,7 @@ urlpatterns = [
 ]
 ```
 
-Project/Project/urls.py
+> Project/Project/urls.py
 ```python
 from django.contrib import admin
 from django.urls import include, path
@@ -111,3 +111,26 @@ urlpatterns = [
     path('page/', include('APP_NAME.urls'))
 ]
 ```
+
+### Templates
+
+Мы так-же можем имортировать html страницы в наши ссылки и модернизировать их из языка разметки в продвинутый язык[^how-use-code]. Например
+добавить переменные. Чтобы это сделать с начало в папке приложения нужно создать директории. 
+
+Это должно выглядеть так:
+`APP_NAME/templates/TEMPLATE_NAME/HTML_NAME.html`
+
+И чтобы наша страница отображалась на сайте, надо создать функцию возвращающую данную страницу. 
+
+```python
+from django.shortcuts import render
+
+# В первом аргументе мы говорим что должны отправить страницу пришедшему запросу.
+# Во втором аргументе указываем путь до страницы.
+
+def content(request):
+    return render(request, 'TEMPLATE_NAME/HTML_NAME.html')
+```
+
+[^how-use-code]: Как внедрять в html python можно посмотреть в файлах [views.py](./first_project/first_app/views.py), 
+[greet.html](./first_project/first_app/templates/hello/greet.html).

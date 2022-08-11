@@ -3,10 +3,12 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello wolrd")
+    return render(request, "hello/index.html")
 
 def tom(request):
     return HttpResponse("Hello, tom!")
 
 def greet(request, name):
-    return HttpResponse(f"Hello, {name.capitalize()}!")
+    return render(request, 'hello/greet.html', {
+        'name': name.capitalize(),
+    })
