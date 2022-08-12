@@ -134,3 +134,26 @@ def content(request):
 
 [^how-use-code]: Как внедрять в html python можно посмотреть в файлах [views.py](./first_project/first_app/views.py), 
 [greet.html](./first_project/first_app/templates/hello/greet.html).
+
+Чтобы внедрять css в наши страницы надо создать отдельную папку static файлов, т.к. django 
+динамично обрабатывает все файлы в нашей структуре. Должно это выглядеть так:
+
+`APP_NAME/static/FOLDER_NAME/STYLE_NAME.css`
+
+> HTML file
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Site</title>
+    <link rel="stylesheet" href="{% static 'FOLDER_NAME/STYLE_NAME.css' %}">
+</head>
+<body>
+    
+</body>
+</html>
+```
+
+### Tasks
