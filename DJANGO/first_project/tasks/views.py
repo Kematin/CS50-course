@@ -7,3 +7,7 @@ def index(request):
         'tasks': tasks,
         'number': '1'
     })
+
+
+def add(request):
+    return render(request, 'tasks/add.html')
