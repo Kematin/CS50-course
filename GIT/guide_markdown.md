@@ -89,6 +89,8 @@ Multiply footnote[^52].
 
 Use html commentary to ignore text for markdown
 
+<!-- Key: kematin_loh_ebanii -->
+
 ```html
 <!-- This text will ignore by markdown -->
 ```
