@@ -196,6 +196,51 @@ Post в нашей ссылке не будут появляться новые 
 </form>
 ```
 
-### Layout
+### Form
 
-Изначально html файлы работают автономно и не могут взаимодействовать между собой.
+Что-бы получать данные с форм, надо использовать формы созданные django, благодаря 
+им мы можем отправлять данные на сервер. 
+
+> views.py
+```python
+from django import forms
+from django.shortcuts import render
+
+tasks = ['taks 1', 'task 2']
+def add(request):
+    # Проверяем метод запроса
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+
+        if form.is_valid():
+            # Берем данные с формы с именем FORM_NAME и добавляем их в список
+            task = form.cleaned_data(['FORM_NAME'])
+            tasks.append(task)
+
+        else:
+            # Возвращаем форму с предупреждением если данные не правильные
+            return render(request, 'TEMPLATE_NAME/File.html', {
+                'form': form
+            })
+
+    # Возвращаем html файл с переменной form
+    return render(request, 'TEMPLATE_NAME/File.html', {
+        'form': TaskForm()
+    })
+
+# Создание формы
+class TaskForm(form.Form):
+    FORM_NAME = forms.CharField(label="Add New Task")
+```
+
+> File.html
+```html
+<!-- Перезагрузка страницы после получение данных -->
+<form action="{% url 'app_name:file' %}" method="post">
+    <!-- Создаем токен и вставляем созданную форму из views -->
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+```
+
