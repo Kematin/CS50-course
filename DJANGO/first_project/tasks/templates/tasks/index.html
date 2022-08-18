@@ -5,6 +5,8 @@
     <ol>
         {% for task in tasks %}
             <li>{{ task }}</li>
+        {% empty %}
+            <li>No tasks.</li>
         {% endfor %}
     </ol>
     {% if number == '1' %}
