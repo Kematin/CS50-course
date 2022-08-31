@@ -1,0 +1,5 @@
+/* LSP server for nvim */
+lsp_server
+
+/* Virtual envorment */
+venv
