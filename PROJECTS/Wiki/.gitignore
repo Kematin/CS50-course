@@ -3,3 +3,7 @@ lsp_server
 
 /* Virtual envorment */
 venv
+
+/* cache and secret key */
+__pycache__
+wiki/wiki/secret.py
