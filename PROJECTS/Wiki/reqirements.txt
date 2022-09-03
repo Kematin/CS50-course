@@ -1,0 +1,2 @@
+django==4.1
+markdown2==2.4.3
