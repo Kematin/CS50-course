@@ -12,13 +12,14 @@ def index(request):
     })
 
 def open_article_page(request, article):
-    if article in list_entries:
-        try:
-            return render(request, f"entries_html/{article}.html")
-        except TemplateDoesNotExist:
-            print(f"[!] Article {article} not found")
+    try:
+        for i in range(len(list_entries)):
+            if article.lower() in list_entries[i].lower():
+                return render(request, f"entries_html/{list_entries[i]}.html")
+        else:
             return render(request, f"error/article_not_found.html")
-
-    else:
+                
+    except TemplateDoesNotExist:
         print(f"[!] Article {article} not found")
         return render(request, f"error/article_not_found.html")
+
