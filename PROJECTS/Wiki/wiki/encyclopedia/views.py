@@ -9,7 +9,7 @@ from . import util
 list_entries = util.list_entries()
 def index(request):
     for item in list_entries:
-        util.convert_from_md_and_save_html(item)
+        util.convert_from_md_to_html(item)
     random_page = choice(list_entries)
     return render(request, "encyclopedia/index.html", {
         "entries": list_entries,
