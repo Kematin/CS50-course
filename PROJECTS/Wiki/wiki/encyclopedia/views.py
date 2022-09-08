@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.template.exceptions import TemplateDoesNotExist
+from django.template import RequestContext
 
 from random import choice
 
@@ -16,11 +17,15 @@ def index(request):
         "random_page": random_page,
     })
 
+
 def open_article_page(request, article):
     try:
+        random_page = choice(list_entries)
         for i in range(len(list_entries)):
             if article.lower() in list_entries[i].lower():
-                return render(request, f"entries_html/{list_entries[i]}.html")
+                return render(request, f"entries_html/{list_entries[i]}.html", {
+                    "random_page": random_page
+                })
         else:
             print(f"[!] Article {article} not found")
             return render(request, f"error/article_not_found.html")
@@ -29,6 +34,10 @@ def open_article_page(request, article):
         print(f"[!] Article {article} not found")
         return render(request, f"error/article_not_found.html")
 
+
 def add_new_article(request):
     return render(request, "encyclopedia/add_page.html")
 
+
+def handler404(request):
+    return render(request, "error/404.html", {})
