@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.template.exceptions import TemplateDoesNotExist
-from django.template import RequestContext
 
 from random import choice
 
 from . import util
-
 
 list_entries = util.list_entries()
 def index(request):
@@ -24,7 +22,7 @@ def open_article_page(request, article):
         for i in range(len(list_entries)):
             if article.lower() in list_entries[i].lower():
                 return render(request, f"entries_html/{list_entries[i]}.html", {
-                    "random_page": random_page
+                    "random_page": random_page,
                 })
         else:
             print(f"[!] Article {article} not found")

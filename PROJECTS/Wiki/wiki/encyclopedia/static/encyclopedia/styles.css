@@ -13,8 +13,8 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
-    width: 80%;
+    height: 70vh;
+    width: 60%;
 }
 
 .main {
@@ -35,4 +35,11 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.submit {
+    position: relative;
+    top: 20px;
+    width: 80px;    
+    height: 40px;    
 }
