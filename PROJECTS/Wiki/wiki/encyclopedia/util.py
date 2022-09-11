@@ -27,9 +27,9 @@ def save_file(title: str, content: str, type: str, dir: str) -> None:
     if check_exist_file(filename):
         default_storage.delete(filename)
         print(f"[!] File {title}.{type} was already exist and was delete")
-    else:
-        default_storage.save(filename, ContentFile(content))
-        print(f"[+] File {title}.{type} was write with new content")
+
+    default_storage.save(filename, ContentFile(content))
+    print(f"[+] File {title}.{type} was write with new content")
 
 
 def get_content_from_file(title: str, type: str, dir: str) -> str | None:

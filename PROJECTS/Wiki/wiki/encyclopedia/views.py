@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.template.exceptions import TemplateDoesNotExist
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from random import choice
 
 from . import util
+from .forms import TextareaForm
 
 list_entries = util.list_entries()
 def index(request):
@@ -34,8 +37,39 @@ def open_article_page(request, article):
 
 
 def add_new_article(request):
-    return render(request, "encyclopedia/add_page.html")
+    if request.method == 'POST':
+        form = TextareaForm(request.POST)
+
+        if form.is_valid():
+            content = form.cleaned_data['textarea_form']
+            save_file(content)
+            return HttpResponseRedirect(reverse('add'))
+
+    else:
+        return render(request, "encyclopedia/add_page.html", 
+                      {"textarea_form": TextareaForm()})
 
 
 def handler404(request):
     return render(request, "error/404.html", {})
+
+
+def save_file(content: str) -> None:
+    if not check_exist_handline(content):
+        # in future will be popup window
+        print("[!] No article name")
+    else:
+        try:
+            headline = content.split("\n")[0].strip()
+            title = headline[2:]
+            util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
+        except Exception as ex:
+            print("[!] Some error") 
+            print(ex) 
+
+
+def check_exist_handline(content: str) -> bool:
+    if content[0] != "#":
+        return False
+    else:
+        return True

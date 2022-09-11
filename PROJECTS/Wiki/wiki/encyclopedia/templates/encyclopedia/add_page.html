@@ -6,10 +6,10 @@
 
 {% block body %}
     <h1>Add article</h1>
-    <p><i>Use <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">markdown markup</a></i></p>
-    <form method="post" action="{% url 'index' %}">
+    <p><i>Use <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" target="_blank">markdown markup</a></i></p>
+    <form method="post">
         {% csrf_token %}
-        <textarea id="id_textarea" name="textarea"># Article Name</textarea>
-        <p><input class="submit" type="submit" value="Send"></p>
+        <div class="textarea">{{ textarea_form }}</div>
+        <p><input id="submit_new_page" class="submit" type="submit" value="Save"></p>
     </form>
 {% endblock %}
