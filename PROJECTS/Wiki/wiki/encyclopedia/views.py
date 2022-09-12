@@ -1,16 +1,14 @@
+# django
 from django.shortcuts import render
 from django.template.exceptions import TemplateDoesNotExist
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
+# theard party lib
 from random import choice
 
+# local lib
 from . import util
 from .forms import TextareaForm
-
-def return_list_entries() -> list:
-    list_entries = util.list_entries()
-    return list_entries
+from .main import *
 
 
 def index(request):
@@ -24,10 +22,13 @@ def index(request):
     })
 
 
-def open_article_page(request, article):
+def open_article_page(request, article: str):
     try:
+        # get list entries and random page
         list_entries = return_list_entries()
         random_page = choice(list_entries)
+
+        # check exist of article
         for i in range(len(list_entries)):
             if article.lower() in list_entries[i].lower():
                 return render(request, f"entries_html/{list_entries[i]}.html", {
@@ -73,25 +74,3 @@ def handler404(request):
     return render(request, "error/404.html", {})
 
 
-# Return title
-def save_file(content: str) -> str | None:
-    if not check_exist_handline(content):
-        # in future will be popup window
-        print("[!] No article name")
-    else:
-        try:
-            headline = content.split("\n")[0].strip()
-            title = headline[2:]
-            util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
-            return title
-        except Exception as ex:
-            print("[!] Some error") 
-            print(ex) 
-            return None
-
-
-def check_exist_handline(content: str) -> bool:
-    if content[0] != "#":
-        return False
-    else:
-        return True

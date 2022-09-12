@@ -1,10 +1,13 @@
 import re
 
+# django
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
+# theard party lib
 from markdown2 import Markdown
 
+# global verb, dir
 ENTRIES_MD_DIR = 'entries/'
 ENTRIES_HTML_DIR = 'encyclopedia/templates/entries_html/'
 
