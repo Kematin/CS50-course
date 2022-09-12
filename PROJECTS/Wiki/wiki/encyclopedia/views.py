@@ -8,8 +8,13 @@ from random import choice
 from . import util
 from .forms import TextareaForm
 
-list_entries = util.list_entries()
+def return_list_entries() -> list:
+    list_entries = util.list_entries()
+    return list_entries
+
+
 def index(request):
+    list_entries = return_list_entries()
     for item in list_entries:
         util.convert_from_md_to_html(item)
     random_page = choice(list_entries)
@@ -21,6 +26,7 @@ def index(request):
 
 def open_article_page(request, article):
     try:
+        list_entries = return_list_entries()
         random_page = choice(list_entries)
         for i in range(len(list_entries)):
             if article.lower() in list_entries[i].lower():
@@ -41,9 +47,22 @@ def add_new_article(request):
         form = TextareaForm(request.POST)
 
         if form.is_valid():
+            # get list entries and random article
+            list_entries = return_list_entries()
+            random_page = choice(list_entries)
+
+            # get content from textarea and save to md
             content = form.cleaned_data['textarea_form']
-            save_file(content)
-            return HttpResponseRedirect(reverse('add'))
+            title = save_file(content)
+
+            # check exist of article
+            if title is not None:
+                util.convert_from_md_to_html(title)
+                dir = f"entries_html/{title}.html"
+            else:
+                dir = "encyclopedia/index"
+
+            return render(request, dir, {"random_page": random_page,})
 
     else:
         return render(request, "encyclopedia/add_page.html", 
@@ -54,7 +73,8 @@ def handler404(request):
     return render(request, "error/404.html", {})
 
 
-def save_file(content: str) -> None:
+# Return title
+def save_file(content: str) -> str | None:
     if not check_exist_handline(content):
         # in future will be popup window
         print("[!] No article name")
@@ -63,9 +83,11 @@ def save_file(content: str) -> None:
             headline = content.split("\n")[0].strip()
             title = headline[2:]
             util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
+            return title
         except Exception as ex:
             print("[!] Some error") 
             print(ex) 
+            return None
 
 
 def check_exist_handline(content: str) -> bool:
