@@ -56,14 +56,18 @@ def add_new_article(request):
             content = form.cleaned_data['textarea_form']
             title = save_file(content)
 
-            # check exist of article
+            # check title 
             if title is not None:
-                util.convert_from_md_to_html(title)
-                dir = f"entries_html/{title}.html"
+                # check exist of article
+                if title in list_entries:
+                    return handler_already_create_article(request, title)
+                else:
+                    util.convert_from_md_to_html(title)
+                    dir = f"entries_html/{title}.html"
+                    return render(request, dir, {"random_page": random_page,})
             else:
-                dir = "encyclopedia/index"
+                return index(request)
 
-            return render(request, dir, {"random_page": random_page,})
 
     else:
         return render(request, "encyclopedia/add_page.html", 
@@ -74,3 +78,5 @@ def handler404(request):
     return render(request, "error/404.html", {})
 
 
+def handler_already_create_article(request, title: str):
+    return render(request, "error/article_exist.html", {"title": title})

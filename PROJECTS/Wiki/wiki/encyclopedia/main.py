@@ -12,10 +12,18 @@ def save_file(content: str) -> str | None:
     if not check_exist_handline(content):
         # in future will be popup window
         print("[!] No article name")
+        return None
     else:
         try:
+            # get headline and title
             headline = content.split("\n")[0].strip()
             title = headline[2:]
+
+            # change title
+            title = title.lower()
+            title = title[0].upper() + title[1:]
+
+            # save content
             util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
             return title
         except Exception as ex:
