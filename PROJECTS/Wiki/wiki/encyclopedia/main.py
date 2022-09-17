@@ -8,19 +8,24 @@ def return_list_entries() -> list:
 
 
 # Save and convert to html file if article title not in list entries
-def save_and_convert_file(content: str) -> str | None:
+# If check_exist_handline return None will return False 
+# It mean what title not correct
+def save_and_convert_file(content: str) -> tuple[str | None, bool]:
     list_entries = return_list_entries()
     title = return_modifided_title(content)
+    check_correct_title = False
 
     if title is not None:
         # check exist of article
         if title in list_entries:
             title = None
+            check_correct_title = True
         else:
             util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
             util.convert_from_md_to_html(title)
+            check_correct_title = True
 
-    return title
+    return title, check_correct_title
             
 
 # Get content and return title or None if title not exist

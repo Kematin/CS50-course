@@ -1,0 +1,10 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block body %}
+    <h1>Error: The title of the article is written incorrectly or not written at all</h1>
+    <p><a href="{% url 'index' %}">Go to main page</a></p>
+{% endblock %}

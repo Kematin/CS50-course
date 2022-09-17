@@ -54,14 +54,17 @@ def add_new_article(request):
 
             # get content from textarea and save to md
             content = form.cleaned_data['textarea_form']
-            title = save_and_convert_file(content)
+            title, check_correct_title = save_and_convert_file(content)
 
-            # check title 
-            if title is None:
-                return handler_already_create_article(request)
+            # check correct title 
+            if not check_correct_title:
+                return handler_uncorret_title(request)
             else:
-                dir = f"entries_html/{title}.html"
-                return render(request, dir, {"random_page": random_page,})
+                if title is None:
+                    return handler_already_create_article(request)
+                else:
+                    dir = f"entries_html/{title}.html"
+                    return render(request, dir, {"random_page": random_page,})
             
     else:
         return render(request, "encyclopedia/add_page.html", 
@@ -74,3 +77,7 @@ def handler404(request):
 
 def handler_already_create_article(request):
     return render(request, "error/article_exist.html")
+
+
+def handler_uncorret_title(request):
+    return render(request, "error/title_uncorrect.html")
