@@ -1,0 +1,3 @@
+# Golang
+
+Golang - cool language
