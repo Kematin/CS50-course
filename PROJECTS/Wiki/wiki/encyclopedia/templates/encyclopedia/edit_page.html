@@ -9,8 +9,7 @@
     <p><i>Use <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" target="_blank">markdown markup</a></i></p>
     <form method="post">
         {% csrf_token %}
-        <textarea  rows="20" cols="80" >My Name is Django</textarea>
-        <!-- <div class="textarea">{{ textarea_form }}</div> -->
+        <textarea class=".textarea" name="textarea" cols="80" rows="20">{{ content }}</textarea>
         <p><input id="submit_new_page" class="submit" type="submit" value="Save"></p>
     </form>
 {% endblock %}

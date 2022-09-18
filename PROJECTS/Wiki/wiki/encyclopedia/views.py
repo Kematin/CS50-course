@@ -7,7 +7,7 @@ from random import choice
 
 # local lib
 from . import util
-from .forms import TextareaForm, TextareaFormPreFiled
+from .forms import TextareaForm
 from .main import *
 
 # -------------------------- MAIN ROUTES --------------------------
@@ -77,14 +77,17 @@ def add_new_article(request):
 
 
 def edit_article(request):
-    form = TextareaFormPreFiled()
-    title = "Title"
-    content = "Content"
+    title = "css"
+    content = util.get_content_from_file(title, "md", util.ENTRIES_MD_DIR)
     context = {
             "title": title,
             "content": content,
-            "textarea_form": form,
         }
+
+    if request.method == "POST":
+        textarea_content = request.POST["textarea"]
+        print(textarea_content)
+
     return render(request, "encyclopedia/edit_page.html", context)
 
 
