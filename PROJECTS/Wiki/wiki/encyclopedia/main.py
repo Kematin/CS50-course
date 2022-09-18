@@ -8,7 +8,7 @@ def return_list_entries() -> list:
 
 
 # Save and convert to html file if article title not in list entries
-# If check_exist_handline return None will return False 
+# If check_exist_handline return None this function will return False 
 # It mean what title not correct
 def save_and_convert_file(content: str) -> tuple[str | None, bool]:
     list_entries = return_list_entries()

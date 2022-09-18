@@ -7,8 +7,11 @@ from random import choice
 
 # local lib
 from . import util
-from .forms import TextareaForm
+from .forms import TextareaForm, TextareaFormPreFiled
 from .main import *
+
+# -------------------------- MAIN ROUTES --------------------------
+
 
 
 def index(request):
@@ -44,31 +47,49 @@ def open_article_page(request, article: str):
 
 
 def add_new_article(request):
+    # get list entries and random page
+    list_entries = return_list_entries()
+    random_page = choice(list_entries)
+
     if request.method == 'POST':
         form = TextareaForm(request.POST)
 
         if form.is_valid():
-            # get list entries and random article
-            list_entries = return_list_entries()
-            random_page = choice(list_entries)
 
             # get content from textarea and save to md
             content = form.cleaned_data['textarea_form']
-            title, check_correct_title = save_and_convert_file(content)
+            compose = save_and_convert_file(content)
 
-            # check correct title 
-            if not check_correct_title:
-                return handler_uncorret_title(request)
-            else:
-                if title is None:
-                    return handler_already_create_article(request)
-                else:
+            # compose = (title, check_correct_title)
+            match compose:
+                case (str(), True):
+                    title = compose[0]
                     dir = f"entries_html/{title}.html"
                     return render(request, dir, {"random_page": random_page,})
-            
+
+                case (str() | None, False): return handler_uncorret_title(request)
+                case (None, False | True): return handler_already_create_article(request)
+                    
     else:
         return render(request, "encyclopedia/add_page.html", 
-                      {"textarea_form": TextareaForm()})
+                      {"textarea_form": TextareaForm(),
+                       "random_page": random_page})
+
+
+def edit_article(request):
+    form = TextareaFormPreFiled()
+    title = "Title"
+    content = "Content"
+    context = {
+            "title": title,
+            "content": content,
+            "textarea_form": form,
+        }
+    return render(request, "encyclopedia/edit_page.html", context)
+
+
+# -------------------------- HANDLERS --------------------------
+
 
 
 def handler404(request):
