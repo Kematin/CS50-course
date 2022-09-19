@@ -36,6 +36,7 @@ def open_article_page(request, article: str):
             if article.lower() in list_entries[i].lower():
                 return render(request, f"entries_html/{list_entries[i]}.html", {
                     "random_page": random_page,
+                    "title": list_entries[i]
                 })
         else:
             print(f"[!] Article {article} not found")
@@ -76,9 +77,13 @@ def add_new_article(request):
                        "random_page": random_page})
 
 
-def edit_article(request):
-    title = "css"
+def edit_article(request, title):
     content = util.get_content_from_file(title, "md", util.ENTRIES_MD_DIR)
+    if content == None:
+        return render(request, "error/article_not_found.html")
+
+    title = title.lower()
+    title = title[0].upper() + title[1:]
     context = {
             "title": title,
             "content": content,

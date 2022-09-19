@@ -7,7 +7,7 @@ urlpatterns = [
     path("wiki/<str:article>", views.open_article_page, name="article"),
     path("wiki/", views.index, name="wiki"),
     path("add", views.add_new_article, name="add"),
-    path("edit", views.edit_article, name="edit"),
+    path("edit/<str:title>", views.edit_article, name="edit"),
     re_path(r"^", views.handler404, name="404"),
 ]
 

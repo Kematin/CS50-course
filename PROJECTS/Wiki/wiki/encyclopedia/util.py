@@ -64,6 +64,7 @@ def convert_from_md_to_html(title: str) -> None:
         edit_content_html(title, html_content)
 
 
+
 def content_consolidation(content: list) -> list:
     content = ['    ' + item for item in content]
     initial_content = [
@@ -71,9 +72,14 @@ def content_consolidation(content: list) -> list:
                 '{% block title %}',
                 '   Article',
                 '{% endblock %}',
-                '{% block body %}'
+                '{% block body %}',
                ]
-    final_content = ['{% endblock %}']
+    final_content = [
+            '   <form action="/edit/{{ title }}">',
+                    '<p><input id="submit_edit_page" class="submit" type="submit"style="width: 80px; height:30px"value="Edit page"></p>',
+            '   </form>',
+            '{% endblock %}',
+            ]
     total_content = initial_content + content + final_content
     return total_content
 

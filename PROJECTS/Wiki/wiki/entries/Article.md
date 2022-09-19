@@ -1,3 +1,0 @@
-# ARTICLE
-
-ARTicle is articlejk
