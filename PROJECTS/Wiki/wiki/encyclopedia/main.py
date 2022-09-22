@@ -1,16 +1,13 @@
 # local lib
 from . import util
 
-
-def return_list_entries() -> list:
-    list_entries = util.list_entries()
-    return list_entries
+# ----------------- MAIN -----------------
 
 
 # Save and convert to html file if article title not in list entries
 # If check_exist_handline return None this function will return False 
 # It mean what title not correct
-def save_and_convert_file(content: str) -> tuple[str | None, bool]:
+def save_new_file_and_convert_to_html(content: str) -> tuple[str | None, bool]:
     list_entries = return_list_entries()
     title = return_modifided_title(content)
     check_correct_title = False
@@ -22,13 +19,30 @@ def save_and_convert_file(content: str) -> tuple[str | None, bool]:
             check_correct_title = True
         else:
             util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
-            util.convert_from_md_to_html(title)
+            util.edit_content_and_save_file(title)
             check_correct_title = True
 
     return title, check_correct_title
             
 
-# Get content and return title or None if title not exist
+# If check_exist_handline return None this function will return None
+# It mean what title not correct
+def edit_file_and_convert_to_html(content: str) -> str | None:
+    title = return_modifided_title(content)
+
+    if title is not None:
+        util.save_file(title, content, "md", util.ENTRIES_MD_DIR)
+        util.edit_content_and_edit_file(title)
+
+    return title
+
+
+
+# ----------------- UTILITY -----------------
+
+
+
+# Return title or None if title not exist
 def return_modifided_title(content: str) -> str | None:
     if not check_exist_handline(content):
         # in future will be popup window
@@ -58,3 +72,10 @@ def check_exist_handline(content: str) -> bool:
         return False
     else:
         return True
+
+
+def return_list_entries() -> list:
+    list_entries = util.list_entries()
+    return list_entries
+
+

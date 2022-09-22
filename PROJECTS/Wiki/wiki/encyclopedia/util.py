@@ -64,7 +64,6 @@ def convert_from_md_to_html(title: str) -> None:
         edit_content_html(title, html_content)
 
 
-
 def content_consolidation(content: list) -> list:
     content = ['    ' + item for item in content]
     initial_content = [
@@ -76,7 +75,7 @@ def content_consolidation(content: list) -> list:
                ]
     final_content = [
             '   <form action="/edit/{{ title }}">',
-                    '<p><input id="submit_edit_page" class="submit" type="submit"style="width: 80px; height:30px"value="Edit page"></p>',
+            '       <p><input id="submit_edit_page" class="submit" type="submit"style="width: 80px; height:30px"value="Edit page"></p>',
             '   </form>',
             '{% endblock %}',
             ]
@@ -84,20 +83,26 @@ def content_consolidation(content: list) -> list:
     return total_content
 
 
-def edit_content_html(title: str, content: list) -> None:
-    # Check exist file
+def edit_content_and_save_file(title: str) -> None:
     filename = f"{ENTRIES_HTML_DIR}/{title}.html"
-    if check_exist_file(filename):
+    if not check_exist_file(filename):
+        convert_from_md_to_html(title)
+    else:
         print(f"[!] File {title}.html was already exist")
 
-    # Save file with new content
-    else:
-        # Get content
-        content = content_consolidation(content)
 
-        # Write file with new content
-        with open(filename, 'w', encoding='utf-8') as f:
-            for string in content:
-                f.write(string + '\n')
-            print(f"[+] File {title}.html was write with new content")
+def edit_content_and_edit_file(title: str) -> None:
+    convert_from_md_to_html(title)
+
+
+def edit_content_html(title: str, content: list) -> None:
+    # Get content and filename
+    content = content_consolidation(content)
+    filename = f"{ENTRIES_HTML_DIR}/{title}.html"
+
+    # Write file with new content
+    with open(filename, 'w', encoding='utf-8') as f:
+        for string in content:
+            f.write(string + '\n')
+        print(f"[+] File {title}.html was write with new content")
 

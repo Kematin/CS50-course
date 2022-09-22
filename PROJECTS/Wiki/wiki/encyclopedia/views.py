@@ -17,7 +17,7 @@ from .main import *
 def index(request):
     list_entries = return_list_entries()
     for item in list_entries:
-        util.convert_from_md_to_html(item)
+        util.edit_content_and_save_file(item)
     random_page = choice(list_entries)
     return render(request, "encyclopedia/index.html", {
         "entries": list_entries,
@@ -59,7 +59,7 @@ def add_new_article(request):
 
             # get content from textarea and save to md
             content = form.cleaned_data['textarea_form']
-            compose = save_and_convert_file(content)
+            compose = save_new_file_and_convert_to_html(content)
 
             # compose = (title, check_correct_title)
             match compose:
@@ -78,6 +78,10 @@ def add_new_article(request):
 
 
 def edit_article(request, title):
+    # get list entries and random page
+    list_entries = return_list_entries()
+    random_page = choice(list_entries)
+
     content = util.get_content_from_file(title, "md", util.ENTRIES_MD_DIR)
     if content == None:
         return render(request, "error/article_not_found.html")
@@ -87,11 +91,18 @@ def edit_article(request, title):
     context = {
             "title": title,
             "content": content,
+            "random_page": random_page,
         }
 
     if request.method == "POST":
         textarea_content = request.POST["textarea"]
-        print(textarea_content)
+        check_exist_title = edit_file_and_convert_to_html(textarea_content)
+
+        if check_exist_title is None:
+            return handler_uncorret_title(request)
+
+        return index(request)
+
 
     return render(request, "encyclopedia/edit_page.html", context)
 
