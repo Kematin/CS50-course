@@ -19,10 +19,15 @@ def index(request):
     for item in list_entries:
         util.edit_content_and_save_file(item)
     random_page = choice(list_entries)
-    return render(request, "encyclopedia/index.html", {
+
+    context = {
         "entries": list_entries,
         "random_page": random_page,
-    })
+        "articles": list_entries,
+                    }
+
+    # function for search field (return main page if search input is None)
+    return find_article(request, context, "index")
 
 
 def open_article_page(request, article: str):
@@ -36,7 +41,8 @@ def open_article_page(request, article: str):
             if article.lower() in list_entries[i].lower():
                 return render(request, f"entries_html/{list_entries[i]}.html", {
                     "random_page": random_page,
-                    "title": list_entries[i]
+                    "title": list_entries[i],
+                    "articles": list_entries,
                 })
         else:
             print(f"[!] Article {article} not found")
@@ -72,9 +78,14 @@ def add_new_article(request):
                 case (None, False | True): return handler_already_create_article(request)
                     
     else:
-        return render(request, "encyclopedia/add_page.html", 
-                      {"textarea_form": TextareaForm(),
-                       "random_page": random_page})
+
+        # function for search field (return main page if search input is None)
+        context = {
+            "textarea_form": TextareaForm(),
+            "random_page": random_page,
+            "articles": list_entries,
+                        }
+        return find_article(request, context, "add_page")
 
 
 def edit_article(request, title):
@@ -92,8 +103,10 @@ def edit_article(request, title):
             "title": title,
             "content": content,
             "random_page": random_page,
+            "articles": list_entries,
         }
 
+    # Post
     if request.method == "POST":
         textarea_content = request.POST["textarea"]
         check_exist_title = edit_file_and_convert_to_html(textarea_content)
@@ -104,7 +117,20 @@ def edit_article(request, title):
         return index(request)
 
 
-    return render(request, "encyclopedia/edit_page.html", context)
+    # Get
+    else:
+        return render(request, "encyclopedia/edit_page.html", context)
+
+
+# -------------------------- ADDITIONAL FUNCTIONS --------------------------
+
+
+def find_article(request, context: dict, html_name: str):
+    article_name_by_search = request.GET.get("article")
+    if article_name_by_search is not None:
+        return open_article_page(request, article_name_by_search)
+    else:
+        return render(request, f"encyclopedia/{html_name}.html", context)
 
 
 # -------------------------- HANDLERS --------------------------
@@ -121,3 +147,7 @@ def handler_already_create_article(request):
 
 def handler_uncorret_title(request):
     return render(request, "error/title_uncorrect.html")
+
+
+def handler_article_not_found(request):
+    return render(request, "error/article_not_found.html")

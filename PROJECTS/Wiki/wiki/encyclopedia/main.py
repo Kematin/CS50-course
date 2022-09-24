@@ -53,10 +53,7 @@ def return_modifided_title(content: str) -> str | None:
             # get headline and title
             headline = content.split("\n")[0].strip()
             title = headline[2:]
-
-            # change title
-            title = title.lower()
-            title = title[0].upper() + title[1:]
+            title = change_title(title)
 
             # return title
             return title
@@ -79,3 +76,7 @@ def return_list_entries() -> list:
     return list_entries
 
 
+def change_title(title: str) -> str:
+    title = title.lower()
+    title = title[0].upper() + title[1:]
+    return title
