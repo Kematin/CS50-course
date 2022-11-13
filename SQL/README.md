@@ -124,6 +124,45 @@ _Значение id не добавляется вручную т.к. мы ук
 ```
 1 - SELECT * FROM flights WHERE id = 3;
 2 - SELECT * FROM flights WHERE origin = "New York";
+3 - SELECT * FROM flights WHERE duration > 300 AND origin = "Paris"
+4 - SELECT * FROM flights WHERE duration > 200 OR origin = "New York"
+5 - SELECT * FROM flights WHERE origin IN ("New York", "Paris", "London")
+6 - SELECT * FROM flights WHERE origin LIKE "%b%"
 ```
 1. Этой командой мы берем данные строки где id = 3.
 2. Этой командой мы берем данные строки где origin имеет значение New York.
+3. Этой командой мы берем данные строки где origin имеет значение Paris и duration больше 300.
+4. Этой командой мы берем данные строки где origin имеет значение New York или duration больше 200.
+5. Команда как in в python.
+6. Этой командой мы берем данные строки где в origin есть буква b.
+
+### UPDATE
+
+Команда **UPDATE** нужна для изменения какого либо параметра в базе данных
+
+```
+UPDATE flights
+    SET duration = 450
+    WHERE origin="New York" AND destination="Moscow"
+```
+Меняет значение duration на 450 по нижним условиям.
+
+### DELETE
+
+Команда удаляет строку(и) из базны данных по условиям
+
+```
+DELETE FROM flights 
+    WHERE id IN (1, 5)
+```
+Удаляет 1 и 5 строку из базы данных.
+
+
+### Other clauses
+Класс это:<br>
+SELECT * FROM flights `class` `requirement`
+
+- **LIMIT** (до какого номера строки)
+- **ORDER BY** (выдавать данные по признаку столбца)
+- **GROUP BY** (группировать выдачу данных по столбцу)
+- ...
