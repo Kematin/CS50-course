@@ -136,29 +136,29 @@ _Значение id не добавляется вручную т.к. мы ук
 5. Команда как in в python.
 6. Этой командой мы берем данные строки где в origin есть буква b.
 
-### UPDATE
+#### UPDATE
 
 Команда **UPDATE** нужна для изменения какого либо параметра в базе данных
 
 ```
 UPDATE flights
     SET duration = 450
-    WHERE origin="New York" AND destination="Moscow"
+    WHERE origin="New York" AND destination="Moscow";
 ```
 Меняет значение duration на 450 по нижним условиям.
 
-### DELETE
+#### DELETE
 
 Команда удаляет строку(и) из базны данных по условиям
 
 ```
 DELETE FROM flights 
-    WHERE id IN (1, 5)
+    WHERE id IN (1, 5);
 ```
 Удаляет 1 и 5 строку из базы данных.
 
 
-### Other clauses
+#### Other clauses
 Класс это:<br>
 SELECT * FROM flights `class` `requirement`
 
@@ -166,3 +166,24 @@ SELECT * FROM flights `class` `requirement`
 - **ORDER BY** (выдавать данные по признаку столбца)
 - **GROUP BY** (группировать выдачу данных по столбцу)
 - ...
+
+### Join tables
+
+Базы данных состоят из большого кол-ва таблиц и для удобства их использования 
+их можно объеденять с помощью join.
+
+Команда для использования JOIN:
+```
+SELECT first, origin, destination 
+    FROM flights JOIN passengers
+    ON passengers.flight_id = flights.id;
+```
+
+**JOINs**
+- JOIN / INNER JOIN
+- LEFT OUTER JOIN
+- RIGHT OUTER JOIN
+- FULL OUTER JOIN
+
+Пример:
+
