@@ -174,10 +174,19 @@ SELECT * FROM flights `class` `requirement`
 
 Команда для использования JOIN:
 ```
+SELECT row_name_1, row_name_2, row_name_n
+    FROM table_name JOIN table_name_2
+    ON table_name_2.row_name_id = table_name.id;
+```
+
+Пример:
+```
 SELECT first, origin, destination 
     FROM flights JOIN passengers
     ON passengers.flight_id = flights.id;
 ```
+Берет значения first, origin, destination из таблицы flights 
+и вставляет эти значения сопоставляя flight_id из passengers и id из flights
 
 **JOINs**
 - JOIN / INNER JOIN
@@ -185,5 +194,14 @@ SELECT first, origin, destination
 - RIGHT OUTER JOIN
 - FULL OUTER JOIN
 
-Пример:
+### Create INDEX
 
+Нужен для более быстрых запросов. 
+
+Команда INDEX:
+```
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+```
+
+### SQL Injection
