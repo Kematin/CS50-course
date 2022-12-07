@@ -1,5 +1,19 @@
 # SQL, MODELS and MIGRATIONS
 
+- [SQL](#SQL)
+    - [Data](#Data)
+    - [Tables](#Tables)
+    - [Add data in tables](#Add)
+    - [SQL Queries](#Queries)
+        - [Update](#UPDATE)
+        - [Delete](#DELETE)
+        - [Other clauses](#Other)
+    - [Join tables](#Join)
+    - [Create Index](#INDEX)
+    - [SQL Vulnerabilities](#Vulnerabilities)
+        - [SQL Injection](#Injection)
+        - [Race condition](#Race-Condition)
+
 ## SQL
 
 ### Data
@@ -95,7 +109,7 @@ CREATE TABLE flights (
 - **UNIQUE** (Гарантирует что каждое значение будет уникальным)
 - **...**
 
-### Add data in tables
+### Add
 
 Для добавления данных в таблицу используется команда **INSERT** с интуитивно понятным
 синтаксисом:
@@ -107,7 +121,7 @@ INSERT INTO flights
 ```
 _Значение id не добавляется вручную т.к. мы указали его как автозаполнение._
 
-### SQL Queries
+### Queries
 
 Для того чтобы взять значения с таблиц используется команда **SELECT**:
 
@@ -158,7 +172,7 @@ DELETE FROM flights
 Удаляет 1 и 5 строку из базы данных.
 
 
-#### Other clauses
+#### Other
 Класс это:<br>
 SELECT * FROM flights `class` `requirement`
 
@@ -167,7 +181,7 @@ SELECT * FROM flights `class` `requirement`
 - **GROUP BY** (группировать выдачу данных по столбцу)
 - ...
 
-### Join tables
+### Join
 
 Базы данных состоят из большого кол-ва таблиц и для удобства их использования 
 их можно объеденять с помощью join.
@@ -194,7 +208,7 @@ SELECT first, origin, destination
 - RIGHT OUTER JOIN
 - FULL OUTER JOIN
 
-### Create INDEX
+### INDEX
 
 Позволяет повысить производительность запросов (подобно индексу в конце учебника).<br>
 _*Примечание: при обновление таблицы, INDEX так-же надо обновлять, поэтому 
@@ -206,9 +220,9 @@ CREATE INDEX index_name
 ON table_name (column1, column2, ...);
 ```
 
-### SQL Vulnerabilities
+### Vulnerabilities
 
-#### SQL Injection
+#### Injection
 
 ***SQL Injection*** - самая популярная уязвимость. 
 Это внедрение SQL кода в запросе на сайте, который вы неосознанно обрабатываете на 
@@ -232,7 +246,7 @@ SELECT * FROM users;
 - Обрабатывать вводимые данные и проверять их на то, являются ли они SQL кодом.
 - Добавить абстрактный слой перед SQL запросами, чтобы самостоятельно их не создавать.
 
-#### Race Condition
+#### Race-Condition
 
 ***Race Condition*** или "или состояние гонок" еще одна проблема, нарушающая один 
 из принципов ACID - Isolation (изоляция), когда на транзакцию одного юзера накладывается
