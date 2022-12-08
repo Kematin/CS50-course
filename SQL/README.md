@@ -14,7 +14,8 @@
         - [SQL Injection](#Injection)
         - [Race condition](#Race-Condition)
 - [Django Models](#Models)
-- [Django Migrations](#Migrations)
+    - [Django Migrations](#Migrations)
+    - [Django Shell](#Shell)
 
 ## SQL
 
@@ -277,4 +278,57 @@ class Flights(models.Model):
 3. В аргументе 2 полей ограничевается максимальная длина
 
 
-## Migrations
+### Migrations
+
+Теперь, когда созданна модель надо создать базу данных из модели. Делается это 
+командой:
+
+`python manage.py makemigrations`
+
+Данная команда создает `файл` в папке `migrations` благодаря которому можно редактировать
+или создавать базы данных исходя из модели.
+
+Далее, командой ниже мигрируется наша модель, дефолтные модели джанго и создается
+база данных (sqlite3 по умолчанию):
+
+`python manage.py migrate`
+
+### Shell
+
+Работать с базой данной с помощью пайтон команд можно через Django Shell оболочку.
+
+`python manage.py shell`
+
+Пример работы в shell:
+```python
+# Import flight model
+from flights import Flight
+
+# Create a new flight
+f = Flight(origin="New York", destination="London", duration=400)
+
+# Save information in db
+f.save()
+
+# Query for all flights stored in the database
+In [4]: Flight.objects.all()
+Out[4]: <QuerySet [<Flight: Flight object (1)>]>
+```
+
+Для того чтобы вывод объектов был более информативен создается магический метод `__str__`
+```python
+class Flights(models.Model):
+    origin = models.CharField(max_length = 50)    
+    destination = models.CharField(max_length = 50)    
+    duration = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.id}: {self.origin} to {self.destination}"
+```
+
+```python
+In [4]: Flight.objects.all()
+Out[4]: <QuerySet [<Flight: 1: New York to London>]>
+```
+
+
