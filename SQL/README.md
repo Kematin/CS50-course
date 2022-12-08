@@ -13,6 +13,8 @@
     - [SQL Vulnerabilities](#Vulnerabilities)
         - [SQL Injection](#Injection)
         - [Race condition](#Race-Condition)
+- [Django Models](#Models)
+- [Django Migrations](#Migrations)
 
 ## SQL
 
@@ -252,3 +254,27 @@ SELECT * FROM users;
 из принципов ACID - Isolation (изоляция), когда на транзакцию одного юзера накладывается
 транзакция чужого юзера тем самым ошибочно работая с данными 2-ого юзера как с первым.
 [Видео Over Enginerr на эту тему](https://www.youtube.com/watch?v=gOB3hpAVIIQ&t=818s)
+
+
+## Models
+
+**Django Models** - Абстрактный слой выше SQL, позволяющий работать нам с базами данных
+с помощью классов и обьектов, а не напрямую запросами.
+
+Модели создаются в файле `models.py` в директории приложения. В классе нашей модели
+мы описываем какие данные будут использоваться в приложении.
+
+Пример:
+```python
+class Flights(models.Model):
+    origin = models.CharField(max_length = 50)    
+    destination = models.CharField(max_length = 50)    
+    duration = models.IntegerField()
+```
+
+1. Первой строкой создается модель, наследующая дефолтную модель Джанги
+2. Далее создаются поля для данных: origin, destination, duration
+3. В аргументе 2 полей ограничевается максимальная длина
+
+
+## Migrations
