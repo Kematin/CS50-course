@@ -377,3 +377,36 @@ class Flight(models.Model):
 (CASCADE - полное удаление данных в модели). Другие типы данного аргумента в 
 [статье](https://docs.djangoproject.com/en/4.0/ref/models/fields/#django.db.models.ForeignKey.on_delete).
 4. Третий аргумент это связанное имя по которому можно быстро найти данные.
+
+
+**Shell**:
+```python
+# Import all models
+In [1]: from flights.models import *
+
+# Create some new airports
+In [2]: jfk = Airport(code="JFK", city="New York")
+In [4]: lhr = Airport(code="LHR", city="London")
+In [6]: cdg = Airport(code="CDG", city="Paris")
+In [9]: nrt = Airport(code="NRT", city="Tokyo")
+
+# Save the airports to the database
+In [3]: jfk.save()
+In [5]: lhr.save()
+In [8]: cdg.save()
+In [10]: nrt.save()
+
+# Add flight and save in db 
+In [11]: f = Flight(origin=cdg, destination=nrt, duration=515)
+In [12] f.save()
+
+# Display some info about the flight
+In [13]: flights = Flight.objects.all()
+In [14]: flight = flights[0]
+In [15]: fligh.destination
+Out[15]: <Airport: Tokyo (NRT)>
+
+# Using the related name to query by airport of arrival:
+In [16]: nrt.arrivals.all()
+Out[16]: <QuerySet [<Flight: 1 --- Paris (CDG) --- Tokyo (NRT) --- 515>]>
+```
