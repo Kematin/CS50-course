@@ -16,6 +16,7 @@
 - [Django Models](#Models)
     - [Django Migrations](#Migrations)
     - [Django Shell](#Shell)
+        - [Merging tables by Python](#Merging)
 
 ## SQL
 
@@ -331,4 +332,48 @@ In [4]: Flight.objects.all()
 Out[4]: <QuerySet [<Flight: 1: New York to London>]>
 ```
 
+Пример работы в shell c объектами базы данных:
+```python
+# Import flight model
+from flights.models import Flight
 
+# Get last element from db (also can get first element)
+last_flight = Flight.objects.all().last()
+
+# Display element
+In [3]: last_flight
+Out[3]: <Flight: 2 --- New York --- London --- 415>
+
+# Display origin and destination from object
+# (Referring to an element as an attribute in classes)
+In [4]: last_flight.origin, last_flight.destination
+Out[4]: ('New York', 'London')
+```
+
+#### Merging
+
+```python
+class Airport(models.Model):
+    code = models.CharField(max_length=3)
+    city = models.CharField(max_length=64)
+
+    def __str__(self):
+        return f"{self.city} ({self.code})"
+        
+
+class Flight(models.Model):
+    origin = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="departures")
+    destination = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="arrivals")
+    duration = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.id}: {self.origin} to {self.destination}"
+```
+
+1. Создается новая модель, а во второй CharField заменяется ForeignKey,
+означающий, что данные будут заменятся от другой модели.
+2. Первый аргумент ForeignKey означает с какой модели будут интегрироваться данные.
+3. Второй аргумент означает логику при удалении данных из интегрируемой модели 
+(CASCADE - полное удаление данных в модели). Другие типы данного аргумента в 
+[статье](https://docs.djangoproject.com/en/4.0/ref/models/fields/#django.db.models.ForeignKey.on_delete).
+4. Третий аргумент это связанное имя по которому можно быстро найти данные.
