@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .models import Flight
+from .models import Airport, Flight
 
 # Create your views here.
 
 def index(request):
     context = {
-            "flights": Flight.objects.all()
+            "airports": Airport.objects.all(),
+            "flights": Flight.objects.all(),
         }
     return render(request, "index.html", context)
