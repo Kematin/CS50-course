@@ -19,6 +19,7 @@
         - [Merging tables by Python](#Merging)
         - [Display information on site](#Display)
         - [More shell commands](#Commands)
+- [Django Admin](#Admin)
 
 ## SQL
 
@@ -495,3 +496,31 @@ In [7]: cdg = Airport.objects.get(city="Paris")
 In [8]: f = Flight(origin=jfk, destination=cdg, duration=435)
 In [9]: f.save()
 ```
+
+## Admin
+
+Что-бы добавлять новые объекты ранее использовался shell, этот процесс можно 
+упростить с помощью админки. Для начала создается супер юзер (админ)
+
+```
+/mnt/d/CS50/SQL/airline (main*) » python manage.py createsuperuser
+Username (leave blank to use 'kematin'): user_1
+Email address: a@inbox.ru
+Password: 
+Password (again): 
+```
+
+Теперь надо добавить модели в админ панель.
+
+`admin.py`
+```python
+from django.contrib import admin
+from .models import *
+
+# Register your models here.
+admin.site.register(Flight)
+admin.site.register(Airport)
+```
+
+На сайте перейдя по адресу `/admin` теперь можно войти в админ панель, откуда 
+можно манипулировать данными.
