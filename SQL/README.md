@@ -17,6 +17,8 @@
     - [Django Migrations](#Migrations)
     - [Django Shell](#Shell)
         - [Merging tables by Python](#Merging)
+        - [Display information on site](#Display)
+        - [More shell commands](#Commands)
 
 ## SQL
 
@@ -409,4 +411,87 @@ Out[15]: <Airport: Tokyo (NRT)>
 # Using the related name to query by airport of arrival:
 In [16]: nrt.arrivals.all()
 Out[16]: <QuerySet [<Flight: 1 --- Paris (CDG) --- Tokyo (NRT) --- 515>]>
+```
+
+#### Display
+
+`urls.py`
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.index, name="index")
+]
+```
+
+`views.py`
+```python
+from django.shortcuts import render
+from .models import Airport, Flight
+
+def index(request):
+    context = {
+            "airports": Airport.objects.all(),
+            "flights": Flight.objects.all(),
+        }
+    return render(request, "index.html", context)
+```
+
+`templates/layout.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
+```
+
+`templates/index.html`
+```html
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Airports:</h1>
+    <ul>
+        {% for airport in airports %}
+            <li>Airport: {{ airport.id }}: {{ airport.city }} ({{ airport.code }})</li>
+        {% endfor %}
+    </ul>
+    <h1>Flights</h1>
+    <ul>
+        {% for flight in flights %}
+            <li>Flight: {{ flight.id }}: {{ flight.origin }} to {{ flight.destination }} ({{ flight.duration }} minutes)</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+```
+
+
+#### Commands
+
+**Shell**
+
+```python
+# Using the filter command to find all airports based in New York
+In [3]: Airport.objects.filter(city="New York")
+Out[3]: <QuerySet [<Airport: New York (JFK)>]>
+
+# Using the get command to get only one airport in New York
+In [5]: Airport.objects.get(city="New York")
+Out[5]: <Airport: New York (JFK)>
+
+# Assigning some airports to variable names:
+In [6]: jfk = Airport.objects.get(city="New York")
+In [7]: cdg = Airport.objects.get(city="Paris")
+
+# Creating and saving a new flight:
+In [8]: f = Flight(origin=jfk, destination=cdg, duration=435)
+In [9]: f.save()
 ```
