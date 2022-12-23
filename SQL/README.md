@@ -20,6 +20,8 @@
         - [Display information on site](#Display)
         - [More shell commands](#Commands)
 - [Django Admin](#Admin)
+    - [Display more info about object](#DisplayRout)
+- [Many-to-Many Relationships](#Many-to-Many)
 
 ## SQL
 
@@ -524,3 +526,46 @@ admin.site.register(Airport)
 
 На сайте перейдя по адресу `/admin` теперь можно войти в админ панель, откуда 
 можно манипулировать данными.
+
+### DisplayRout
+Отображение большей информации насчет полета (для каждого отдельный путь)
+
+`views.py`
+```python
+# Function, which return html template
+def flight(request, flight_id):
+    # Get info about flight by id
+    flight = Flight.objects.all().get(id=flight_id)
+    context = {
+            "flight": flight,
+        }
+    return render(request, "flight.html", context)
+```
+
+`urls.py`
+```python
+# Append new route with variable flight id
+urlpatterns = [
+    path('', views.index, name="index"),
+    path('<int:flight_id>', views.flight, name="flight"),
+]
+```
+
+`template/flight.html`
+```html
+<!-- Create template, which display info -->
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Flight {{ flight.id }}</h1>
+    <ul>
+        <li>Origin - {{ flight.origin }}</li>
+        <li>Destination - {{ flight.destination }}</li>
+        <li>Duration - {{ flight.duration }}</li>
+    </ul>
+    <a href="{% url 'index' %}">All Flights</a>
+{% endblock %}
+```
+
+## Many-to-Many
+
