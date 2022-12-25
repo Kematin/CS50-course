@@ -568,4 +568,20 @@ urlpatterns = [
 ```
 
 ## Many-to-Many
+Реализация отношения многие к многим через добавление новой модели:
 
+`models.py`
+```python
+# Create new model
+class Passenger(models.Model):
+    first = models.CharField(max_length=64)
+    last = models.CharField(max_length=64)
+    flights = models.ManyToManyField(Flight, blank=True, related_name="passenger")
+
+    def __str__(self):
+        return f"{self.first} {self.last}"
+```
+
+1. ManyToManyField и Flight (первым аргументом) означает что данное поле будет в отношение многим к многим с 
+таблицей (моделью) Flight
+2. blank=True означает что значение полета у пассажира может быть None.
