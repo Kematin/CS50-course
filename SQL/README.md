@@ -22,6 +22,7 @@
 - [Django Admin](#Admin)
     - [Display more info about object](#DisplayRout)
 - [Many-to-Many Relationships](#Many-to-Many)
+- [Add passengers in flight](#Passengers)
 
 ## SQL
 
@@ -585,3 +586,46 @@ class Passenger(models.Model):
 1. ManyToManyField и Flight (первым аргументом) означает что данное поле будет в отношение многим к многим с 
 таблицей (моделью) Flight
 2. blank=True означает что значение полета у пассажира может быть None.
+
+Отображение на странице сайта
+
+`views.py`
+```python
+# Create function, which get all passengers from flight
+def flight(request, flight_id):
+    flight = Flight.objects.all().get(id=flight_id)
+    passengers = flight.passengers.all()
+    context = {
+            "flight": flight,
+            "passengers": passengers,
+        }
+    return render(request, "flight.html", context)
+```
+
+`flight.html`
+```html
+{% extends 'layout.html' %}
+
+<!-- Display elements on site -->
+{% block body %}
+    <h1>Flight {{ flight.id }}</h1>
+    <ul>
+        <li>Origin - {{ flight.origin }}</li>
+        <li>Destination - {{ flight.destination }}</li>
+        <li>Duration - {{ flight.duration }}</li>
+    </ul>
+    <h1>Passengers:</h1>
+    <ul>
+        {% for passenger in passengers %}
+            <li>{{ passenger }}</li>
+        {% empty %}
+            <li>No passengers.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">All Flights</a>
+{% endblock %}
+```
+
+
+### Passengers
+
