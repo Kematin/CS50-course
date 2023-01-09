@@ -21,6 +21,7 @@
         - [More shell commands](#Commands)
 - [Django Admin](#Admin)
     - [Display more info about object](#DisplayRout)
+    - [Customize Django Admin](#Customize)
 - [Many-to-Many Relationships](#Many-to-Many)
 - [Add passengers in flight](#Passengers)
 
@@ -567,6 +568,25 @@ urlpatterns = [
     <a href="{% url 'index' %}">All Flights</a>
 {% endblock %}
 ```
+
+### Customize
+
+Еще одно преимущество дефолтной админки в django - это ее настраивоемость.
+Можно лучше настроить вывод информации насчет объекта.
+Пример:
+
+`admin.py`
+```python
+class FlightAdmin(admin.ModelAdmin):
+    list_display = ("id", "origin", "destination", "duration")
+
+admin.site.register(Flight, FlightAdmin)
+```
+Теперь в админке каждый объект полета будет отображатся не через функцию __str__, а
+как показано в кортеже
+
+Подробнее в [документации](https://docs.djangoproject.com/en/4.0/ref/contrib/admin/)
+
 
 ## Many-to-Many
 Реализация отношения многие к многим через добавление новой модели:
