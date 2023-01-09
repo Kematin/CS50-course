@@ -16,9 +16,11 @@
         {% endfor %}
     </ul>
     <a href="{% url 'index' %}">All Flights</a>
+    <!-- Create new form, which url is flight/flight_id/book -->
     <form action="{% url 'book' flight.id %}" method="post">
         {% csrf_token %}
         <select name="passengers" id="">
+            <!-- Cycle "for" in non_passengers for add this passengers -->
             {% for passenger in non_passengers %}
                 <option value="{{ passenger.id }}">{{ passenger }}</option>
             {% empty %}

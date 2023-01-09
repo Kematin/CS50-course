@@ -629,3 +629,71 @@ def flight(request, flight_id):
 
 ### Passengers
 
+Добавление пассажиров в полет:
+
+Для лучшего понимания лучше изобразить цикличную схему в последовательности:
+1. Объект Flight
+2. Html форма
+3. Функция book
+
+`urls.py`
+```python
+urlpatterns = [
+    path('', views.index, name="index"),
+    path('<int:flight_id>', views.flight, name="flight"),
+    # Add new route to add passenger in flight
+    path('<int:flight_id>/book', views.book, name="book"),
+]
+```
+
+`views.py`
+```python
+def flight(request, flight_id):
+    flight = Flight.objects.all().get(id=flight_id)
+    passengers = flight.passengers.all()
+    # find all passengers, who not in flight
+    non_passengers = Passenger.objects.exclude(flights=flight).all()
+    context = {
+            "flight": flight,
+            "passengers": passengers,
+            "non_passengers": non_passengers,
+        }
+    return render(request, "flight.html", context)
+
+
+def book(request, flight_id):
+    # if a post request, add new passenger
+    if request.method == "POST":
+        
+        # accesing flight
+        flight = Flight.objects.all().get(id=flight_id)
+
+        # find id passenger from submitted data
+        passenger_id = int(request.POST["passengers"])
+
+        # find passenger from based id
+        passenger = Passenger.objects.get(pk=passenger_id)
+
+        # add new passenger in flight
+        passenger.flights.add(flight)
+
+        # redirect user to flight route
+        return HttpResponseRedirect(reverse("flight", args=(flight.id,)))
+```
+
+`flight.html`
+```html
+    <!-- Create new form, which url is flight/flight_id/book -->
+    <form action="{% url 'book' flight.id %}" method="post">
+        {% csrf_token %}
+        <select name="passengers" id="">
+            <!-- Cycle "for" in non_passengers for add this passengers -->
+            {% for passenger in non_passengers %}
+                <option value="{{ passenger.id }}">{{ passenger }}</option>
+            {% empty %}
+                All available passengers in flight.
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+```
