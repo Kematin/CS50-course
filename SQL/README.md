@@ -24,6 +24,7 @@
     - [Customize Django Admin](#Customize)
 - [Many-to-Many Relationships](#Many-to-Many)
 - [Add passengers in flight](#Passengers)
+- [Users](#Users)
 
 ## SQL
 
@@ -717,3 +718,6 @@ def book(request, flight_id):
         <input type="submit" value="Submit">
     </form>
 ```
+
+## Users
+
