@@ -6,10 +6,37 @@ from django.urls import reverse
 
 from .models import User
 
+# ------------------------------- MAIN PAGE ------------------------------------
 
 
 def index(request):
     return render(request, "auctions/index.html")
+
+
+# ------------------------------- USER LOGIN ------------------------------------
+
+
+def watchlist(request):
+    return render(request, "auctions/user_login/watchlist.html")
+
+
+def won_listing(request):
+    return render(request, "auctions/user_login/won_listing.html")
+
+
+def create_listing(request):
+    return render(request, "auctions/user_login/create_listing.html")
+
+
+# ------------------------------- USER NOT LOGIN ------------------------------------
+
+
+def category(request):
+    return render(request, "auctions/user_not_login/category.html")
+
+
+def inactive(request):
+    return render(request, "auctions/user_not_login/inactive.html")
 
 
 def login_view(request):
@@ -25,11 +52,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "auctions/login.html", {
+            return render(request, "auctions/user_not_login/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "auctions/login.html")
+        return render(request, "auctions/user_not_login/login.html")
 
 
 def logout_view(request):
@@ -46,7 +73,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "auctions/register.html", {
+            return render(request, "auctions/user_not_login/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -61,4 +88,4 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "auctions/user_not_login/register.html")

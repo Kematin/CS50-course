@@ -28,14 +28,43 @@
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'won' %}">Won listing</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create' %}">Create listing</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' %}">Category</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inactive' %}">Inactive listings</a>
+                </li>
+
             <!-- USER NOT AUTH -->
 
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' %}">Category</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inactive' %}">Inactive listings</a>
                 </li>
             {% endif %}
         </ul>
