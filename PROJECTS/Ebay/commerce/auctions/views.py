@@ -1,16 +1,19 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import *
+from src import main
 
 # ------------------------------- MAIN PAGE ------------------------------------
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = Listing.objects.all()
+    context = {"listings": listings}
+    return render(request, "auctions/index.html", context)
 
 
 # ------------------------------- USER LOGIN ------------------------------------
@@ -37,6 +40,9 @@ def category(request):
 
 def inactive(request):
     return render(request, "auctions/user_not_login/inactive.html")
+
+
+# ------------------------------- BY CS50 ------------------------------------
 
 
 def login_view(request):
