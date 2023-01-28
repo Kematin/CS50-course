@@ -16,6 +16,12 @@ def index(request):
     return render(request, "auctions/index.html", context)
 
 
+def listing(request, listing_id):
+    listing = Listing.objects.all().get(id=listing_id)
+    context = {"listing": listing}
+    return render(request, "auctions/listing.html", context)
+
+
 # ------------------------------- USER LOGIN ------------------------------------
 
 

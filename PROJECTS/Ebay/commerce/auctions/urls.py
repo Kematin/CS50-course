@@ -6,6 +6,9 @@ urlpatterns = [
     # Main Page
     path("", views.index, name="index"),
 
+    # Listing Page
+    path("listing/<int:listing_id>", views.listing, name="listing"),
+
     # User not login
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
