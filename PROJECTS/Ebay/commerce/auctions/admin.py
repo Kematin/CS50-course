@@ -5,14 +5,17 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ("username", "password")
 
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ("name", "cost", "user_winner")
+    list_display = ("name", "cost", "winner")
 
 class CommentaryAdmin(admin.ModelAdmin):
     list_display = ("user", "commentary")
 
+class WatchlistAdmin(admin.ModelAdmin):
+    list_display = ("user",)
 
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Commentary, CommentaryAdmin)
+admin.site.register(Watchlist, WatchlistAdmin)
 admin.site.register(Category)

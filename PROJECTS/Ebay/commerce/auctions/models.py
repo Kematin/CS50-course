@@ -9,26 +9,34 @@ class Category(models.Model):
         return self.name
 
 
+class User(AbstractUser):
+    pass
+
+
 class Listing(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=500)
     cost = models.FloatField()
 
     image_url = models.CharField(max_length=100, blank=True)
-    user_winner = models.CharField(max_length=150, blank=True)
     category_names = models.ManyToManyField(Category, blank=True, related_name="category")
+
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
+    winner = models.CharField(max_length=150, blank=True)
 
     def __str__(self):
         return f"{self.name}: price - {self.cost}"
 
 
-class User(AbstractUser):
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist_user")
     watchlist = models.ManyToManyField(Listing, blank=True, related_name="watchlist")
 
 
 class Commentary(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="commentary_user")
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="commentary_listing")
     commentary = models.CharField(max_length=500)
 
     def __str__(self):
-        return f"{self.user}: {self.commentary}"
+        return f"{self.user}: {self.commentary} ({self.listing})"
