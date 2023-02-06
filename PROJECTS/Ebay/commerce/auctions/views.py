@@ -5,6 +5,18 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import *
+'''
+Listing
+User
+Category
+Watchlist
+Commentary
+'''
+from .forms import *
+'''
+ListingForm
+'''
+
 from src import main
 
 # ------------------------------- MAIN PAGE ------------------------------------
@@ -34,7 +46,11 @@ def won_listing(request):
 
 
 def create_listing(request):
-    return render(request, "auctions/user_login/create_listing.html")
+    form = ListingForm
+    context = {
+            "form": form
+        }
+    return render(request, "auctions/user_login/create_listing.html", context)
 
 
 # ------------------------------- USER NOT LOGIN ------------------------------------

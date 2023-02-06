@@ -18,7 +18,7 @@ class Listing(models.Model):
     description = models.CharField(max_length=500)
     cost = models.FloatField()
 
-    image_url = models.CharField(max_length=100, blank=True)
+    image_url = models.URLField(blank=True)
     category_names = models.ManyToManyField(Category, blank=True, related_name="category")
 
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
