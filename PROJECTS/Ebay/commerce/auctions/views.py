@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
@@ -37,27 +38,37 @@ def listing(request, listing_id):
 # ------------------------------- USER LOGIN ------------------------------------
 
 
+@login_required
 def watchlist(request):
     return render(request, "auctions/user_login/watchlist.html")
 
 
+@login_required
 def won_listing(request):
     return render(request, "auctions/user_login/won_listing.html")
 
 
+@login_required
 def create_listing(request):
-    if request.method == 'POST':
-        print(request.POST)
+    form = ListingForm()
+    context = {
+        "form": form
+    }
+
+    if request.method == "POST":
         form = ListingForm(request.POST)
         if form.is_valid():
-            data = request.POST["description"]
-            print(data)
+            data = request.POST
+            create_listing = main.CreateListing(request, Listing)
+            result = create_listing.main(data)
+            
+            if result is None:
+                context["message"] = "Listing with same name already exist."
+                return render(request, "auctions/user_login/create_listing.html", context)
+            else:
+                return redirect("index")
         
-    else:
-        form = ListingForm()
-        context = {
-                "form": form
-            }
+    if request.method == "GET":
         return render(request, "auctions/user_login/create_listing.html", context)
 
 
