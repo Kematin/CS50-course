@@ -15,7 +15,7 @@ class User(AbstractUser):
 
 class Listing(models.Model):
     name = models.CharField(max_length=20)
-    description = models.CharField(max_length=500)
+    description = models.TextField(max_length=500)
     cost = models.FloatField()
 
     image_url = models.URLField(blank=True)

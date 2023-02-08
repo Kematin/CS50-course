@@ -46,11 +46,19 @@ def won_listing(request):
 
 
 def create_listing(request):
-    form = ListingForm
-    context = {
-            "form": form
-        }
-    return render(request, "auctions/user_login/create_listing.html", context)
+    if request.method == 'POST':
+        print(request.POST)
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            data = request.POST["description"]
+            print(data)
+        
+    else:
+        form = ListingForm()
+        context = {
+                "form": form
+            }
+        return render(request, "auctions/user_login/create_listing.html", context)
 
 
 # ------------------------------- USER NOT LOGIN ------------------------------------

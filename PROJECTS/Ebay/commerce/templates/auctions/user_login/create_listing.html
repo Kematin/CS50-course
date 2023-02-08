@@ -2,9 +2,13 @@
 
 {% block body %}
     <h1>Create</h1>
-    <form action="" method="post">
+    <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        <ul>
+            {% for field in form %}
+                <li>{{ field.label_tag }} {{field}}</li>
+            {% endfor %}
+        </ul>
         <input type="submit">
     </form>
 {% endblock %}
