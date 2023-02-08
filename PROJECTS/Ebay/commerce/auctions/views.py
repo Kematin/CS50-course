@@ -32,6 +32,8 @@ def index(request):
 def listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
     context = {"listing": listing}
+    if listing.creator == request.user:
+        context["close_button"] = "Close button"
     return render(request, "auctions/listing.html", context)
 
 
@@ -51,6 +53,7 @@ def won_listing(request):
 @login_required
 def create_listing(request):
     form = ListingForm()
+
     context = {
         "form": form
     }

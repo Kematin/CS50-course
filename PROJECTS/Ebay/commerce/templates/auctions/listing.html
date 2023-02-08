@@ -8,4 +8,7 @@
         <p>Price: <strong>{{ listing.cost }} $</strong></p>
         <p>Creator: <strong>{{ listing.creator }}</strong></p>
     </div>
+    {% if close_button %}
+        <button>Close</button>
+    {% endif %}
 {% endblock %}
