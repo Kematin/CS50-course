@@ -8,7 +8,9 @@
         <p>Price: <strong>{{ listing.cost }} $</strong></p>
         <p>Creator: <strong>{{ listing.creator }}</strong></p>
     </div>
-    {% if close_button %}
+    {% if user_creator %}
         <button>Close</button>
+    {% elif user.is_authenticated %}
+        <button>Upp cost</button>
     {% endif %}
 {% endblock %}

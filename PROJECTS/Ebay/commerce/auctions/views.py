@@ -33,7 +33,7 @@ def listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
     context = {"listing": listing}
     if listing.creator == request.user:
-        context["close_button"] = "Close button"
+        context["user_creator"] = "True"
     return render(request, "auctions/listing.html", context)
 
 
