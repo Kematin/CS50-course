@@ -8,9 +8,19 @@
         <p>Price: <strong>{{ listing.cost }} $</strong></p>
         <p>Creator: <strong>{{ listing.creator }}</strong></p>
     </div>
-    {% if user_creator %}
-        <button>Close</button>
-    {% elif user.is_authenticated %}
-        <button>Upp cost</button>
-    {% endif %}
+        {% if user_creator %}
+        <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Close</button>
+            </form>
+        {% elif user.is_authenticated %}
+            {% if upp_cost_error %}
+                <div id="upp_cost_error">{{ upp_cost_error }}</div>
+            {% endif %}
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <input name="new_cost" type="nubmer" pattern="\d*" min="0">
+                <button type="submit">Upp cost</button>
+            </form>
+        {% endif %}
 {% endblock %}

@@ -32,9 +32,30 @@ def index(request):
 def listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
     context = {"listing": listing}
-    if listing.creator == request.user:
-        context["user_creator"] = "True"
-    return render(request, "auctions/listing.html", context)
+
+    if request.method == "POST":
+        # Delete listing (go to inactive)
+        if listing.creator == request.user:
+            delete = main.Listing(request, Listing)
+            delete.delete_listing(listing_id)
+
+        # Upp cost for listing
+        else:
+            new_cost = float(request.POST["new_cost"])
+            upp = main.Listing(request, Listing)
+            result = upp.upp_cost(listing_id, new_cost)
+            if result is None:
+                context["upp_cost_error"] = "The new price is less than or equal to the old one"
+                return render(request, "auctions/listing.html", context)
+
+        return redirect("index")
+                        
+
+    if request.method == "GET":
+        context = {"listing": listing}
+        if listing.creator == request.user:
+            context["user_creator"] = "True"
+        return render(request, "auctions/listing.html", context)
 
 
 # ------------------------------- USER LOGIN ------------------------------------
@@ -62,8 +83,8 @@ def create_listing(request):
         form = ListingForm(request.POST)
         if form.is_valid():
             data = request.POST
-            create_listing = main.CreateListing(request, Listing)
-            result = create_listing.main(data)
+            create = main.Listing(request, Listing)
+            result = create.create_listing(data)
             
             if result is None:
                 context["message"] = "Listing with same name already exist."
