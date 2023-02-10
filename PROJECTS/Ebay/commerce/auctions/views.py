@@ -24,7 +24,8 @@ from src import main
 
 
 def index(request):
-    listings = Listing.objects.all()
+    # non_passengers = Passenger.objects.exclude(flights=flight).all()
+    innactive_listings = Listing.objects.exclude(winner="")
     context = {"listings": listings}
     return render(request, "auctions/index.html", context)
 
@@ -34,10 +35,10 @@ def listing(request, listing_id):
     context = {"listing": listing}
 
     if request.method == "POST":
-        # Delete listing (go to inactive)
+        # Delete listing (go to inactive with winner)
         if listing.creator == request.user:
             delete = main.Listing(request, Listing)
-            delete.delete_listing(listing_id)
+            delete.delete_listing(listing_id, User)
 
         # Upp cost for listing
         else:

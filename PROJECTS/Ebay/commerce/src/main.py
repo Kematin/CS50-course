@@ -16,9 +16,12 @@ class Listing:
             listing.save()
             return True
  
-    def delete_listing(self, listing_id: int) -> None:
+    def delete_listing(self, listing_id: int, UserModel) -> None:
         listing = self.all_listings.get(id=listing_id)
-        listing.delete()
+        # request.user will be change to current cost winner user
+        winner = UserModel.objects.get(username=self.request.user)
+        listing.winner = winner.username
+        listing.save()
 
     # Return None if listing with same name already exist
     def create_listing(self, data) -> bool | None:
