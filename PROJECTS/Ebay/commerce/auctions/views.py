@@ -110,6 +110,11 @@ def inactive(request):
     context = {"listings": inactive_listings}
     return render(request, "auctions/user_not_login/inactive.html", context)
 
+def inactive_listing(request, listing_id):
+    listing = Listing.objects.all().get(id=listing_id)
+    context = {"listing": listing}
+    return render(request, "auctions/inactive_listing.html", context)
+
 
 # ------------------------------- BY CS50 ------------------------------------
 
