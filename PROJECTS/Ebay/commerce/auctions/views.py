@@ -25,7 +25,8 @@ from src import main
 
 def index(request):
     # non_passengers = Passenger.objects.exclude(flights=flight).all()
-    innactive_listings = Listing.objects.exclude(winner="")
+    inactive_listings = Listing.objects.exclude(winner="")
+    listings = list(filter(lambda listing: listing not in inactive_listings, Listing.objects.all()))
     context = {"listings": listings}
     return render(request, "auctions/index.html", context)
 
@@ -105,7 +106,9 @@ def category(request):
 
 
 def inactive(request):
-    return render(request, "auctions/user_not_login/inactive.html")
+    inactive_listings = Listing.objects.exclude(winner="")
+    context = {"listings": inactive_listings}
+    return render(request, "auctions/user_not_login/inactive.html", context)
 
 
 # ------------------------------- BY CS50 ------------------------------------
