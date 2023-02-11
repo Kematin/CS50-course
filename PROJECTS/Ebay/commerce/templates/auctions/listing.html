@@ -22,23 +22,35 @@
             </ul>
         </p>
     </div>
-        {% if winner_error %}
-            <div id="winner_error">{{ winner_error }}</div> 
-        {% endif %}
+    <div class="logic_elements">
+            <div class="winner_error">
+                {% if winner_error %}
+                    <div id="winner_error">{{ winner_error }}</div> 
+                {% endif %}
+            </div>
 
-        {% if user_creator %}
-            <form action="{% url 'listing' listing.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Close</button>
-            </form>
-        {% elif user.is_authenticated %}
-            {% if upp_cost_error %}
-                <div id="upp_cost_error">{{ upp_cost_error }}</div>
+            {% if user_creator %}
+                <form action="{% url 'listing' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">close</button>
+                </form>
+            {% elif user.is_authenticated %}
+                {% if upp_cost_error %}
+                    <div id="upp_cost_error">{{ upp_cost_error }}</div>
+                {% endif %}
+                <form action="{% url 'listing' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <input name="new_cost" type="nubmer" pattern="\d*" min="0">
+                    <button type="submit">Upp cost</button>
+                </form>
             {% endif %}
-            <form action="{% url 'listing' listing.id %}" method="post">
-                {% csrf_token %}
-                <input name="new_cost" type="nubmer" pattern="\d*" min="0">
-                <button type="submit">Upp cost</button>
-            </form>
-        {% endif %}
+    </div>
+    <div class="commentaries">
+        <h5>Commentaries:</h5>
+        {% for commentary in commentaries %}
+            <p>{{ commentary.user }}: {{ commentary.commentary }}</p>
+        {% empty %}
+            No comments.
+        {% endfor %}
+    </div>
 {% endblock %}

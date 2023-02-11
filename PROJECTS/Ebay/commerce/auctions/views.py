@@ -31,13 +31,17 @@ def index(request):
 
 
 def listing(request, listing_id):
+    # Get all data about listing
     listing = Listing.objects.all().get(id=listing_id)
     categories = listing.category_names.all()
     context = {"listing": listing, "categories": categories}
     if listing.creator == request.user:
             context["user_creator"] = "True"
+    commentaries = Commentary.objects.filter(listing=listing)
+    context["commentaries"] = commentaries
 
 
+    # POST
     if request.method == "POST":
         # Delete listing (go to inactive with winner)
         if listing.creator == request.user:
@@ -55,10 +59,10 @@ def listing(request, listing_id):
             if result is None:
                 context["upp_cost_error"] = "The new price is less than or equal to the old one"
                 return render(request, "auctions/listing.html", context)
-
         return redirect("index")
                         
 
+    # GET
     if request.method == "GET":
         return render(request, "auctions/listing.html", context)
 
