@@ -89,7 +89,7 @@ def create_listing(request):
         if form.is_valid():
             data = request.POST
             create = main.Listing(request, Listing)
-            result = create.create_listing(data)
+            result = create.create_listing(data, Category)
             
             if result is None:
                 context["message"] = "Listing with same name already exist."

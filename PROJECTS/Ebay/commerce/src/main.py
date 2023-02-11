@@ -29,18 +29,28 @@ class Listing:
             return None
 
     # Return None if listing with same name already exist
-    def create_listing(self, data) -> bool | None:
+    def create_listing(self, data, CategoryModel) -> bool | None:
         listing_name = data["name"]
         if self.check_same_name(listing_name):
             return None
         
+        # Get main data
         listing_description = data["description"] 
         listing_cost = data["cost"] 
-        listing_creator = self.request.user
         listing_image = self.create_image_url(data["image_url"])
+        listing_id_categories = self.request.POST.getlist("category_names")
 
+        # Get creator 
+        listing_creator = self.request.user
+
+        # Get categories
+        listing_categories = self.get_categories(listing_id_categories, CategoryModel)
+
+        # Create new listing
         new_listing = self.model(name=listing_name, description=listing_description, 
                             cost=listing_cost, image_url=listing_image, creator=listing_creator)
+        new_listing.save()
+        new_listing.category_names.set(listing_categories)
         new_listing.save()
         return True
 
@@ -63,3 +73,9 @@ class Listing:
             return True
         else:
             return False
+
+    def get_categories(self, id_categories, CategoryModel) -> list:
+        categories = CategoryModel.objects.all()
+        print(id_categories)
+        listing_categories = [categories[int(id_category)-1] for id_category in id_categories]
+        return listing_categories
