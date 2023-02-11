@@ -32,7 +32,7 @@
             {% if user_creator %}
                 <form action="{% url 'listing' listing.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit">close</button>
+                    <button type="submit">Close</button>
                 </form>
             {% elif user.is_authenticated %}
                 {% if upp_cost_error %}
@@ -53,4 +53,14 @@
             No comments.
         {% endfor %}
     </div>
+    <form action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+        <h5>Add commentary</h5>
+        <ul>
+            {% for field in form %}
+                <li>{{ field.label_tag }} {{ field }}</li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Send commentary</button>
+    </form>
 {% endblock %}

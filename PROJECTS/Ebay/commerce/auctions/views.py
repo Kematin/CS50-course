@@ -16,6 +16,7 @@ Commentary
 from .forms import *
 '''
 ListingForm
+CommentaryForm
 '''
 
 from src import main
@@ -35,10 +36,18 @@ def listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
     categories = listing.category_names.all()
     context = {"listing": listing, "categories": categories}
-    if listing.creator == request.user:
-            context["user_creator"] = "True"
+
+    # commentaries
     commentaries = Commentary.objects.filter(listing=listing)
     context["commentaries"] = commentaries
+
+    # check creator user
+    if listing.creator == request.user:
+            context["user_creator"] = "True"
+
+    # commentaries form
+    form = CommentaryForm
+    context["form"] = form
 
 
     # POST
