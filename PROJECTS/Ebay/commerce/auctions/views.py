@@ -34,18 +34,24 @@ def listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
     categories = listing.category_names.all()
     context = {"listing": listing, "categories": categories}
+    if listing.creator == request.user:
+            context["user_creator"] = "True"
+
 
     if request.method == "POST":
         # Delete listing (go to inactive with winner)
         if listing.creator == request.user:
             delete = main.Listing(request, Listing)
-            delete.delete_listing(listing_id, User)
+            result = delete.delete_listing(listing_id)
+            if result is None:
+                context["winner_error"] = "Nobody bought this staff"
+                return render(request, "auctions/listing.html", context)
 
         # Upp cost for listing
         else:
             new_cost = float(request.POST["new_cost"])
             upp = main.Listing(request, Listing)
-            result = upp.upp_cost(listing_id, new_cost)
+            result = upp.upp_cost(listing_id, new_cost, User)
             if result is None:
                 context["upp_cost_error"] = "The new price is less than or equal to the old one"
                 return render(request, "auctions/listing.html", context)
@@ -54,8 +60,6 @@ def listing(request, listing_id):
                         
 
     if request.method == "GET":
-        if listing.creator == request.user:
-            context["user_creator"] = "True"
         return render(request, "auctions/listing.html", context)
 
 

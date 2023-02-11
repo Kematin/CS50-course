@@ -7,6 +7,11 @@
         <br>{{ listing.description }}
         <p>Price: <strong>{{ listing.cost }} $</strong></p>
         <p>Creator: <strong>{{ listing.creator }}</strong></p>
+        {% if listing.temporary_winner %}
+            <p>Current user winner: <strong>{{ listing.temporary_winner }}</strong></p>
+        {% else %}
+            <p>Current user winner: <strong>Nobody</strong></p>
+        {% endif %}
         <p>
             <ul> Categories:
                 {% for category in categories %}
@@ -17,8 +22,12 @@
             </ul>
         </p>
     </div>
+        {% if winner_error %}
+            <div id="winner_error">{{ winner_error }}</div> 
+        {% endif %}
+
         {% if user_creator %}
-        <form action="{% url 'listing' listing.id %}" method="post">
+            <form action="{% url 'listing' listing.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Close</button>
             </form>

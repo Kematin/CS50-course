@@ -5,23 +5,28 @@ class Listing:
         self.all_listings = self.model.objects.all()
 
     # Return None if new cost less than old
-    def upp_cost(self, listing_id: int, new_cost: float) -> bool | None:
+    def upp_cost(self, listing_id: int, new_cost: float, UserModel) -> bool | None:
         listing = self.all_listings.get(id=listing_id)
         old_cost = listing.cost
 
         if self.check_new_cost(old_cost, new_cost):
             return None
         else:
+            temporary_winner = UserModel.objects.get(username=self.request.user)
             listing.cost = new_cost
+            listing.temporary_winner = temporary_winner.username
             listing.save()
             return True
  
-    def delete_listing(self, listing_id: int, UserModel) -> None:
+    def delete_listing(self, listing_id: int) -> bool | None:
         listing = self.all_listings.get(id=listing_id)
-        # request.user will be change to current cost winner user
-        winner = UserModel.objects.get(username=self.request.user)
-        listing.winner = winner.username
-        listing.save()
+        winner = listing.temporary_winner
+        if winner:
+            listing.winner = winner
+            listing.save()
+            return True
+        else:
+            return None
 
     # Return None if listing with same name already exist
     def create_listing(self, data) -> bool | None:

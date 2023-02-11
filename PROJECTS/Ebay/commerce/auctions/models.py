@@ -23,6 +23,7 @@ class Listing(models.Model):
 
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
     winner = models.CharField(max_length=150, blank=True)
+    temporary_winner = models.CharField(max_length=150, blank=True)
 
     def __str__(self):
         return f"{self.name}: price - {self.cost}"
