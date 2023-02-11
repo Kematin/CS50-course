@@ -24,7 +24,6 @@ from src import main
 
 
 def index(request):
-    # non_passengers = Passenger.objects.exclude(flights=flight).all()
     inactive_listings = Listing.objects.exclude(winner="")
     listings = list(filter(lambda listing: listing not in inactive_listings, Listing.objects.all()))
     context = {"listings": listings}
@@ -33,7 +32,8 @@ def index(request):
 
 def listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
-    context = {"listing": listing}
+    categories = listing.category_names.all()
+    context = {"listing": listing, "categories": categories}
 
     if request.method == "POST":
         # Delete listing (go to inactive with winner)
@@ -54,7 +54,6 @@ def listing(request, listing_id):
                         
 
     if request.method == "GET":
-        context = {"listing": listing}
         if listing.creator == request.user:
             context["user_creator"] = "True"
         return render(request, "auctions/listing.html", context)
@@ -112,7 +111,8 @@ def inactive(request):
 
 def inactive_listing(request, listing_id):
     listing = Listing.objects.all().get(id=listing_id)
-    context = {"listing": listing}
+    categories = listing.category_names.all()
+    context = {"listing": listing, "categories": categories}
     return render(request, "auctions/inactive_listing.html", context)
 
 

@@ -7,6 +7,15 @@
         <br>{{ listing.description }}
         <p>Price: <strong>{{ listing.cost }} $</strong></p>
         <p>Creator: <strong>{{ listing.creator }}</strong></p>
+        <p>
+            <ul> Categories:
+                {% for category in categories %}
+                    <li> {{ category }}</li>        
+                {% empty %}
+                    <li>No categories :[</li>
+                {% endfor %}
+            </ul>
+        </p>
     </div>
         {% if user_creator %}
         <form action="{% url 'listing' listing.id %}" method="post">
