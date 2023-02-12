@@ -30,7 +30,7 @@
             </div>
 
             {% if user_creator %}
-                <form action="{% url 'listing' listing.id %}" method="post">
+                <form action="{% url 'close_listing' listing.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Close</button>
                 </form>
@@ -38,7 +38,7 @@
                 {% if upp_cost_error %}
                     <div id="upp_cost_error">{{ upp_cost_error }}</div>
                 {% endif %}
-                <form action="{% url 'listing' listing.id %}" method="post">
+                <form action="{% url 'upp_cost' listing.id %}" method="post">
                     {% csrf_token %}
                     <input name="new_cost" type="nubmer" pattern="\d*" min="0">
                     <button type="submit">Upp cost</button>

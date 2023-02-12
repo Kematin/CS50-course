@@ -49,31 +49,34 @@ def listing(request, listing_id):
     form = CommentaryForm
     context["form"] = form
 
+    return render(request, "auctions/listing.html", context)
 
-    # POST
+
+# ! add feature to display error
+def close_listing(request, listing_id):
+    # listing go to inactive
+    context = {}
     if request.method == "POST":
-        # Delete listing (go to inactive with winner)
-        if listing.creator == request.user:
-            delete = main.Listing(request, Listing)
-            result = delete.delete_listing(listing_id)
-            if result is None:
-                context["winner_error"] = "Nobody bought this staff"
-                return render(request, "auctions/listing.html", context)
+        delete = main.Listing(request, Listing)
+        result = delete.delete_listing(listing_id)
+        if result is None:
+            context["winner_error"] = "Nobody bought this staff"
 
-        # Upp cost for listing
-        else:
-            new_cost = float(request.POST["new_cost"])
-            upp = main.Listing(request, Listing)
-            result = upp.upp_cost(listing_id, new_cost, User)
-            if result is None:
-                context["upp_cost_error"] = "The new price is less than or equal to the old one"
-                return render(request, "auctions/listing.html", context)
-        return redirect("index")
-                        
+    return redirect(f"../{listing_id}")
 
-    # GET
-    if request.method == "GET":
-        return render(request, "auctions/listing.html", context)
+
+# ! add feature to display error
+def upp_cost_listing(request, listing_id):
+    context = {}
+    if request.method == "POST":
+        new_cost = float(request.POST["new_cost"])
+        upp = main.Listing(request, Listing)
+        result = upp.upp_cost(listing_id, new_cost, User)
+        if result is None:
+            context["upp_cost_error"] = "The new price is less than or equal to the old one"
+
+    return redirect(f"../{listing_id}")
+
 
 def add_commentaries(request, listing_id):
     if request.method == "POST":

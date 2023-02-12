@@ -22,8 +22,10 @@ urlpatterns = [
     path("won", views.won_listing, name="won"),
     path("create", views.create_listing, name="create"),
 
-    # Additionaly
+    # Additionaly for listing
     path("listing/commentaries/<int:listing_id>", views.add_commentaries, name="add_commentaries"),
+    path("listing/close/<int:listing_id>", views.close_listing, name="close_listing"),
+    path("listing/upp/<int:listing_id>", views.upp_cost_listing, name="upp_cost"),
 
     # Error handlers
 
