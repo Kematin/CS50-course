@@ -75,6 +75,16 @@ def listing(request, listing_id):
     if request.method == "GET":
         return render(request, "auctions/listing.html", context)
 
+def add_commentaries(request, listing_id):
+    if request.method == "POST":
+        form = CommentaryForm(request.POST)
+        if form.is_valid():
+            commentary = request.POST["commentary"]
+            add = main.Commentary(request, Commentary)
+            add.add_commentary(commentary, listing_id, User, Listing)
+
+    return redirect(f"../{listing_id}")
+
 
 # ------------------------------- USER LOGIN ------------------------------------
 

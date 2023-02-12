@@ -79,3 +79,18 @@ class Listing:
         print(id_categories)
         listing_categories = [categories[int(id_category)-1] for id_category in id_categories]
         return listing_categories
+
+
+class Commentary:
+    def __init__(self, request, model):
+        self.request = request
+        self.model = model
+
+    def add_commentary(self, commentary: str, listing_id:int, UserModel, ListingModel):
+        user = UserModel.objects.get(username=self.request.user)
+        listing = ListingModel.objects.get(id=listing_id)
+        new_commentary = self.model(user=user, commentary=commentary, listing=listing) 
+        new_commentary.save()
+    
+    def delete_commentary(self):
+        pass
