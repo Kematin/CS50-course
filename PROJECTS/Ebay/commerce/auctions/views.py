@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -60,7 +61,8 @@ def close_listing(request, listing_id):
         delete = main.Listing(request, Listing)
         result = delete.delete_listing(listing_id)
         if result is None:
-            context["winner_error"] = "Nobody bought this staff"
+            messages.error(request, "Nobody bought this staff")
+
 
     return redirect(f"../{listing_id}")
 
@@ -74,6 +76,17 @@ def upp_cost_listing(request, listing_id):
         result = upp.upp_cost(listing_id, new_cost, User)
         if result is None:
             context["upp_cost_error"] = "The new price is less than or equal to the old one"
+
+    return redirect(f"../{listing_id}")
+
+
+# ! add feature to display error
+def add_to_watchlist(request, listing_id):
+    context = {}
+    if request.method == "POST":
+        add = main.Watchlist(request, Watchlist)
+        # if result is None:
+        #     context["watchlist_error"] = "The new price is less than or equal to the old one"
 
     return redirect(f"../{listing_id}")
 

@@ -53,14 +53,22 @@
             No comments.
         {% endfor %}
     </div>
-    <form action="{% url 'add_commentaries' listing.id %}" method="post">
-        {% csrf_token %}
-        <h5>Add commentary</h5>
-        <ul>
-            {% for field in form %}
-                <li>{{ field.label_tag }} {{ field }}</li>
-            {% endfor %}
-        </ul>
-        <button type="submit">Send commentary</button>
-    </form>
+    {% if user.is_authenticated %}
+        <form action="{% url 'add_commentaries' listing.id %}" method="post">
+            {% csrf_token %}
+            <h5>Add commentary</h5>
+            <ul>
+                {% for field in form %}
+                    <li>{{ field.label_tag }} {{ field }}</li>
+                {% endfor %}
+            </ul>
+            <button type="submit">Send commentary</button>
+        </form>
+
+        <form action="{% url 'add_to_watchlist' listing.id %}" method="post">
+            {% csrf_token %}
+            <h5>Add to watchlist</h5>
+            <button type="submit">Add</button>
+        </form>
+    {% endif %}
 {% endblock %}
