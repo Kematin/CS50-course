@@ -32,7 +32,7 @@ class Listing(models.Model):
 class Watchlist(models.Model):
     a = models.CharField(max_length=500, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist_user")
-    watchlist = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="watchlist")
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="watchlist")
 
 
 class Commentary(models.Model):

@@ -11,7 +11,7 @@ class CommentaryAdmin(admin.ModelAdmin):
     list_display = ("user", "commentary")
 
 class WatchlistAdmin(admin.ModelAdmin):
-    list_display = ("user",)
+    list_display = ("user", "listing")
 
 # Register your models here.
 admin.site.register(User, UserAdmin)

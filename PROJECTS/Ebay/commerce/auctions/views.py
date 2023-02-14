@@ -60,11 +60,10 @@ def close_listing(request, listing_id):
     if request.method == "POST":
         delete = main.Listing(request, Listing)
         result = delete.delete_listing(listing_id)
-        if result is None:
+        if not result:
             messages.error(request, "Nobody bought this staff")
 
-
-    return redirect(f"../{listing_id}")
+    return redirect(f"inactive")
 
 
 # ! add feature to display error
@@ -74,7 +73,7 @@ def upp_cost_listing(request, listing_id):
         new_cost = float(request.POST["new_cost"])
         upp = main.Listing(request, Listing)
         result = upp.upp_cost(listing_id, new_cost, User)
-        if result is None:
+        if not result:
             context["upp_cost_error"] = "The new price is less than or equal to the old one"
 
     return redirect(f"../{listing_id}")
@@ -85,10 +84,12 @@ def add_to_watchlist(request, listing_id):
     context = {}
     if request.method == "POST":
         add = main.Watchlist(request, Watchlist)
-        # if result is None:
-        #     context["watchlist_error"] = "The new price is less than or equal to the old one"
+        result = add.add_to_watchlist(listing_id, Listing, User)
+        if not result:
+            messages.error(request, "This listing already in watchlist")
+            context["watchlist_error"] = "This listing already in watchlist"
 
-    return redirect(f"../{listing_id}")
+    return redirect(f"watchlist")
 
 
 def add_commentaries(request, listing_id):
