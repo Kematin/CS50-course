@@ -1,33 +1,9 @@
-class Listing:
-    def __init__(self, request, model):
-        self.model = model
-        self.request = request
-        self.all_listings = self.model.objects.all()
+from .listing import Listing
 
-    # Return False if new cost less than old
-    def upp_cost(self, listing_id: int, new_cost: float, UserModel) -> bool:
-        listing = self.all_listings.get(id=listing_id)
-        old_cost = listing.cost
-
-        if self.check_new_cost(old_cost, new_cost):
-            return False
-        else:
-            temporary_winner = UserModel.objects.get(username=self.request.user)
-            listing.cost = new_cost
-            listing.temporary_winner = temporary_winner.username
-            listing.save()
-            return True
+class ListingCreateNew(Listing):
+    def __init__(self, request, ListingModel):
+        super().__init__(request, ListingModel)
  
-    def delete_listing(self, listing_id: int) -> bool:
-        listing = self.all_listings.get(id=listing_id)
-        winner = listing.temporary_winner
-        if winner:
-            listing.winner = winner
-            listing.save()
-            return True
-        else:
-            return False
-
     # Return False if listing with same name already exist
     def create_listing(self, data, CategoryModel) -> bool:
         listing_name = data["name"]
@@ -68,12 +44,6 @@ class Listing:
         else:
             return listing_image
     
-    def check_new_cost(self, old_cost, new_cost) -> bool:
-        if new_cost <= old_cost:
-            return True
-        else:
-            return False
-
     def get_categories(self, id_categories, CategoryModel) -> list:
         categories = CategoryModel.objects.all()
         listing_categories = [categories[int(id_category)-1] for id_category in id_categories]

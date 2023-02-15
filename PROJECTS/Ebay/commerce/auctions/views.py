@@ -21,6 +21,17 @@ CommentaryForm
 '''
 
 from src import main
+functions = main.functions
+'''
+Listing fucntions: create, upp_cost, close, get_info
+Commentary
+Watchlist
+'''
+
+from src.exceptions import *
+'''
+ListingError
+'''
 
 # ------------------------------- MAIN PAGE ------------------------------------
 
@@ -53,15 +64,12 @@ def listing(request, listing_id):
     return render(request, "auctions/listing.html", context)
 
 
-# ! add feature to display error
 def close_listing(request, listing_id):
-    # listing go to inactive
-    context = {}
     if request.method == "POST":
-        delete = main.Listing(request, Listing)
-        result = delete.delete_listing(listing_id)
-        if not result:
-            messages.error(request, "Nobody bought this staff")
+        try:
+            functions["close"](request, Listing, listing_id=listing_id)
+        except ListingError:
+            # ! add feature to display error
 
     return redirect(f"inactive")
 
