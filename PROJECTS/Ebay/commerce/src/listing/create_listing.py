@@ -1,8 +1,9 @@
-from .listing import Listing
+from .listing import Listing, DefaultArguments
+from ..exceptions import ListingError
 
 class ListingCreateNew(Listing):
-    def __init__(self, request, ListingModel):
-        super().__init__(request, ListingModel)
+    def __init__(self, default_arguments: DefaultArguments):
+        super().__init__(default_arguments)
  
     # Return False if listing with same name already exist
     def create_listing(self, data, CategoryModel) -> bool:

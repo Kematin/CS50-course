@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -67,8 +67,10 @@ def listing(request, listing_id):
 def close_listing(request, listing_id):
     if request.method == "POST":
         try:
-            functions["close"](request, Listing, listing_id=listing_id)
+            default_arguments = (request, listing_id, Listing) 
+            functions["close"](default_arguments)
         except ListingError:
+            print("error")
             # ! add feature to display error
 
     return redirect(f"inactive")
@@ -76,13 +78,14 @@ def close_listing(request, listing_id):
 
 # ! add feature to display error
 def upp_cost_listing(request, listing_id):
-    context = {}
     if request.method == "POST":
-        new_cost = float(request.POST["new_cost"])
-        upp = main.Listing(request, Listing)
-        result = upp.upp_cost(listing_id, new_cost, User)
-        if not result:
-            context["upp_cost_error"] = "The new price is less than or equal to the old one"
+        try:
+            new_cost = float(request.POST["new_cost"])
+            default_arguments = (request, listing_id, Listing) 
+            functions["upp_cost"](default_arguments, new_cost, User)
+        except ListingError:
+            print("error")
+            # ! add feature to display error
 
     return redirect(f"../{listing_id}")
 
