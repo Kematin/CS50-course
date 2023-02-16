@@ -1,6 +1,8 @@
 from django.db import models
 from django.http import HttpRequest
+
 from typing import NamedTuple
+from dataclasses import dataclass
 
 from ..exceptions import ListingError
 
@@ -9,6 +11,14 @@ class DefaultArguments(NamedTuple):
     request: HttpRequest
     listing_id: int
     ListingModel: models.Model
+
+
+@dataclass
+class CreateListingArguments:
+    data: dict
+    request: HttpRequest
+    ListingModel: models.Model
+    CategoryModel: models.Model
 
 
 class Listing:
@@ -29,9 +39,10 @@ def upp_cost_listing(default_arguments: DefaultArguments, new_cost: int, UserMod
     logic.upp_cost()
     
 
-def create_listing(default_arguments: DefaultArguments) -> None:
+def create_listing(create_arguments: CreateListingArguments) -> None:
     from .create_listing import ListingCreateNew
-    request, listing_id, ListingModel = default_arguments
+    logic = ListingCreateNew(create_arguments)
+    logic.create_listing()
    
 
 def get_info_about_listing(default_arguments: DefaultArguments) -> None:

@@ -1,35 +1,51 @@
-from .listing import Listing, DefaultArguments
+from .listing import CreateListingArguments
 from ..exceptions import ListingError
+from typing import NamedTuple
 
-class ListingCreateNew(Listing):
-    def __init__(self, default_arguments: DefaultArguments):
-        super().__init__(default_arguments)
- 
-    # Return False if listing with same name already exist
-    def create_listing(self, data, CategoryModel) -> bool:
-        listing_name = data["name"]
-        if self.check_same_name(listing_name):
-            return False
+class UnpackedData(NamedTuple):
+    description = str
+    cost = float
+    image_url = str
+    categories = list[str]
+    creator = str
+
+
+class ListingCreateNew():
+    def __init__(self, create_arguments: CreateListingArguments): 
+        self.data = create_arguments.data 
+        self.request = create_arguments.request 
+        self.ListingModel = create_arguments.ListingModel 
+        self.CategoryModel = create_arguments.CategoryModel
+        self.all_listings = self.ListingModel.objects.all()
+
+    def create_listing(self) -> None:
+        name = self.data["name"]
+        if self.check_same_name(name):
+            raise ListingError
+        else: 
+            try:
+                data = self.unpack_data(self.data)
+                description, cost, image_url, creator, categories = data
+
+                new_listing = self.ListingModel(name=name, description=description, 
+                                    cost=cost, image_url=image_url, creator=creator)
+                new_listing.save()
+                new_listing.category_names.set(categories)
+                new_listing.save()
+            except Exception as e:
+                print(e)
+                raise ListingError
         
-        # Get main data
-        listing_description = data["description"] 
-        listing_cost = data["cost"] 
-        listing_image = self.create_image_url(data["image_url"])
-        listing_id_categories = self.request.POST.getlist("category_names")
+    def unpack_data(self, data):
+        description = data["description"] 
+        cost = data["cost"] 
+        image_url = self.create_image_url(data["image_url"])
+        category_names = self.request.POST.getlist("category_names")
+        creator = self.request.user
+        categories = self.get_categories(category_names, self.CategoryModel)
 
-        # Get creator 
-        listing_creator = self.request.user
-
-        # Get categories
-        listing_categories = self.get_categories(listing_id_categories, CategoryModel)
-
-        # Create new listing
-        new_listing = self.model(name=listing_name, description=listing_description, 
-                            cost=listing_cost, image_url=listing_image, creator=listing_creator)
-        new_listing.save()
-        new_listing.category_names.set(listing_categories)
-        new_listing.save()
-        return True
+        data = (description, cost, image_url, creator, categories)
+        return data 
 
     def check_same_name(self, listing_name: str) -> bool:
         names_listing = [listing.name for listing in self.all_listings]

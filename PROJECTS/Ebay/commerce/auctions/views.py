@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect, HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from dataclasses import dataclass
+
 from .models import *
 '''
 Listing
@@ -32,6 +34,13 @@ from src.exceptions import *
 '''
 ListingError
 '''
+
+@dataclass
+class CreateListingArguments:
+    data: dict
+    request: HttpRequest
+    ListingModel: models.Model
+    CategoryModel: models.Model
 
 # ------------------------------- MAIN PAGE ------------------------------------
 
@@ -138,15 +147,16 @@ def create_listing(request):
     if request.method == "POST":
         form = ListingForm(request.POST)
         if form.is_valid():
-            data = request.POST
-            create = main.Listing(request, Listing)
-            result = create.create_listing(data, Category)
-            
-            if result is None:
-                context["message"] = "Listing with same name already exist."
-                return render(request, "auctions/user_login/create_listing.html", context)
-            else:
-                return redirect("index")
+            try:
+                data = request.POST
+                arguments = CreateListingArguments(
+                        request=request, ListingModel=Listing, data=data, CategoryModel=Category) 
+                functions["create"](arguments)
+            except ListingError:
+                # ! add feature to display error
+                print("error")
+
+            return redirect("index")
         
     if request.method == "GET":
         return render(request, "auctions/user_login/create_listing.html", context)
