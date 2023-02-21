@@ -129,7 +129,10 @@ def add_commentaries(request, listing_id):
 
 @login_required
 def watchlist(request):
-    return render(request, "auctions/user_login/watchlist.html")
+    user = User.objects.all().get(username=request.user)
+    listings = Watchlist.objects.filter(user=user)
+    listings = [listing.listing for listing in listings]
+    return render(request, "auctions/user_login/watchlist.html", {"listings": listings})
 
 
 @login_required

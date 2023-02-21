@@ -23,5 +23,5 @@ def add_to_watchlist(default_arguments: DefaultArguments, WatchlistModel, UserMo
 
 
 functions = {
-        "add": add_to_watchlist
+        "add": add_to_watchlist,
     }
