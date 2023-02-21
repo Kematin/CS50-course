@@ -82,8 +82,8 @@ def close_listing(request, listing_id):
             default_arguments = (request, listing_id, Listing) 
             listing_functions["close"](default_arguments)
         except ListingError:
-            print("error")
-            # ! add feature to display error
+            messages.error(request, "Error: Nobody won this listing.")
+            return redirect(f"../{listing_id}")
 
     return redirect(f"inactive")
 
@@ -96,21 +96,19 @@ def upp_cost_listing(request, listing_id):
             default_arguments = (request, listing_id, Listing) 
             listing_functions["upp_cost"](default_arguments, new_cost, User)
         except ListingError:
-            print("error")
-            # ! add feature to display error
+            messages.error(request, "Error: The new price is less than or equal to the old price.")
 
     return redirect(f"../{listing_id}")
 
 
-# ! add feature to display error
 def add_to_watchlist(request, listing_id):
     if request.method == "POST":
         try:
             default_arguments = (request, listing_id, Listing) 
             watchlist_functions["add"](default_arguments, Watchlist, User)
         except WatchlistError:
-            print("error")
-            # ! add feature to display error
+            messages.error(request, "Error: This listing already in your watchlist.")
+            return redirect(f"../{listing_id}")
 
     return redirect(f"watchlist")
 
