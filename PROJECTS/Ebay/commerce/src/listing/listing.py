@@ -4,8 +4,6 @@ from django.http import HttpRequest
 from typing import NamedTuple
 from dataclasses import dataclass
 
-from ..exceptions import ListingError
-
 
 class DefaultArguments(NamedTuple):
     request: HttpRequest
@@ -45,13 +43,10 @@ def create_listing(create_arguments: CreateListingArguments) -> None:
     logic.create_listing()
    
 
-def get_info_about_listing(default_arguments: DefaultArguments) -> None:
-    pass
 
 
 functions = {
         "close": close_listing,
         "upp_cost": upp_cost_listing,
         "create": create_listing,
-        "get_info": get_info_about_listing,
     }

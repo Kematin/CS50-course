@@ -23,9 +23,11 @@ CommentaryForm
 '''
 
 from src import main
-functions = main.functions
+listing_functions = main.listing_functions
+watchlist_functions = main.watchlist_functions
 '''
 Listing fucntions: create, upp_cost, close, get_info
+Watchlist functions: add
 Commentary
 Watchlist
 '''
@@ -33,6 +35,7 @@ Watchlist
 from src.exceptions import *
 '''
 ListingError
+WatchlistError
 '''
 
 @dataclass
@@ -77,7 +80,7 @@ def close_listing(request, listing_id):
     if request.method == "POST":
         try:
             default_arguments = (request, listing_id, Listing) 
-            functions["close"](default_arguments)
+            listing_functions["close"](default_arguments)
         except ListingError:
             print("error")
             # ! add feature to display error
@@ -91,7 +94,7 @@ def upp_cost_listing(request, listing_id):
         try:
             new_cost = float(request.POST["new_cost"])
             default_arguments = (request, listing_id, Listing) 
-            functions["upp_cost"](default_arguments, new_cost, User)
+            listing_functions["upp_cost"](default_arguments, new_cost, User)
         except ListingError:
             print("error")
             # ! add feature to display error
@@ -101,13 +104,13 @@ def upp_cost_listing(request, listing_id):
 
 # ! add feature to display error
 def add_to_watchlist(request, listing_id):
-    context = {}
     if request.method == "POST":
-        add = main.Watchlist(request, Watchlist)
-        result = add.add_to_watchlist(listing_id, Listing, User)
-        if not result:
-            messages.error(request, "This listing already in watchlist")
-            context["watchlist_error"] = "This listing already in watchlist"
+        try:
+            default_arguments = (request, listing_id, Listing) 
+            watchlist_functions["add"](default_arguments, Watchlist, User)
+        except WatchlistError:
+            print("error")
+            # ! add feature to display error
 
     return redirect(f"watchlist")
 
@@ -151,7 +154,7 @@ def create_listing(request):
                 data = request.POST
                 arguments = CreateListingArguments(
                         request=request, ListingModel=Listing, data=data, CategoryModel=Category) 
-                functions["create"](arguments)
+                listing_functions["create"](arguments)
             except ListingError:
                 # ! add feature to display error
                 print("error")
