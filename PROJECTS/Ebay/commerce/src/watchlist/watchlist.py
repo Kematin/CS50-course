@@ -21,7 +21,19 @@ def add_to_watchlist(default_arguments: DefaultArguments, WatchlistModel, UserMo
     logic = AddToWatchlist(default_arguments, WatchlistModel, UserModel)
     logic.add_to_watchlist()
 
+def remove_watchlist(default_arguments: DefaultArguments, WatchlistModel, UserModel):
+    from .remove_watchlist import RemoveWatchlist
+    logic = RemoveWatchlist(default_arguments, WatchlistModel, UserModel)
+    logic.remove_watchlist()
+
+def check_watchlist(default_arguments: DefaultArguments, WatchlistModel, UserModel) -> bool:
+    from .check_watchlist import CheckWatchlist
+    logic = CheckWatchlist(default_arguments, WatchlistModel, UserModel)
+    return logic.check_watchlist()
+
 
 functions = {
         "add": add_to_watchlist,
+        "remove": remove_watchlist,
+        "check": check_watchlist,
     }

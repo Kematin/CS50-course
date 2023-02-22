@@ -27,7 +27,7 @@ listing_functions = main.listing_functions
 watchlist_functions = main.watchlist_functions
 '''
 Listing fucntions: create, upp_cost, close, get_info
-Watchlist functions: add
+Watchlist functions: add, remove, check
 Commentary
 Watchlist
 '''
@@ -73,6 +73,11 @@ def listing(request, listing_id):
     form = CommentaryForm
     context["form"] = form
 
+    # check that listing in watchlist
+    default_arguments = (request, listing_id, Listing) 
+    if watchlist_functions["check"](default_arguments, Watchlist, User):
+        context["watchlist"] = "True"
+
     return render(request, "auctions/listing.html", context)
 
 
@@ -101,6 +106,17 @@ def upp_cost_listing(request, listing_id):
     return redirect(f"../{listing_id}")
 
 
+def add_commentaries(request, listing_id):
+    if request.method == "POST":
+        form = CommentaryForm(request.POST)
+        if form.is_valid():
+            commentary = request.POST["commentary"]
+            add = main.Commentary(request, Commentary)
+            add.add_commentary(commentary, listing_id, User, Listing)
+
+    return redirect(f"../{listing_id}")
+
+
 def add_to_watchlist(request, listing_id):
     if request.method == "POST":
         try:
@@ -113,15 +129,16 @@ def add_to_watchlist(request, listing_id):
     return redirect(f"watchlist")
 
 
-def add_commentaries(request, listing_id):
+def remove_watchlist(request, listing_id):
     if request.method == "POST":
-        form = CommentaryForm(request.POST)
-        if form.is_valid():
-            commentary = request.POST["commentary"]
-            add = main.Commentary(request, Commentary)
-            add.add_commentary(commentary, listing_id, User, Listing)
+        try:
+            default_arguments = (request, listing_id, Listing) 
+            watchlist_functions["remove"](default_arguments, Watchlist, User)
+        except WatchlistError:
+            messages.error(request, "Error: Cannot remove")
+            return redirect(f"../{listing_id}")
 
-    return redirect(f"../{listing_id}")
+    return redirect(f"watchlist")
 
 
 # ------------------------------- USER LOGIN ------------------------------------
@@ -132,7 +149,10 @@ def watchlist(request):
     user = User.objects.all().get(username=request.user)
     listings = Watchlist.objects.filter(user=user)
     listings = [listing.listing for listing in listings]
-    return render(request, "auctions/user_login/watchlist.html", {"listings": listings})
+    context = {
+            "listings": listings,
+        }
+    return render(request, "auctions/user_login/watchlist.html", context)
 
 
 @login_required

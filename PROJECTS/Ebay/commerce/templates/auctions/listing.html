@@ -72,10 +72,14 @@
             <button type="submit">Send commentary</button>
         </form>
 
-        <form action="{% url 'add_to_watchlist' listing.id %}" method="post">
-            {% csrf_token %}
-            <h5>Add to watchlist</h5>
-            <button type="submit">Add</button>
-        </form>
+        {% if watchlist %}
+            in your wl
+        {% else %}
+            <form action="{% url 'add_to_watchlist' listing.id %}" method="post">
+                {% csrf_token %}
+                <h5>Add to watchlist</h5>
+                <button type="submit">Add</button>
+            </form>
+        {% endif %}
     {% endif %}
 {% endblock %}

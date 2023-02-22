@@ -27,6 +27,7 @@ urlpatterns = [
     path("listing/close/<int:listing_id>", views.close_listing, name="close_listing"),
     path("listing/upp/<int:listing_id>", views.upp_cost_listing, name="upp_cost"),
     path("listing/watchlist/<int:listing_id>", views.add_to_watchlist, name="add_to_watchlist"),
+    path("listing/remove_watchlist/<int:listing_id>", views.remove_watchlist, name="remove_watchlist"),
 
     # Error handlers
 
