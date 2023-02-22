@@ -7,5 +7,12 @@ class RemoveWatchlist(Watchlist):
         self.WatchlistModel = WatchlistModel
         self.UserModel = UserModel
 
-    def remove_watchlist(self):
-        pass
+    def remove_watchlist(self) -> None:
+        try:
+            listing = self.all_listings.get(id=self.listing_id)
+            username = self.request.user
+            user = self.UserModel.objects.get(username=username)
+            watchlist = self.WatchlistModel.objects.get(user=user, listing=listing)
+            watchlist.delete()
+        except Exception:
+            pass

@@ -73,7 +73,11 @@
         </form>
 
         {% if watchlist %}
-            in your wl
+            <form action="{% url 'remove_watchlist' listing.id %}" method="post">
+                {% csrf_token %}
+                <h5>Remove from watchlist</h5>
+                <button type="submit">Remove</button>
+            </form>
         {% else %}
             <form action="{% url 'add_to_watchlist' listing.id %}" method="post">
                 {% csrf_token %}
