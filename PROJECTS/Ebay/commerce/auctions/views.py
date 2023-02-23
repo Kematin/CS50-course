@@ -117,6 +117,14 @@ def add_commentaries(request, listing_id):
     return redirect(f"../{listing_id}")
 
 
+def delete_commentaries(request, listing_id, commentary_id):
+    if request.method == "POST":
+        commentary = Commentary.objects.get(id=commentary_id)
+        commentary.delete()
+
+    return redirect(f"../../{listing_id}")
+
+
 def add_to_watchlist(request, listing_id):
     if request.method == "POST":
         try:

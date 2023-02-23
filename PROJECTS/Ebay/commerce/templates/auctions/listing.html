@@ -55,7 +55,15 @@
     <div class="commentaries">
         <h5>Commentaries:</h5>
         {% for commentary in commentaries %}
-            <p>{{ commentary.user }}: {{ commentary.commentary }}</p>
+            <p>
+                {{ commentary.user }}: {{ commentary.commentary }}
+                {% if user == commentary.user %}
+                    <form action="{% url 'delete_commentaries' listing.id commentary.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Delete comment</button>
+                    </form>
+                {% endif %}
+            </p>
         {% empty %}
             No comments.
         {% endfor %}
