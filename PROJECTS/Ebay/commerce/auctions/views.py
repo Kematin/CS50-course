@@ -165,7 +165,10 @@ def watchlist(request):
 
 @login_required
 def won_listing(request):
-    return render(request, "auctions/user_login/won_listing.html")
+    all_listings = Listing.objects.all()
+    listings = all_listings.filter(winner=request.user)
+    context = {"listings": listings}
+    return render(request, "auctions/user_login/won_listing.html", context)
 
 
 @login_required
