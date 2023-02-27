@@ -5,7 +5,7 @@
     <ul>
         {% for listing in listings %}
                 <li>
-                    Name: <strong><a href="{% url 'listing' listing.id %}">{{ listing.name }}</a></strong>, Cost: <strong>{{ listing.cost }}$</strong>
+                    Name: <strong><a href="{% url 'inactive_listing' listing.id %}">{{ listing.name }}</a></strong>, Cost: <strong>{{ listing.cost }}$</strong>
                     {% if listing.image_url %}
                         <br>
                         <div class="display-img">
