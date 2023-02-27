@@ -201,7 +201,19 @@ def create_listing(request):
 
 
 def category(request):
-    return render(request, "auctions/user_not_login/category.html")
+    all_categories = Category.objects.all()
+    categories = list()
+    for category in all_categories:
+        all_listings = Listing.objects.all()
+        listings_category = all_listings.filter(category_names=category.id)
+        categories.append({category.name: [listings_category]})
+
+    for category_dict in categories:
+        print(category_dict)
+
+    context = {"categories": categories}
+
+    return render(request, "auctions/user_not_login/category.html", context)
 
 
 def inactive(request):

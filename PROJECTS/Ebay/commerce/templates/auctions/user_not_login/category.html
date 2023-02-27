@@ -1,7 +1,34 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
     <h1>Category</h1>
+    <ol>
+        {% for category_data in categories %}
+            {%  for category_name, category_listings in category_data.items %}
+                <li>
+                    {{ category_name }}
+                    <ul>
+                        {% for listings in category_listings %}
+                                {% for listing in listings %}
+                                    <li>
+                                        Name: <strong><a href="{% url 'listing' listing.id %}">{{ listing.name }}</a></strong>, Cost: <strong>{{ listing.cost }}$</strong>
+                                        {% if listing.image_url %}
+                                            <br>
+                                            <div class="display-img">
+                                                <img src="{{ listing.image_url }}" alt="Image" style="width: 100px; height:auto">
+                                            </div>
+                                        {% else %}
+                                            <br>No image.
+                                        {% endif %}
+                                    </li>
+                                {% empty %}
+                                    <li>No listings.</li>
+                                {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
 
+        {% endfor %}
+    </ol>
 {% endblock %}
