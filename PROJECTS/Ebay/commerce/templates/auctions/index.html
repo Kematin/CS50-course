@@ -2,21 +2,25 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <ul>
-        {% for listing in listings %}
-                <li>
-                    Name: <strong><a href="{% url 'listing' listing.id %}">{{ listing.name }}</a></strong>, Cost: <strong>{{ listing.cost }}$</strong>
-                    {% if listing.image_url %}
-                        <br>
-                        <div class="display-img">
-                            <img src="{{ listing.image_url }}" alt="Image" style="width: 100px; height:auto">
-                        </div>
-                    {% else %}
-                        <br>No image.
-                    {% endif %}
-                </li>
-        {% empty %}
-            No listings.    
-        {% endfor %}
+    <ul class="list-group">
+      {% for listing in listings %}
+        <li class="list-group-item">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h4 class="mb-0"><a href="{% url 'listing' listing.id %}" class="text-dark">{{ listing.name }}</a></h4>
+              <p class="text-muted mb-0">$ {{ listing.cost }}</p>
+            </div>
+            <div class="col-md-4 text-center">
+              {% if listing.image_url %}
+                <img src="{{ listing.image_url }}" alt="Image" class="img-fluid rounded display-image">
+              {% else %}
+                <p class="text-muted mb-0">No image.</p>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No listings.</li>    
+      {% endfor %}
     </ul>
 {% endblock %}
