@@ -93,7 +93,6 @@ def close_listing(request, listing_id):
     return redirect(f"inactive")
 
 
-# ! add feature to display error
 def upp_cost_listing(request, listing_id):
     if request.method == "POST":
         try:
@@ -188,8 +187,8 @@ def create_listing(request):
                         request=request, ListingModel=Listing, data=data, CategoryModel=Category) 
                 listing_functions["create"](arguments)
             except ListingError:
-                # ! add feature to display error
-                print("error")
+                messages.error(request, "Listing with same name already exist")
+                return redirect("create")
 
             return redirect("index")
         

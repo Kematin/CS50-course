@@ -1,8 +1,69 @@
+/* Define light tones for background and text */
 body {
-    padding: 10px;
+  background-color: #f8f9fa;
+  color: #212529;
 }
 
-.display-image {
-    max-width: 100px;
-    max-height: 100px;
+/* Style the list group */
+.list-group-item {
+  border-color: #dee2e6;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0;
+}
+
+/* Add padding and margin to the list items */
+.list-group-item + .list-group-item {
+  margin-top: 10px;
+}
+
+.list-group-item h4 {
+  margin-bottom: 0;
+}
+
+.list-group-item p {
+  margin-bottom: 0;
+}
+
+/* Style the image */
+.list-group-item img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+/* Add margin and padding to the top and bottom of the page */
+body {
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+/* Style the form */
+form {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input[type=text],
+form input[type=email] {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #dee2e6;
+  box-shadow: none;
+}
+
+form input[type=text]:focus,
+form input[type=email]:focus {
+  border-color: #007bff;
+  box-shadow: none;
+}
+
+form button[type=submit] {
+  margin-top: 10px;
 }
