@@ -205,10 +205,11 @@ def category(request):
     for category in all_categories:
         all_listings = Listing.objects.all()
         listings_category = all_listings.filter(category_names=category.id)
-        categories.append({category.name: [listings_category]})
 
-    for category_dict in categories:
-        print(category_dict)
+        inactive_listings = Listing.objects.exclude(winner="")
+        listings_category = list(filter(lambda listing: listing not in inactive_listings, listings_category))
+
+        categories.append({category.name: [listings_category]})
 
     context = {"categories": categories}
 

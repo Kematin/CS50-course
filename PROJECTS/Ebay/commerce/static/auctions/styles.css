@@ -67,3 +67,16 @@ form input[type=email]:focus {
 form button[type=submit] {
   margin-top: 10px;
 }
+
+.listing-info {
+font-size: 18px;
+font-weight: 500;
+}
+.badge {
+font-size: 14px;
+}
+
+.no-image {
+font-style: italic;
+color: #999;
+}

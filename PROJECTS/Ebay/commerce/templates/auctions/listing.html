@@ -3,14 +3,14 @@
 {% block body %}
     <h2> {{ listing.name }}</h2>
     {% if messages %}
-        <ul class="messages">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {{ message }}
             {% endfor %}
-        </ul>
+        </div>
     {% endif %}
     <div class="about_listing">
-        <img src="{{ listing.image_url }}" alt="">
+        <img class="display_image" src="{{ listing.image_url }}" alt="">
         <br>{{ listing.description }}
         <p>Price: <strong>{{ listing.cost }} $</strong></p>
         <p>Creator: <strong>{{ listing.creator }}</strong></p>
