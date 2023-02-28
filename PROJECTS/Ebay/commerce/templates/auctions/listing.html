@@ -1,73 +1,86 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2> {{ listing.name }}</h2>
-    {% if messages %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
-    {% endif %}
-    <div class="about_listing">
-        <img class="display_image" src="{{ listing.image_url }}" alt="">
-        <br>{{ listing.description }}
-        <p>Price: <strong>{{ listing.cost }} $</strong></p>
-        <p>Creator: <strong>{{ listing.creator }}</strong></p>
-        {% if listing.temporary_winner %}
-            <p>Current user winner: <strong>{{ listing.temporary_winner }}</strong></p>
-        {% else %}
-            <p>Current user winner: <strong>Nobody</strong></p>
-        {% endif %}
-        <p>
-            <ul> Categories:
-                {% for category in categories %}
-                    <li> {{ category }}</li>        
-                {% empty %}
-                    <li>No categories :[</li>
+    <div class="container mt-3">
+        <h2 class="text-center">{{ listing.name }}</h2>
+        {% if messages %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                    {{ message }}
                 {% endfor %}
-            </ul>
-        </p>
-    </div>
-    <div class="logic_elements">
-            <div class="winner_error">
-                {% if winner_error %}
-                    <div id="winner_error">{{ winner_error }}</div> 
-                {% endif %}
             </div>
-
-            {% if user_creator %}
-                <form action="{% url 'close_listing' listing.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Close</button>
-                </form>
-            {% elif user.is_authenticated %}
-                {% if upp_cost_error %}
-                    <div id="upp_cost_error">{{ upp_cost_error }}</div>
+        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <img class="w-100" src="{{ listing.image_url }}" alt="{{ listing.name }}">
+            </div>
+            <div class="col-md-6">
+                <h5>About this item:</h5>
+                <p>{{ listing.description }}</p>
+                <p>Price: <strong>{{ listing.cost }} $</strong></p>
+                <p>Creator: <strong>{{ listing.creator }}</strong></p>
+                {% if listing.temporary_winner %}
+                    <p>Current user winner: <strong>{{ listing.temporary_winner }}</strong></p>
+                {% else %}
+                    <p>Current user winner: <strong>Nobody</strong></p>
                 {% endif %}
-                <form action="{% url 'upp_cost' listing.id %}" method="post">
-                    {% csrf_token %}
-                    <input name="new_cost" type="nubmer" pattern="\d*" min="0">
-                    <button type="submit">Upp cost</button>
-                </form>
-            {% endif %}
-    </div>
-    <div class="commentaries">
-        <h5>Commentaries:</h5>
-        {% for commentary in commentaries %}
-            <p>
-                {{ commentary.user }}: {{ commentary.commentary }}
-                {% if user == commentary.user %}
-                    <form action="{% url 'delete_commentaries' listing.id commentary.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Delete comment</button>
-                    </form>
-                {% endif %}
-            </p>
-        {% empty %}
-            No comments.
-        {% endfor %}
-    </div>
+                <p>
+                    Categories:
+                    {% for category in categories %}
+                        <span class="badge rounded-pill bg-secondary">{{ category }}</span>
+                    {% empty %}
+                        <span class="badge rounded-pill bg-secondary">No categories</span>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        {% if winner_error %}
+                            <div class="alert alert-danger">{{ winner_error }}</div>
+                        {% endif %}
+                        {% if user_creator %}
+                            <form action="{% url 'close_listing' listing.id %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-success" type="submit">Close</button>
+                            </form>
+                        {% elif user.is_authenticated %}
+                            {% if upp_cost_error %}
+                                <div class="alert alert-danger">{{ upp_cost_error }}</div>
+                            {% endif %}
+                            <form action="{% url 'upp_cost' listing.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input name="new_cost" type="number" class="form-control" placeholder="Enter new cost" aria-label="Enter new cost" aria-describedby="button-addon2" pattern="\d*" min="0">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2">Upp cost</button>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Commentaries:</h5>
+                        {% for commentary in commentaries %}
+                            <p class="card-text">
+                                <strong>{{ commentary.user }}</strong>: {{ commentary.commentary }}
+                                {% if user == commentary.user %}
+                                    <form action="{% url 'delete_commentaries' listing.id commentary.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit">Delete comment</button>
+                                    </form>
+                                {% endif %}
+                            </p>
+                        {% empty %}
+                            No comments.
+                        {% endfor %}
+        </div>
     {% if user.is_authenticated %}
         <form action="{% url 'add_commentaries' listing.id %}" method="post">
             {% csrf_token %}
