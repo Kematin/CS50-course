@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Site</title>
+    <script>
+        function hello() {
+            <!-- take first element with tag h1 -->
+            const header = document.querySelector("h1");
+            if (header.innerHTML === "Hello!") {
+                header.innerHTML = "Goodbuy!"
+            }
+            else {
+                header.innerHTML = "Hello!"
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Hello!</h1>
+    <button onclick="hello()">Click me!</button>
+</body>
+</html>
