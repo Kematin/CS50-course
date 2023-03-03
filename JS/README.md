@@ -3,6 +3,8 @@
  - [Variables](#Variables)
  - [querySelector](#querySelector)
  - [DOM Manipulation](#DOM)
+    - [JS Console](#Console)
+    - [Arrow functions](#ArrowFunctions)
 
 
 # JavaScript
@@ -72,3 +74,17 @@ document.addEventListener("DOMContentLoaded", function() {
 Способ как перенести код в отдельный файл так-же как и в css.
 
 
+**Еще один пример DOM манипуляции в файле [Colors.html](Colors.html) и [Colors.js](Colors.js)**
+
+
+## Console
+
+Консоль джаваскрипта отличная вещь для тестинга и деббагинга небольших фич. Пример 
+использования так-же в [Colors.js](Colors.js)
+
+
+## ArrowFunctions
+
+Как я понял просто упращает написание function func(arg) {}, на func = (arg) => {}. 
+Но зачем? :o. Подобным синтаксисом мы передаем в переменную функцию, а при дефолтном написание 
+просто ее инициализируем. 
