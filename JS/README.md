@@ -5,6 +5,7 @@
  - [DOM Manipulation](#DOM)
     - [JS Console](#Console)
     - [Arrow functions](#ArrowFunctions)
+    - [TODO list](#TODO)
 
 
 # JavaScript
@@ -85,6 +86,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 ## ArrowFunctions
 
-Как я понял просто упращает написание function func(arg) {}, на func = (arg) => {}. 
+Как я понял просто упращает написание ``function func(arg) {}``, на ``func = (arg) => {}``. 
 Но зачем? :o. Подобным синтаксисом мы передаем в переменную функцию, а при дефолтном написание 
-просто ее инициализируем. 
+просто ее инициализируем в памяти. 
+
+
+## TODO
+
+Пример реализации с комментариями в файле [todo.js](todo.js) и [todo.html](todo.html)
