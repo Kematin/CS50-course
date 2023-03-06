@@ -6,6 +6,8 @@
     - [JS Console](#Console)
     - [Arrow functions](#ArrowFunctions)
     - [TODO list](#TODO)
+ - [Intervals](#Intervals)
+ - [Local Storage](#LocalStorage)
 
 
 # JavaScript
@@ -93,4 +95,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
 ## TODO
 
-Пример реализации с комментариями в файле [todo.js](todo.js) и [todo.html](todo.html)
+Пример реализации с комментариями в файле [Todo.js](todo.js) и [Todo.html](todo.html)
+
+
+# Intervals
+
+Интервалы js вызываются командой ``setInterval(func, tickTime);`` и позволяют повторять 
+каждую tickTime милисикунду функцию func.
+
+Пример реализации в файле [Interval.js](Interval.js) и [Interval.html](Interval.html)
+
+
+# LocalStorage
+
+Во время обновления страницы сбрасываются все наши изменения в ходе логики: цвет текста, счетчик и т.д.
+Это можно исправить благодаря **локальному хранилищу браузера пользователся**, в котором можно сохранять информацию
+для будущего использования. Информация локального хранилища сохраняется в виде **ключ-значение**. Основные функции
+локального хранилища:
+
+```js
+// Get value from local storage with this key
+localStorage.getItem(key)
+
+// Set value into local storage with this key
+localStorage.setItem(key, value)
+```
+
+Пример реализации в файле [Storage.js](Storage.js) и [Storage.html](Storage.html)
