@@ -10,6 +10,7 @@
  - [Local Storage](#LocalStorage)
  - [APIs](#APIs)
     - [JavaScript Objects](#Objects)
+    - [Currency Exchange](#CurrencyExchange)
 
 
 # JavaScript
@@ -149,3 +150,10 @@ console.log(person.age)
 ```
 
 Пример работы с объектом джаваскрипта в файле [Objects.js](Objects.js) и [Objects.html](Objects.html)
+
+
+## CurrencyExchange
+
+Пример использования API в файле [Currency.js](Currency.js) и [Currency.html](Currency.html).
+
+В данном проекте используется api 
