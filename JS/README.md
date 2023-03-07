@@ -8,6 +8,8 @@
     - [TODO list](#TODO)
  - [Intervals](#Intervals)
  - [Local Storage](#LocalStorage)
+ - [APIs](#APIs)
+    - [JavaScript Objects](#Objects)
 
 
 # JavaScript
@@ -122,3 +124,28 @@ localStorage.setItem(key, value)
 ```
 
 Пример реализации в файле [Storage.js](Storage.js) и [Storage.html](Storage.html)
+
+# APIs
+
+## Objects
+
+**JavaScript Object** - объект, схожий по синтаксису на словарь питона, в котором хранятся данные
+в виде ключ-значение. Объекты js полезны тем, что с помощью них удобно передавать данные, тем более 
+при использование апишек. Обычно данные от апишек возвращаются в виде **JSON** (JS Object Notation).
+
+Пример объекта:
+```js
+var person = {
+    name: "Jhon",
+    age: 50
+}
+// Jhon (also person["name"] will output same result)
+console.log(person.name)
+
+person.age = 25
+
+// 25
+console.log(person.age)
+```
+
+Пример работы с объектом джаваскрипта в файле [Objects.js](Objects.js) и [Objects.html](Objects.html)
