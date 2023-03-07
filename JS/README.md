@@ -156,4 +156,25 @@ console.log(person.age)
 
 Пример использования API в файле [Currency.js](Currency.js) и [Currency.html](Currency.html).
 
-В данном проекте используется api 
+В данном проекте используется API [European Central Bank’s Exchange Rate API](https://exchangeratesapi.io/).
+Для создания API запросов используется AJAX (Asynchronous JavaScript And XML), который позволяет 
+брать данные с других страних, даже когда наша уже загруженна. 
+
+Синтаксис API запросов:
+```js
+function callAPI() {
+    // Some request url api
+    url = "https://api.exchangeratesapi.io/latest?base=USD"
+
+    // Send get request to the url
+    fetch(url)
+    
+    // Put response in json format
+    .then(response => response.json())
+
+    // Get our data with json format and put its into another func
+    .then(data => changeData(data))
+}
+```
+
+Пример работы с комментариями в файле [Currency.js](Currency.js) и [Currency.html](Currency.html)
