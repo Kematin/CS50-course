@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Single page</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="{% static 'index.js' %}"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Header</h1>
+		</header>
+		<main>
+			<button data-page="1">Page 1</button>
+			<button data-page="2">Page 2</button>
+			<button data-page="3">Page 3</button>
+
+			<div id="page1" class="pages">
+				<h2>This is page 1</h2>
+				<p id="text1"></p>
+			</div>
+			<div id="page2" class="pages">
+				<h2>This is page 2</h2>
+				<p id="text2"></p>
+			</div>
+			<div id="page3" class="pages">
+				<h2>This is page 3</h2>
+				<p id="text3"></p>
+			</div>
+		</main>
+	</body>
+</html>
