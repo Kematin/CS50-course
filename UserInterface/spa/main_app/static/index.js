@@ -12,21 +12,21 @@ function showPage(pageNum) {
 		});
 }
 
-function disablePages() {
-	pages = document.querySelectorAll(".pages");
-	pages.forEach((page) => {
+function disablepages() {
+	pages = document.queryselectorall(".pages");
+	pages.foreach((page) => {
 		page.style.display = "none";
 	});
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-	showPage("1");
+document.addeventlistener("domcontentloaded", () => {
+	showpage("1");
 
-	buttonsChangePage = document.querySelectorAll("button");
-	buttonsChangePage.forEach((button) => {
+	buttonschangepage = document.queryselectorall("button");
+	buttonschangepage.foreach((button) => {
 		button.onclick = function () {
 			page = this.dataset.page;
-			showPage(page);
+			showpage(page);
 		};
 	});
 });
