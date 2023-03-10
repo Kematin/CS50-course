@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const section = this.dataset.section;
 
             // Add the current state to the history
-            history.pushState({section: section}, "", `section${section}`);
+            history.pushState({section: section}, "", `section/${section}`);
             showSection(section);
         };
     });
