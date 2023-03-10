@@ -1,32 +1,27 @@
-function showPage(pageNum) {
-	disablePages();
-	activePage = document.querySelector(`#page${pageNum}`);
-	activePage.style.display = "block";
-
-	fetch(`/section/${pageNum}`)
-		.then((response) => response.text())
-		.then((text) => {
-			newP = document.querySelector(`#text${pageNum}`);
-			newP.innerHTML = text;
-			activePage.append(newP);
-		});
+// When back arrow is clicked, show previous section
+window.onpopstate = function(event) {
+    showSection(event.state.section);
 }
 
-function disablepages() {
-	pages = document.queryselectorall(".pages");
-	pages.foreach((page) => {
-		page.style.display = "none";
-	});
+function showSection(section) {
+    // Get text from server by GET request
+    fetch(`/section/${section}`)
+    .then(response => response.text())
+    .then(text => {
+        console.log(text);
+        document.querySelector('#content').innerHTML = text;
+    });
+
 }
 
-document.addeventlistener("domcontentloaded", () => {
-	showpage("1");
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('button').forEach(button => {
+        button.onclick = function() {
+            const section = this.dataset.section;
 
-	buttonschangepage = document.queryselectorall("button");
-	buttonschangepage.foreach((button) => {
-		button.onclick = function () {
-			page = this.dataset.page;
-			showpage(page);
-		};
-	});
+            // Add the current state to the history
+            history.pushState({section: section}, "", `section${section}`);
+            showSection(section);
+        };
+    });
 });

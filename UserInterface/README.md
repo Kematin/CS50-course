@@ -23,27 +23,28 @@
 
 **index.html**
 
-Имеется 3 условные страницы (секции), которые выключены функцией disablePages.
+Имеется 3 кнопки для переключения секций и основной div в котором будет
+помещенны данные о секции.
 
 ```html
-<main>
-	<button data-page="1">Page 1</button>
-	<button data-page="2">Page 2</button>
-	<button data-page="3">Page 3</button>
-
-	<div id="page1" class="pages">
-		<h2>This is page 1</h2>
-		<p id="text1"></p>
-	</div>
-	<div id="page2" class="pages">
-		<h2>This is page 2</h2>
-		<p id="text2"></p>
-	</div>
-	<div id="page3" class="pages">
-		<h2>This is page 3</h2>
-		<p id="text3"></p>
-	</div>
-</main>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Single Page</title>
+        <style>
+        </style>
+        <script src="{% static 'index.js' %}"></script>
+    </head>
+    <body>
+        <h1>Hello!</h1>
+        <button data-section="1">Section 1</button>
+        <button data-section="2">Section 2</button>
+        <button data-section="3">Section 3</button>
+        <div id="content">
+        </div>
+    </body>
+</html>
 ```
 
 **views.py**
@@ -66,26 +67,36 @@ def section(request, num: int):
 GET запрос на страницу сервера, по пути _section/pageNum_, а из ответа забирается
 один из текстов сервера, который будет отображен на странице.
 
+Так-же применяется метод history, который создает _историю посещений_, и при нажатии
+на стрелку прошлой страницы, будет открыта ранее отображаемая секция 
+(_это контроллирует функция метода window **onpopstate**_). 
+
 ```js
-function disablePages() {
-	pages = document.querySelectorAll(".pages");
-	pages.forEach((page) => {
-		page.style.display = "none";
-	});
+// When back arrow is clicked, show previous section
+window.onpopstate = function(event) {
+    showSection(event.state.section);
 }
 
-function showPage(pageNum) {
-	disablePages();
+function showSection(section) {
+    // Get text from server by GET request
+    fetch(`/section/${section}`)
+    .then(response => response.text())
+    .then(text => {
+        console.log(text);
+        document.querySelector('#content').innerHTML = text;
+    });
 
-	activePage = document.querySelector(`#page${pageNum}`);
-	activePage.style.display = "block";
-
-	fetch(`/section/${pageNum}`)
-		.then((response) => response.text())
-		.then((text) => {
-			newP = document.querySelector(`#text${pageNum}`);
-			newP.innerHTML = text;
-			activePage.append(newP);
-		});
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('button').forEach(button => {
+        button.onclick = function() {
+            const section = this.dataset.section;
+
+            // Add the current state to the history
+            history.pushState({section: section}, "", `section${section}`);
+            showSection(section);
+        };
+    });
+});
 ```
