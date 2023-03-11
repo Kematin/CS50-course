@@ -1,6 +1,7 @@
 - [User Interfaces](#UserInterfaces)
 - [Single Page Application](#SPA)
 - [Scroll](#Scroll)
+- [Infinity Scroll](#InfinityScroll)
 
 # UserInterfaces
 
@@ -124,3 +125,11 @@ document.body.offsetHeight: высота документа в пикселях
 выражением `window.scrollY + window.innerHeight >= document.body.offsetHeight`.
 
 **Пример в файле [Scroll.js](Scroll.js) и [Scroll.html](Scroll.html)**
+
+# InfinityScroll
+
+Прошлая работа с окном полезна при создание страницы с бесконечным скроллингом вниз.
+Т.е. при заходе на сайт пользователю загружаются 10 постов и при каждом скроллинге до конца страницы,
+загружаются еще 10 постов и т.д.
+
+**Реализация бесконечного скроллинга страницы в проекте [infinity](infinity)**
