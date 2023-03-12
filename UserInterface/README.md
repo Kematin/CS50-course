@@ -2,6 +2,7 @@
 - [Single Page Application](#SPA)
 - [Scroll](#Scroll)
 - [Infinity Scroll](#InfinityScroll)
+- [Animation](#Animation)
 
 # UserInterfaces
 
@@ -212,6 +213,14 @@ function createPost(content) {
 
     document.querySelector("#posts").append(newPost);
 }
-
-
 ```
+
+# Animation
+
+Так-же с помощью css можно создавать анимации, а благодаря js управлять ими.
+В фукнциях анимации мы показываем как изменяется элемент,
+с помощью конструкции `from {} to {}` или `0% {} 20% {} n% {} 100% {}`. 
+И создаются такие функции с помощью `@keyframes`
+
+Пример конструкции:
+

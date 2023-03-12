@@ -1,0 +1,47 @@
+@keyframes hello {
+    from {
+        font-size: 10px;
+    } 
+    to {
+        font-size: 50px;
+    }
+}
+
+#hello {
+    animation-name: hello;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+
+
+@keyframes welcome {
+    0% {
+        left: 0%;
+        color: green;
+    }
+    25% {
+        left: 25%;
+        color: blue;
+    }
+    50% {
+        left: 50%;
+        color: red;
+    }
+    75% {
+        left: 25%;
+        color: blue;
+    }
+    100% {
+        left: 0%;
+        color: green;
+    }
+           
+}
+
+#welcome {
+    position: relative;
+    animation-name: welcome;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+}
