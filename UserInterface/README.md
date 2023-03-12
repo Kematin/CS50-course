@@ -133,3 +133,85 @@ document.body.offsetHeight: высота документа в пикселях
 загружаются еще 10 постов и т.д.
 
 **Реализация бесконечного скроллинга страницы в проекте [infinity](infinity)**
+
+**views.py**
+
+Создается отдельный путь на сайте: /posts. При get запросе на него отдается в ответ
+данные о постах в json формате.
+```python
+def posts(request):
+    # Get start point and end point
+    start = int(request.GET.get("start") or 1)
+    end = int(request.GET.get("end") or (start+9))
+
+    # Get array of posts
+    data = [f"Post #{i}" for i in range(start, end+1)]
+    time.sleep(1)
+
+    '''
+    route ./posts?start=5 will return:
+    {
+        Posts: [
+                "Post 5",
+                "Post 6",
+                ...,
+                "Post 15"
+            ]
+    }
+    route ./posts?start=5&end=6 will return: 
+        {Posts: ["Post 5", "Post 6"]}
+    '''
+    return JsonResponse({
+        "posts": data
+    })
+```
+
+**index.js**
+
+Файл js создает get запросы на сервер по пути /posts с атрибутами start и end, для получения
+информации о постах. Каждый раз когда пользователь доходит до конца страницы, создается get запрос
+и отображается новая информация по постам на странице.
+
+```js
+let counter = 1;
+
+// How many posts will be get from server
+const quantity = 15;
+
+// Setup function on scroll
+window.onscroll = checkBottomPage;
+document.addEventListener("DOMContentLoaded", load);
+
+
+function checkBottomPage() {
+    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+        load();
+    }
+}
+
+
+function load() {
+	start = counter;
+	end = start + quantity - 1;
+    counter = end + 1;
+
+    // Get data from server and put in json
+	fetch(`/posts?start=${start}&end=${end}`)
+		.then((response) => response.json())
+		.then(data => {
+            // in forEach loop create posts
+            data.posts.forEach(createPost);
+		});
+}
+
+
+function createPost(content) {
+    const newPost = document.createElement("div");
+    newPost.className = "post";
+    newPost.innerHTML = content;
+
+    document.querySelector("#posts").append(newPost);
+}
+
+
+```
