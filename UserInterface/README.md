@@ -222,5 +222,23 @@ function createPost(content) {
 с помощью конструкции `from {} to {}` или `0% {} 20% {} n% {} 100% {}`. 
 И создаются такие функции с помощью `@keyframes`
 
-Пример конструкции:
+Пример конструкции анимации:
+```css
+@keyframes hello {
+    from {
+        font-size: 10px;
+    } 
+    to {
+        font-size: 50px;
+    }
+}
 
+#hello {
+    animation-name: hello;
+    animation-duration: 3s;
+    animation-iteration-count: 2;
+    animation-fill-mode: forwards;
+}
+```
+
+**Пример манипуляции анимацией в файле [Animation.js](Animation.js) и [Animation.css](Animation.css)**

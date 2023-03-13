@@ -10,7 +10,10 @@
 #hello {
     animation-name: hello;
     animation-duration: 3s;
+    animation-direction: reverse;
+    animation-play-state: paused;
     animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
 }
 
 
@@ -21,7 +24,6 @@
         color: green;
     }
     25% {
-        left: 25%;
         color: blue;
     }
     50% {
@@ -29,7 +31,6 @@
         color: red;
     }
     75% {
-        left: 25%;
         color: blue;
     }
     100% {
@@ -43,5 +44,7 @@
     position: relative;
     animation-name: welcome;
     animation-duration: 5s;
+    animation-play-state: paused;
+    animation-iteration-count: infinite;
     animation-fill-mode: forwards;
 }
