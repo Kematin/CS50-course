@@ -1,10 +1,43 @@
+@keyframes hideElement {
+	0% {
+		opacity: 1;
+		height: 100%;
+		line-height: 100%;
+		padding: 20px;
+		margin-bottom: 10px;
+	}
+	75% {
+		opacity: 0;
+		height: 100%;
+		line-height: 100%;
+		padding: 20px;
+		margin-bottom: 10px;
+	}
+	100% {
+		opacity: 0;
+		height: 0px;
+		line-height: 0px;
+		padding: 0px;
+		margin-bottom: 0px;
+	}
+}
+
 /* Style for post */
+
 .post {
     background-color: #77dd11;
     padding: 20px;
-    margin: 10px;
+    margin-bottom: 10px;
+    animation-name: hideElement;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+}
+.hide {
+	position: relative;
+	left: 80%;
 }
 
 body {
-    padding-bottom: 50px;
+	padding-bottom: 50px;
 }

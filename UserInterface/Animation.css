@@ -1,17 +1,18 @@
 @keyframes hello {
-    from {
+    0% {
         font-size: 10px;
     } 
-    to {
+    50% {
         font-size: 50px;
+    }
+    100% {
+        font-size: 10px;
     }
 }
 
 #hello {
     animation-name: hello;
     animation-duration: 3s;
-    animation-direction: reverse;
-    animation-play-state: paused;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
 }
@@ -44,7 +45,6 @@
     position: relative;
     animation-name: welcome;
     animation-duration: 5s;
-    animation-play-state: paused;
     animation-iteration-count: infinite;
     animation-fill-mode: forwards;
 }

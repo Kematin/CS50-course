@@ -242,3 +242,5 @@ function createPost(content) {
 ```
 
 **Пример манипуляции анимацией в файле [Animation.js](Animation.js) и [Animation.css](Animation.css)**
+
+**Еще один пример в проекте [infinity](infinity)**

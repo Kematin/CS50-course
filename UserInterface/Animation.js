@@ -8,8 +8,12 @@ function playAnimation(element) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    allHeaders = document.querySelectorAll("h1")
+        allHeaders.forEach(header => {
+            header.style.animationPlayState = "paused";
+        });
+
     document.querySelector("#animation").onclick = () => {
-        allHeaders = document.querySelectorAll("h1")
         allHeaders.forEach(header => {
             playAnimation(header)
         });
