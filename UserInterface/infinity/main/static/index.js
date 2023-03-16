@@ -1,6 +1,4 @@
-
 // -------------------------------------------- REALIZIATION OF INFINITE SCROLL -----------------------------------------
-
 
 let counter = 1;
 
@@ -44,20 +42,20 @@ function createPost(content) {
 // -------------------------------------------- ANIMATION DELETE -----------------------------------------
 
 function hide(element) {
-    // Check if the user clicked on a hide button
-    if (element.className === 'hide') {
-        // Change style for post (Post is parent element)
-        element.parentElement.style.animationPlayState = 'running';
-        element.parentElement.addEventListener('animationend', () => {
-            // Delete them, when animation end
-            element.parentElement.remove();
-        });
-    }
+	// Check if the user clicked on a hide button
+	if (element.className === "hide") {
+		// Change style for post (Post is parent element)
+		element.parentElement.style.animationPlayState = "running";
+		element.parentElement.addEventListener("animationend", () => {
+			// Delete them, when animation end
+			element.parentElement.remove();
+		});
+	}
 }
 
 document.addEventListener("click", (event) => {
-    // Get elemenet from target
+	// Get elemenet from target
 	element = event.target;
-    // Call function for delete element
+	// Call function for delete element
 	hide(element);
 });
