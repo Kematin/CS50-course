@@ -1,8 +1,9 @@
 - [User Interfaces](#UserInterfaces)
 - [Single Page Application](#SPA)
 - [Scroll](#Scroll)
-- [Infinity Scroll](#InfinityScroll)
+  - [Infinity Scroll](##InfinityScroll)
 - [Animation](#Animation)
+- [React](#React)
 
 # UserInterfaces
 
@@ -104,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 # Scroll
 
-При создание секций использовался объект **_window_**, с помощью которого 
+При создание секций использовался объект **_window_**, с помощью которого
 можно управлять основным окном пользователя. Несколько интересных параметров:
 
 ```
@@ -120,14 +121,14 @@ window.scrollY: сколько пользователь пролистал вн�
 document.body.offsetHeight: высота документа в пикселях
 ```
 
-![IMG](https://cs50.harvard.edu/web/2020/notes/6/images/scroll.png) 
+![IMG](https://cs50.harvard.edu/web/2020/notes/6/images/scroll.png)
 
 Благодаря этому, например, можно контроллировать достиг ли пользователь конца страницы,
 выражением `window.scrollY + window.innerHeight >= document.body.offsetHeight`.
 
 **Пример в файле [Scroll.js](Scroll.js) и [Scroll.html](Scroll.html)**
 
-# InfinityScroll
+## InfinityScroll
 
 Прошлая работа с окном полезна при создание страницы с бесконечным скроллингом вниз.
 Т.е. при заходе на сайт пользователю загружаются 10 постов и при каждом скроллинге до конца страницы,
@@ -139,6 +140,7 @@ document.body.offsetHeight: высота документа в пикселях
 
 Создается отдельный путь на сайте: /posts. При get запросе на него отдается в ответ
 данные о постах в json формате.
+
 ```python
 def posts(request):
     # Get start point and end point
@@ -159,7 +161,7 @@ def posts(request):
                 "Post 15"
             ]
     }
-    route ./posts?start=5&end=6 will return: 
+    route ./posts?start=5&end=6 will return:
         {Posts: ["Post 5", "Post 6"]}
     '''
     return JsonResponse({
@@ -183,35 +185,32 @@ const quantity = 15;
 window.onscroll = checkBottomPage;
 document.addEventListener("DOMContentLoaded", load);
 
-
 function checkBottomPage() {
-    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-        load();
-    }
+	if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+		load();
+	}
 }
-
 
 function load() {
 	start = counter;
 	end = start + quantity - 1;
-    counter = end + 1;
+	counter = end + 1;
 
-    // Get data from server and put in json
+	// Get data from server and put in json
 	fetch(`/posts?start=${start}&end=${end}`)
 		.then((response) => response.json())
-		.then(data => {
-            // in forEach loop create posts
-            data.posts.forEach(createPost);
+		.then((data) => {
+			// in forEach loop create posts
+			data.posts.forEach(createPost);
 		});
 }
 
-
 function createPost(content) {
-    const newPost = document.createElement("div");
-    newPost.className = "post";
-    newPost.innerHTML = content;
+	const newPost = document.createElement("div");
+	newPost.className = "post";
+	newPost.innerHTML = content;
 
-    document.querySelector("#posts").append(newPost);
+	document.querySelector("#posts").append(newPost);
 }
 ```
 
@@ -219,28 +218,70 @@ function createPost(content) {
 
 Так-же с помощью css можно создавать анимации, а благодаря js управлять ими.
 В фукнциях анимации мы показываем как изменяется элемент,
-с помощью конструкции `from {} to {}` или `0% {} 20% {} n% {} 100% {}`. 
+с помощью конструкции `from {} to {}` или `0% {} 20% {} n% {} 100% {}`.
 И создаются такие функции с помощью `@keyframes`
 
 Пример конструкции анимации:
+
 ```css
 @keyframes hello {
-    from {
-        font-size: 10px;
-    } 
-    to {
-        font-size: 50px;
-    }
+	from {
+		font-size: 10px;
+	}
+	to {
+		font-size: 50px;
+	}
 }
 
 #hello {
-    animation-name: hello;
-    animation-duration: 3s;
-    animation-iteration-count: 2;
-    animation-fill-mode: forwards;
+	animation-name: hello;
+	animation-duration: 3s;
+	animation-iteration-count: 2;
+	animation-fill-mode: forwards;
 }
 ```
 
 **Пример манипуляции анимацией в файле [Animation.js](Animation.js) и [Animation.css](Animation.css)**
 
 **Еще один пример в проекте [infinity](infinity)**
+
+# React
+
+React - фреймворк библиотека джаваскрипта. До этого, используя чистый джаваскрипт,
+программирование считалось императивным. React в свою очередь использует декларативный
+метод, что позволяет не беспокоится о том _как_ отображается элемент.
+
+_Императивный метод:_
+
+```
+View:
+<h1>0</h1>
+
+Logic:
+let num = parseInt(document.querySelector("h1").innerHTML);
+num += 1;
+document.querySelector("h1").innerHTML = num;
+```
+
+_Декларативный метод:_
+
+```
+View:
+<h1>{num}</h1>
+
+Logic:
+num += 1;
+```
+
+React построен на идеи использования компонентов и их взаимодействий.
+
+> Фреймворк React построен на идее компонентов, каждый из которых может иметь базовое состояние. Компонент - это то, что вы видите на веб-странице, например, пост или панель навигации, а состояние - это набор переменных, связанных с этим компонентом. Прелесть React в том, что при изменении состояния React автоматически изменяет DOM соответствующим образом.
+
+Есть множество способов использовать реакт 
+(в том числе команда [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html)).
+В данном примере будет использоватся напрямую в html.
+Для этого надо импортировать 3 библиотеки:
+
+1. React (Определяет компоненты и их поведение)
+2. ReacDOM (Внедряет React компоненты в html)
+3. Babel (Компилирует (или интерпритирует :O) jsx реакта в читый js код)
