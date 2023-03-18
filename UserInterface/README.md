@@ -4,6 +4,7 @@
   - [Infinity Scroll](#InfinityScroll)
 - [Animation](#Animation)
 - [React](#React)
+  - [Game: "Addition"](#Addition)
 
 # UserInterfaces
 
@@ -285,3 +286,29 @@ React построен на идеи использования компонен
 1. React (Определяет компоненты и их поведение)
 2. ReacDOM (Внедряет React компоненты в html)
 3. Babel (Компилирует jsx реакта в чистый js код)
+
+**Структура компонентов React:**
+
+```js
+<div id="app"></div>
+<script type="text/babel">
+    // Create main component App
+    function App() {
+        // Use another components in App
+        // Also we can setup props for compontent (name="Jhon")
+        return (
+            <div>
+                <h1>Welcome!</h1>
+                <Hello name="Jhon" />
+            </div>
+        );
+    }
+
+    // Render main component to DOM elements in div with id app
+    ReactDOM.render(<App />, document.querySelector("#app"));
+</script>
+```
+
+**Пример работы с React в [React.html](React.html)**
+
+## Addition

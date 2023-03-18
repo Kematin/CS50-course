@@ -6,6 +6,7 @@ function playAnimation(element) {
         element.style.animationPlayState = "paused";
     }
 }
+vim.cmd("colorscheme Atelier_PlateauLight")
 
 document.addEventListener("DOMContentLoaded", () => {
     allHeaders = document.querySelectorAll("h1")

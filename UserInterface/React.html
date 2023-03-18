@@ -19,6 +19,7 @@
 		<div id="app"></div>
 
 		<script type="text/babel">
+			// Create Hello component, which take props and return paragraph with name
 			function Hello(props) {
 				let name = props.name;
 				if (name === undefined) {
@@ -28,6 +29,9 @@
 			}
 
 			function Counter() {
+				// Use hoock from React
+				// Count is name of variable and setCount is a function, which change value for variable
+				// Default value of variable is 0
 				const [count, setCount] = React.useState(0);
 
 				function updateCount() {
@@ -35,6 +39,8 @@
 				}
 
 				return (
+					// return h1 as value of variable
+					// return button, which can change value of var
 					<div>
 						<h1>{count}</h1>
 						<button onClick={updateCount}>Count!</button>
@@ -42,11 +48,13 @@
 				);
 			}
 
+			// Create main component App
 			function App() {
+				// Use another components in App
+				// Also we can setup props for compontent (name="Jhon")
 				return (
 					<div>
 						<h1>Welcome!</h1>
-						<Hello name="Germiona" />
 						<Hello name="Jhon" />
 						<Hello />
 						<Counter />
@@ -54,6 +62,7 @@
 				);
 			}
 
+			// Render main component to DOM elements in div with id app
 			ReactDOM.render(<App />, document.querySelector("#app"));
 		</script>
 	</body>
