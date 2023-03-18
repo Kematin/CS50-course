@@ -13,11 +13,38 @@
 			crossorigin
 		></script>
 		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+		<style>
+			#app {
+				text-align: center;
+				font-family: sans-serif;
+			}
+			#score {
+				margin-top: 10px;
+				color: #22dd55;
+			}
+			#problem {
+				font-size: 70px;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="app"></div>
 
 		<script type="text/babel">
+            function Winner(props) {
+                const score = props.score
+                if (score === 10) {
+                    return (
+                        <div id="winner">You won!</div>
+                    );
+                }
+                else {
+                    return (
+                        <div>You need {10-score} more scores for win!</div>
+                    )
+                }
+            }
+
 			function Addition() {
 				const [state, setState] = React.useState({
 					num1: 1,
@@ -25,22 +52,59 @@
 					response: "",
 					score: 0,
 				});
-                return (
-                    <div>
-                        <div>{state.num1} + {state.num2}</div>
-                        <input value={state.response} placeholder="Answer" />
-                        <div>Score: {state.score}</div>
-                    </div>
-                )
+
+				function changeResponse(event) {
+					setState({
+						...state,
+						response: event.target.value,
+					});
+				}
+
+				function keyPress(event) {
+					if (event.key === "Enter") {
+						const answer = parseInt(state.response);
+						if (answer === state.num1 + state.num2) {
+							setState({
+								...state,
+								num1: Math.ceil(Math.random() * 10),
+								num2: Math.ceil(Math.random() * 10),
+								response: "",
+								score: state.score + 1,
+							});
+						} else {
+							setState({
+								...state,
+								response: "",
+								score: state.score - 1,
+							});
+						}
+					}
+				}
+
+				return (
+					<div>
+						<div id="problem">
+							{state.num1} + {state.num2}
+						</div>
+						<input
+							onChange={changeResponse}
+							onKeyPress={keyPress}
+							value={state.response}
+							placeholder="Answer"
+						/>
+						<div id="score">Score: {state.score}</div>
+                        <Winner score={state.score} />
+					</div>
+				);
 			}
 
 			function App() {
-                return (
-                    <div>
-                        <h1>Welcome!</h1>
-                        <Addition />
-                    </div>
-                )
+				return (
+					<div>
+						<h1>Solve this!</h1>
+						<Addition />
+					</div>
+				);
 			}
 
 			ReactDOM.render(<App />, document.querySelector("#app"));

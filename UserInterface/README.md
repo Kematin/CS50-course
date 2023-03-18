@@ -312,3 +312,5 @@ React построен на идеи использования компонен
 **Пример работы с React в [React.html](React.html)**
 
 ## Addition
+
+**Пример реализации игры в решение примеров в файле [Addition.html](Addition.html)**
