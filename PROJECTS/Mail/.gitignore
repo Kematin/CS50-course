@@ -1,0 +1,5 @@
+venv
+secret.txt
+__pycache__
+.DS_Store
+*.sqlite3
