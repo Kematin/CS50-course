@@ -3,6 +3,9 @@
 Front-end для почтового клиента, который выполняет вызовы
 API для отправки и получения электронной почты.
 
+Техническое задание в [specification.md](specification.md), 
+или на [сайте cs50](https://cs50.harvard.edu/web/2020/projects/3/mail/#specification)
+
 ![Main Page](https://cs50.harvard.edu/web/2020/projects/3/images/inbox.png)
 ![Inbox](https://cs50.harvard.edu/web/2020/projects/3/images/email.png)
 
@@ -16,9 +19,8 @@ API для отправки и получения электронной поч�
 
 - GET Emails
 - GET Email
-- POST Create email 
+- POST Create email
 - PUT Change email
-
 
 ### GET /emails/<str:mailbox>
 
@@ -96,4 +98,63 @@ fetch("/emails/1")
 
 		// ... do something else with email ...
 	});
+```
+
+### POST /emails
+
+**Response:**
+
+```json
+Success:
+{
+    "message": "Email sent successfully.",
+    status: 201
+}
+
+Errors:
+{
+    "error": "At least one recipient required.",
+    status: 400
+}
+
+{
+    "error": "POST request required.",
+    status: 400
+}
+
+{
+    "error": "User with email baz@example.com does not exist.",
+    status: 400
+}
+```
+
+**Example js:**
+
+```
+fetch('/emails', {
+  method: 'POST',
+  body: JSON.stringify({
+      recipients: 'baz@example.com',
+      subject: 'Meeting time',
+      body: 'How about we meet tomorrow at 3pm?'
+  })
+})
+.then(response => response.json())
+.then(result => {
+    // Print result
+    console.log(result);
+});
+```
+
+### PUT /emails/<int:email_id>
+
+**Example js:**
+
+```js
+fetch("/emails/100", {
+	method: "PUT",
+	body: JSON.stringify({
+		archived: true,
+	}),
+});
 ```
