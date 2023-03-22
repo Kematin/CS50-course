@@ -4,25 +4,40 @@ export function loadMailbox(mailbox) {
 	document.querySelector("#compose-view").style.display = "none";
 	document.querySelector("#displayMessage").style.display = "none";
 
-	const templateData = getDOMTemplate(mailbox);
-	document.querySelector("#emails-view").innerHTML = templateData;
-}
+	const emailView = document.querySelector("#emails-view");
+	emailView.innerHTML = `<h3>${
+		mailbox.charAt(0).toUpperCase() + mailbox.slice(1)
+	}</h3>`;
 
-function getDOMTemplate(mailbox) {
-	const data = getInfoFromApi(mailbox);
-	const template = createDOMTemplate(data, mailbox);
-	return template;
-}
-
-function getInfoFromApi(mailbox) {
-	fetch(`/emails/${mailbox}`)
-		.then((response) => response.json())
-		.then((emails) => {
-			return emails;
+	getArrayEmails(mailbox).then((emails) => {
+		emails.forEach((email) => {
+			emailView.append(email);
 		});
+	});
 }
 
-function createDOMTemplate(data, mailbox) {
-	const content = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
-	return content;
+async function getArrayEmails(mailbox) {
+	const data = await getInfoFromApi(mailbox);
+	const emails = createArrayEmails(data);
+	return emails;
+}
+
+async function getInfoFromApi(mailbox) {
+	const response = await fetch(`/emails/${mailbox}`);
+	const emails = await response.json();
+	return emails;
+}
+
+function createArrayEmails(data) {
+	let arrayEmails = [];
+
+	data.forEach((email) => {
+		const content = email.body;
+		let emailDOM = document.createElement("div");
+
+		emailDOM.innerHTML = content;
+		arrayEmails.push(emailDOM);
+	});
+
+	return arrayEmails;
 }
