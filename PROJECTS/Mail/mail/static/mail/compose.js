@@ -1,7 +1,9 @@
+import { loadMailbox } from "./load.js";
+
 export function composeEmail() {
 	// Show compose view and hide other views
 	document.querySelector("#emails-view").style.display = "none";
-	document.querySelector("#displayError").style.display = "none";
+	document.querySelector("#displayMessage").style.display = "none";
 	document.querySelector("#compose-view").style.display = "block";
 
 	// Clear out composition fields
@@ -49,7 +51,7 @@ function sendEmail(data) {
 			return response.json();
 		})
 		.then((result) => {
-			console.log(`Result: ${result}`);
+            displaySuccesMessage(result.message)
 		})
 		.catch((error) => {
 			// Handle errors
@@ -71,10 +73,29 @@ function checkData(data) {
 }
 
 function displayErrorMessage(message) {
-	const displayError = document.querySelector("#displayError");
+	const displayError = document.querySelector("#displayMessage");
+
 	displayError.innerHTML = message;
 	displayError.style.display = "block";
+    displayError.style.backgroundColor = "#ffe6e6";
+    displayError.style.border = "1px solid #ff4d4d";
+    displayError.style.color = "#ff4d4d";
+
 	setTimeout(function () {
 		displayError.style.display = "none";
-	}, 5000);
+	}, 8000);
+}
+
+function displaySuccesMessage(message) {
+	const displaySuccess = document.querySelector("#displayMessage");
+
+	displaySuccess.innerHTML = message;
+	displaySuccess.style.display = "block";
+    displaySuccess.style.backgroundColor = "#e7f5ea";
+    displaySuccess.style.border = "1px solid #52c41a";
+    displaySuccess.style.color = "#52c41a";
+
+	setTimeout(function () {
+		displaySuccess.style.display = "none";
+	}, 8000);
 }

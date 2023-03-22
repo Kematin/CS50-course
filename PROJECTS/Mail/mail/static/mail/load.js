@@ -2,7 +2,7 @@ export function loadMailbox(mailbox) {
 	// Show the mailbox and hide other views
 	document.querySelector("#emails-view").style.display = "block";
 	document.querySelector("#compose-view").style.display = "none";
-	document.querySelector("#displayError").style.display = "none";
+	document.querySelector("#displayMessage").style.display = "none";
 
 	const templateData = getDOMTemplate(mailbox);
 	document.querySelector("#emails-view").innerHTML = templateData;
