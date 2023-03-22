@@ -27,7 +27,6 @@ function submitForm() {
 		const errorMessage = "No input data!";
 		displayErrorMessage(errorMessage);
 	} else {
-		displayError.style.display = "none";
 		sendEmail(inputData);
 	}
 }
@@ -75,4 +74,7 @@ function displayErrorMessage(message) {
 	const displayError = document.querySelector("#displayError");
 	displayError.innerHTML = message;
 	displayError.style.display = "block";
+	setTimeout(function () {
+		displayError.style.display = "none";
+	}, 5000);
 }
