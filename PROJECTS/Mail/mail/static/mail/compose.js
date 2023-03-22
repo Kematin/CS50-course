@@ -1,5 +1,3 @@
-import { loadMailbox } from "./load.js";
-
 export function composeEmail() {
 	// Show compose view and hide other views
 	document.querySelector("#emails-view").style.display = "none";
@@ -51,11 +49,9 @@ function sendEmail(data) {
 			return response.json();
 		})
 		.then((result) => {
-            displaySuccesMessage(result.message)
+			displaySuccesMessage(result.message);
 		})
 		.catch((error) => {
-			// Handle errors
-			console.error("Error:", error.message);
 			displayErrorMessage(error.message);
 		});
 }
@@ -77,9 +73,9 @@ function displayErrorMessage(message) {
 
 	displayError.innerHTML = message;
 	displayError.style.display = "block";
-    displayError.style.backgroundColor = "#ffe6e6";
-    displayError.style.border = "1px solid #ff4d4d";
-    displayError.style.color = "#ff4d4d";
+	displayError.style.backgroundColor = "#ffe6e6";
+	displayError.style.border = "1px solid #ff4d4d";
+	displayError.style.color = "#ff4d4d";
 
 	setTimeout(function () {
 		displayError.style.display = "none";
@@ -91,9 +87,9 @@ function displaySuccesMessage(message) {
 
 	displaySuccess.innerHTML = message;
 	displaySuccess.style.display = "block";
-    displaySuccess.style.backgroundColor = "#e7f5ea";
-    displaySuccess.style.border = "1px solid #52c41a";
-    displaySuccess.style.color = "#52c41a";
+	displaySuccess.style.backgroundColor = "#e7f5ea";
+	displaySuccess.style.border = "1px solid #52c41a";
+	displaySuccess.style.color = "#52c41a";
 
 	setTimeout(function () {
 		displaySuccess.style.display = "none";

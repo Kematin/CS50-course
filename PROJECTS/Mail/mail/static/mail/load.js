@@ -9,17 +9,20 @@ export function loadMailbox(mailbox) {
 }
 
 function getDOMTemplate(mailbox) {
-	return `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+	const data = getInfoFromApi(mailbox);
+	const template = createDOMTemplate(data, mailbox);
+	return template;
 }
 
 function getInfoFromApi(mailbox) {
-	// Show the mailbox name
 	fetch(`/emails/${mailbox}`)
 		.then((response) => response.json())
 		.then((emails) => {
-			// Print emails
-			console.log(emails);
+			return emails;
 		});
 }
 
-function createDOMTemplate(data) {}
+function createDOMTemplate(data, mailbox) {
+	const content = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+	return content;
+}

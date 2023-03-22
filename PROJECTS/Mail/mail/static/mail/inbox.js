@@ -1,5 +1,5 @@
-import { composeEmail } from './compose.js';
-import { loadMailbox } from './load.js';
+import { composeEmail } from "./compose.js";
+import { loadMailbox } from "./load.js";
 
 document.addEventListener("DOMContentLoaded", function () {
 	// Use buttons to toggle between views
@@ -13,11 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		.querySelector("#archived")
 		.addEventListener("click", () => loadMailbox("archive"));
 
-    // If compose button was clicked, display compose email
+	// If compose button was clicked, display compose email
 	document.querySelector("#compose").addEventListener("click", composeEmail);
 
 	// By default, load the inbox
 	loadMailbox("inbox");
 });
-
-
