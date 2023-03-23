@@ -12,16 +12,20 @@ export function loadMailbox(mailbox) {
 		mailbox.charAt(0).toUpperCase() + mailbox.slice(1)
 	}</h3>`;
 
-	getArrayEmails(mailbox).then((emails) => {
+	let isArchive = false;
+	if (mailbox === "archived") {
+		isArchive = true;
+	}
+	getArrayEmails(mailbox, isArchive).then((emails) => {
 		emails.forEach((email) => {
 			emailView.append(email);
 		});
 	});
 }
 
-async function getArrayEmails(mailbox) {
+async function getArrayEmails(mailbox, isArchive) {
 	const data = await getInfoFromApi(mailbox);
-	const emails = createArrayEmails(data);
+	const emails = createArrayEmails(data, isArchive);
 	return emails;
 }
 
@@ -31,27 +35,13 @@ async function getInfoFromApi(mailbox) {
 	return emails;
 }
 
-function createArrayEmails(data) {
+function createArrayEmails(data, isArchive) {
 	let arrayEmails = [];
 
 	data.forEach((email) => {
-		// Create new elements
-		const sender = createElementEmail("sender", "p", `${email.sender}:`);
-		const subject = createElementEmail("subject", "p", email.subject);
-		const timestamp = createElementEmail("timestamp", "p", email.timestamp);
-
-		let emailDOM = document.createElement("div");
-		emailDOM.className = "email";
-
-		emailDOM.append(sender);
-		emailDOM.append(subject);
-		emailDOM.append(timestamp);
-
-		if (email.read === true) {
-			emailDOM.style.backgroundColor = "#e8e2e1";
+		if (email.archived === isArchive) {
+			arrayEmails.push(createNewElements(email));
 		}
-
-		arrayEmails.push(emailDOM);
 	});
 
 	return arrayEmails;
@@ -61,6 +51,28 @@ function createElementEmail(name, type, inner) {
 	let newElement = document.createElement(type);
 	newElement.className = name;
 	newElement.innerHTML = inner;
-    newElement.addEventListener("click", displayEmail) 
 	return newElement;
+}
+
+function createNewElements(email) {
+	const sender = createElementEmail("sender", "p", `${email.sender}:`);
+	const subject = createElementEmail("subject", "p", email.subject);
+	const timestamp = createElementEmail("timestamp", "p", email.timestamp);
+
+	let emailDOM = document.createElement("div");
+	emailDOM.className = "email";
+
+	emailDOM.append(sender);
+	emailDOM.append(subject);
+	emailDOM.append(timestamp);
+
+	if (email.read === true) {
+		emailDOM.style.backgroundColor = "#e8e2e1";
+	}
+
+	emailDOM.addEventListener("click", () => {
+		displayEmail(email.id);
+	});
+
+	return emailDOM;
 }
