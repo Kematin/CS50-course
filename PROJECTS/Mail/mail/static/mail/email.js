@@ -64,7 +64,7 @@ function createInfoSection(email) {
 	infoSection.append(timeField);
 
 	const buttons = document.createElement("div");
-	buttons.append(createButtonReply(email.sender, email.subject));
+	buttons.append(createButtonReply(email));
 	buttons.append(createButtonArchive(email.archived, email.id));
 	infoSection.append(buttons);
 
@@ -72,13 +72,13 @@ function createInfoSection(email) {
 	return infoSection;
 }
 
-function createButtonReply(sender, subject) {
+function createButtonReply(emailData) {
 	let buttonReply = document.createElement("button");
 
 	buttonReply.className = "btn btn-sm btn-outline-primary";
 	buttonReply.innerHTML = "Reply";
 	buttonReply.addEventListener("click", () => {
-		reply(sender, subject);
+		reply(emailData);
 	});
 
 	return buttonReply;
@@ -99,19 +99,23 @@ function createButtonArchive(isArchive, id) {
 	return buttonArchive;
 }
 
-function reply(sender, subject) {
+// On Jan 1 2020, 12:00 AM foo@example.com wrote:
+function reply(email) {
 	composeEmail();
-
 	const inputRecipients = document.querySelector("#compose-recipients");
 	const inputSubject = document.querySelector("#compose-subject");
+	const inputBody = document.querySelector("#compose-body");
 
-	inputRecipients.value = sender;
+	const bodyValue = `On ${email.timestamp}, ${email.sender} wrote: \n${email.body}\n\nYour answer:`;
+	inputBody.value = bodyValue;
+
+	inputRecipients.value = email.sender;
 	inputRecipients.disabled = true;
 
-	if (subject.includes("Re:")) {
-		inputSubject.value = subject;
+	if (email.subject.includes("Re:")) {
+		inputSubject.value = email.subject;
 	} else {
-		inputSubject.value = `Re: ${subject}`;
+		inputSubject.value = `Re: ${emai.subject}`;
 	}
 	inputSubject.disabled = true;
 }
