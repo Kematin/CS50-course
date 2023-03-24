@@ -101,11 +101,19 @@ function createButtonArchive(isArchive, id) {
 
 function reply(sender, subject) {
 	composeEmail();
-    console.log("Compose!")
-    const inputRecipients = document.querySelector("#compose-recipients");
-    const inputSubject = document.querySelector("#compose-subject");
+
+	const inputRecipients = document.querySelector("#compose-recipients");
+	const inputSubject = document.querySelector("#compose-subject");
+
 	inputRecipients.value = sender;
-	inputSubject.value = `Re: ${subject}`;
+	inputRecipients.disabled = true;
+
+	if (subject.includes("Re:")) {
+		inputSubject.value = subject;
+	} else {
+		inputSubject.value = `Re: ${subject}`;
+	}
+	inputSubject.disabled = true;
 }
 
 function archive(changeArchive, id) {
