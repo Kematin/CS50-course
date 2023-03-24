@@ -115,7 +115,7 @@ function reply(email) {
 	if (email.subject.includes("Re:")) {
 		inputSubject.value = email.subject;
 	} else {
-		inputSubject.value = `Re: ${emai.subject}`;
+		inputSubject.value = `Re: ${email.subject}`;
 	}
 	inputSubject.disabled = true;
 }
