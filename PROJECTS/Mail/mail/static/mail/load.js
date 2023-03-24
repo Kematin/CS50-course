@@ -13,7 +13,7 @@ export function loadMailbox(mailbox) {
 	}</h3>`;
 
 	let isArchive = false;
-	if (mailbox === "archived") {
+	if (mailbox === "archive") {
 		isArchive = true;
 	}
 	getArrayEmails(mailbox, isArchive).then((emails) => {
