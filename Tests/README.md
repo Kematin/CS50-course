@@ -33,6 +33,7 @@ Unit Тестирование - это тестирование отдтельн
 Пример юнит тестирования в файле [unit.py](unit.py)
 
 Вывод о ошибках юнит тестов:
+
 ```bash
 Display success and false tests
 ...F.F
@@ -51,3 +52,40 @@ AssertionError: True is not false
 ```
 
 # DjangoTest
+
+Для создания тестов django, существует модуль tests.py.
+
+Пример по созданию тестов:
+
+```python
+from django.test import TestCase
+from .models import Model
+
+# Create your tests here.
+class MainTestCase(TestCase):
+
+    # Create some entries for tests
+    def setUp(self) -> None:
+        # create some data for tests
+        a1 = Model.objects.create(name="a1", value=3)
+        a2 = Model.objects.create(name="a2", value=1)
+
+    # Tests
+    def test_departures_count(self):
+        """This test checks valid of first value"""
+        a = UseFul.objects.get(name="a1")
+        self.assertEqual(a.value, 3)
+
+    def test_arrivals_count(self):
+        """This test checks valid of second value"""
+        a = UseFul.objects.get(name="a2")
+        self.assertEqual(a.value, 1)
+```
+
+Для запуска тестов используется команада:
+
+`./manage.py test`
+
+Вывод в консоль такой же как при юнит тестах.
+
+Более полный пример в приложение [testing](tests_project/testing) проекта **tests_project**.
