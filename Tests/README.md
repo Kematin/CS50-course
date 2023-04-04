@@ -3,6 +3,8 @@
   - [Test-Driven Development](#TestDriven)
 - [Unit Testing](#UnitTest)
 - [Django Testing](#DjangoTest)
+- [Client Testing](#ClientTest)
+- [Selenium](#Selenium)
 
 # Testing
 
@@ -89,3 +91,16 @@ class MainTestCase(TestCase):
 Вывод в консоль такой же как при юнит тестах.
 
 Более полный пример в приложение [testing](tests_project/testing) проекта **tests_project**.
+
+# ClientTest
+
+Так-же важно тестировать функции, выполнения которых зависит от клиента, а не 
+от работы сервера (функция при нажатии на кнопку, скроллинг, загрузка страницы и т.д.).
+
+Для этого в джанго есть модуль `Client` из пакета `django.test`.
+
+Более полный пример в приложение [testing](tests_project/testing) проекта **tests_project**.
+
+# Selenium
+
+

@@ -1,7 +1,7 @@
-from django.test import TestCase
+from django.test import Client, TestCase
 from .models import Flight, Airport
 
-# Create your tests here.
+# Django testing
 class FlightTestCase(TestCase):
 
     # Create some entries for tests
@@ -46,3 +46,15 @@ class FlightTestCase(TestCase):
         a2 = Airport.objects.get(code="BBB")
         f = Flight.objects.get(origin=a1, destination=a2, duration=-100)
         self.assertFalse(f.is_valid_flight())
+
+
+# Client testing
+class ClientTestCase(TestCase):
+
+    def test_index(self):
+        """This function test the workability of index page"""
+
+        client = Client()
+        response = client.get("/flights")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["flights"].count(), 3)
