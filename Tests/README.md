@@ -149,4 +149,25 @@ key3:
     - item 3
 ```
 
-Чтобы гитхаб принимал тесты создается каталог `.github` c подкаталогом `workflows`
+Чтобы гитхаб принимал тесты создается каталог `.github` c подкаталогом `workflows`. И в 
+данном подакаталоге создать файле с расширением yaml.
+
+Пример:
+
+> REPO_DIR/.github/workflows/test.yaml
+```yaml
+name: Testing
+on: push
+
+jobs:
+  test_project:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Linters 
+      run: echo "TODO linters"
+    - name: Run Django unit tests
+      run: echo "TODO unit tests"
+```
+
+[Подробное объяснение каждой строчки](https://cs50.harvard.edu/web/2020/notes/7/#github-actions)
