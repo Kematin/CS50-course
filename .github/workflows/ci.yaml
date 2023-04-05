@@ -6,11 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Run Linters 
+      run: echo "TODO linters"
     - name: Run Django unit tests
       run: |
         pip3 install --user django
+        cd Tests/test_project
         python3 manage.py test
-    - name: Run Linters 
-      run: |
-        echo "TODO linters"
+    
 
