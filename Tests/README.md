@@ -1,13 +1,13 @@
-- [Testing](#Testing)
-- [Assert](#Assert)
-  - [Test-Driven Development](#TestDriven)
-- [Unit Testing](#UnitTest)
-- [Django Testing](#DjangoTest)
-- [Client Testing](#ClientTest)
-- [Selenium](#Selenium)
-- [CI/CD](#CI/CD)
-- [GitHub Auctions](#Auctions)
-- [Docker](#Docker)
+- [Testing](#testing)
+- [Assert](#assert)
+  - [TestDriven](#testdriven)
+- [UnitTest](#unittest)
+- [DjangoTest](#djangotest)
+- [ClientTest](#clienttest)
+- [Selenium](#selenium)
+- [CI/CD](#cicd)
+- [Auctions](#auctions)
+- [Docker](#docker)
 
 # Testing
 
@@ -188,16 +188,17 @@ jobs:
 контейнерами можно делится и запускать в _один клик_, что крайне упращает процесс
 сборки.
 
+По сути docker - это способ разгроничения памяти в качестве хоста, в который
+входит сеть, юзер, ipc, mount и т.д. Docker изолирует процесс в рамке
+машины (main host`а).
+
 [Установка](https://docs.docker.com/get-docker/)
 
-Команды докер:
+Работа с докер:
 
 ```bash
 # Create container
 docker run hello-world
-
-# Run docker container
-docker run -it ubuntu bash
 
 # Check list of contaniers
 docker ps
