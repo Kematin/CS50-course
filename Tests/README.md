@@ -192,14 +192,30 @@ jobs:
 входит сеть, юзер, ipc, mount и т.д. Docker изолирует процесс в рамке
 машины (main host`а).
 
+_Docker Image_ - образ докер контейнера.
+
 [Установка](https://docs.docker.com/get-docker/)
 
 Работа с докер:
 
 ```bash
-# Create container
+# Create simple container
 docker run hello-world
 
-# Check list of contaniers
+# See all working contaniers
 docker ps
+
+# See all docker images
+docker images
+
+# Create contanier with template (mongo)
+docker run --name=mongo mongo -d
+
+# Run container and stop its
+docker start mongo
+docker stop mongo
+
+# Restart and delete container (image will not be deleted)
+docker restart mongo
+docker rm mongo
 ```
