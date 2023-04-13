@@ -202,7 +202,7 @@ _Docker Image_ - образ докер контейнера.
 # Create simple container
 docker run hello-world
 
-# See all working contaniers
+# See all working containers
 docker ps
 
 # See all docker images
