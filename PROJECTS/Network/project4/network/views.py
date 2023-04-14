@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User
-# from .services import *
+from network.services import main
 
 
 def index(request):
@@ -13,7 +13,8 @@ def index(request):
 
 
 def get_all_posts_api(request):
-    pass
+    all_posts = main.return_all_posts_json()
+    return JsonResponse(all_posts)
 
 
 def get_own_posts_api(request):
