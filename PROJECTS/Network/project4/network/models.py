@@ -19,8 +19,10 @@ class Comment(models.Model):
 class Follow(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_follow")
-    following = models.ManyToManyField(User, related_name="user_following")
-    followers = models.ManyToManyField(User, related_name="user_followers")
+    following = models.ManyToManyField(
+        User, related_name="user_following", blank=True)
+    followers = models.ManyToManyField(
+        User, related_name="user_followers", blank=True)
 
     def __str__(self) -> str:
         return f"Edit Follow for {self.user}"
@@ -32,7 +34,8 @@ class Post(models.Model):
     content = models.TextField(max_length=800)
     likes = models.IntegerField(validators=[MinValueValidator(0)])
     datetime = models.DateTimeField()
-    comments = models.ManyToManyField(Comment, related_name="post_comments")
+    comments = models.ManyToManyField(
+        Comment, related_name="post_comments", blank=True)
 
     def __str__(self) -> str:
         return f"{self.creator}: {self.content}"
