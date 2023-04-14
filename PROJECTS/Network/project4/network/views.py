@@ -5,10 +5,19 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User
+# from .services import *
 
 
 def index(request):
     return render(request, "network/index.html")
+
+
+def get_all_posts_api(request):
+    pass
+
+
+def get_own_posts_api(request):
+    pass
 
 
 def login_view(request):
@@ -47,8 +56,8 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(
-                request,
-                "network/register.html", {"message": "Passwords must match."}
+                request, "network/register.html",
+                {"message": "Passwords must match."}
             )
 
         # Attempt to create new user
@@ -57,8 +66,8 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(
-                request,
-                "network/register.html", {"message": "Username already taken."}
+                request, "network/register.html",
+                {"message": "Username already taken."}
             )
         login(request, user)
         return HttpResponseRedirect(reverse("index"))

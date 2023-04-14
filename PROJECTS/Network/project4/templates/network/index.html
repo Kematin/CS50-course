@@ -1,5 +1,31 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+	<main>
+		<h1>All Posts.</h1>
+		<div id="dislayPostForm">
+			<form action="{% url 'get_all_posts' %}" method="post">
+				TODO (use form from model)
+				<h4>New post.</h4>
+				<textarea name="" id="" cols="30" rows="10" placeholde='Write here.'></textarea>
+				<input type="submit" value="Post" name="" id="">
+			</form>
+		</div>
+
+		<div id="displayPosts">
+			TODO with js
+			Example:
+			<div class="post">
+				<h4>Foo</h4>	
+				<a href="">Edit</a>
+				<p>Content</p>
+				<p>March 29, 2023 10:40pm</p>
+				<p>Icon likes</p>
+				<div class="comments">
+					<p>Comment 1</p>
+					<p>Comment 2</p>
+				</div>
+			</div>
+		</div>
+	</main>
 {% endblock %}
