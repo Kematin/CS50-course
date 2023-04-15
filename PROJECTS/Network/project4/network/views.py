@@ -17,6 +17,10 @@ def get_all_posts_api(request):
     return JsonResponse(all_posts)
 
 
+def get_post_api(request, id):
+    pass
+
+
 def get_own_posts_api(request):
     pass
 
