@@ -1,11 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
+from django.contrib.auth import logout
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
 from network.services import main
+from network.services import source_cs50
+from network.services.config import ApiException
 
 
 def index(request):
@@ -13,35 +13,31 @@ def index(request):
 
 
 def get_all_posts_api(request):
-    all_posts = main.return_all_posts_json()
-    return JsonResponse(all_posts)
+    try:
+        all_posts = main.return_all_posts_json()
+        return JsonResponse(all_posts, status=200)
+    except ApiException as error:
+        return JsonResponse({"error": str(error)}, status=400)
 
 
-def get_post_api(request, id):
-    pass
+def get_post_api(request, post_id):
+    try:
+        post = main.return_post(post_id)
+        return JsonResponse(post, status=200)
+    except ApiException as error:
+        return JsonResponse({"error": str(error)}, status=400)
 
 
 def get_own_posts_api(request):
     pass
 
 
+# ! ------------------------------------------------- SOURCE CODE
+
+
 def login_view(request):
     if request.method == "POST":
-        # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-
-        # Check if authentication successful
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(
-                request,
-                "network/login.html",
-                {"message": "Invalid username and/or password."},
-            )
+        return source_cs50.login_view_post(request)
     else:
         return render(request, "network/login.html")
 
@@ -53,28 +49,6 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(
-                request, "network/register.html",
-                {"message": "Passwords must match."}
-            )
-
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(
-                request, "network/register.html",
-                {"message": "Username already taken."}
-            )
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return source_cs50.register_post(request)
     else:
         return render(request, "network/register.html")

@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 
 from network.services import main
 from network.models import Post, User, Comment
@@ -49,9 +49,31 @@ class TestServices(TestCase):
                 "content": "Hello",
                 "likes": 2,
                 "datetime": "April 10, 2020, 11:30 AM",
-                "comments": ["wow"]
+                "comments": ["wow"],
             }
         }
         post = Post.objects.get(content="Hello")
         post_json = main.iterate_at_posts_array([post])
         self.assertEqual(post_json, checked_post)
+
+
+class TestExceptions(TestCase):
+    def test_invalid_get_id_post(self):
+        """Test for invalid id post in API"""
+        client = Client()
+        response = client.get("/api/post/100")
+        self.assertEqual(response.status_code, 400)
+
+    def test_invalid_get_all_posts(self):
+        """Test for check raise exception if model return empty array"""
+        client = Client()
+        response = client.get("/api/posts")
+        self.assertEqual(response.status_code, 400)
+
+
+class TestClient(TestCase):
+    def test_index_page(self):
+        """Test for check main page"""
+        client = Client()
+        response = client.get("/")
+        self.assertEqual(response.status_code, 200)
