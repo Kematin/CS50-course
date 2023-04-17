@@ -58,17 +58,32 @@ class TestServices(TestCase):
 
 
 class TestExceptions(TestCase):
+    def setUp(self) -> None:
+        User.objects.create(username="kem", email="k@mail.ru", password="123")
+
     def test_invalid_get_id_post(self):
-        """Test for invalid id post in API"""
+        """Test for invalid id post in API."""
         client = Client()
-        response = client.get("/api/post/100")
-        self.assertEqual(response.status_code, 400)
+        response = client.get("/api/post/100").json()
+        self.assertEqual(response["error"], "Post with id 100 does not exist.")
 
     def test_invalid_get_all_posts(self):
-        """Test for check raise exception if model return empty array"""
+        """Test for check raise exception if model return empty array."""
         client = Client()
-        response = client.get("/api/posts")
-        self.assertEqual(response.status_code, 400)
+        response = client.get("/api/posts").json()
+        self.assertEqual(response["error"], "No posts.")
+
+    def test_invalid_get_own_posts_username(self):
+        """Test for check raise exception if user does not exist."""
+        client = Client()
+        response = client.get("/api/posts/ab").json()
+        self.assertEqual(response["error"], "User ab does not exist.")
+
+    def test_invalid_get_own_posts_empty(self):
+        """Test for check raise exception if user dont have posts."""
+        client = Client()
+        response = client.get("/api/posts/kem").json()
+        self.assertEqual(response["error"], "No posts for user kem.")
 
 
 class TestClient(TestCase):

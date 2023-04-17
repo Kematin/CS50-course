@@ -12,7 +12,24 @@ def index(request):
     return render(request, "network/index.html")
 
 
-def get_all_posts_api(request):
+# * ------------------------------------------------- API POST
+
+
+def create_new_post(request):
+    pass
+
+
+# * ------------------------------------------------- API PUT
+
+
+def change_likes(request):
+    pass
+
+
+# * ------------------------------------------------- API GET
+
+
+def get_all_posts(request):
     try:
         all_posts = main.return_all_posts_json()
         return JsonResponse(all_posts, status=200)
@@ -20,7 +37,7 @@ def get_all_posts_api(request):
         return JsonResponse({"error": str(error)}, status=400)
 
 
-def get_post_api(request, post_id):
+def get_post(request, post_id):
     try:
         post = main.return_post(post_id)
         return JsonResponse(post, status=200)
@@ -28,8 +45,12 @@ def get_post_api(request, post_id):
         return JsonResponse({"error": str(error)}, status=400)
 
 
-def get_own_posts_api(request):
-    pass
+def get_own_posts(request, username):
+    try:
+        own_posts = main.return_own_posts_json(username)
+        return JsonResponse(own_posts, status=200)
+    except ApiException as error:
+        return JsonResponse({"error": str(error)}, status=400)
 
 
 # ! ------------------------------------------------- SOURCE CODE
