@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from network.models import Post, Comment, User
+from network.models import Post, Comment, User, Follow
 from datetime import datetime
 
 from .config import ApiException, PostJson
@@ -9,6 +9,18 @@ from .config import ApiException, PostJson
 def return_all_posts_json() -> dict[PostJson]:
     all_posts = Post.objects.all()
     return check_len_of_post(all_posts, "No posts.")
+
+
+def return_follow_posts_json(username: str) -> dict[PostJson]:
+    try:
+        follow = Follow.objects.get(
+            user=User.objects.get(username=username))
+        following_posts = follow.following_posts.all()
+        message = f"No following posts for user {username}."
+        return check_len_of_post(following_posts, message)
+    except ObjectDoesNotExist:
+        error_message = f'Object "Follow" for user {username} does not exist.'
+        raise ApiException(error_message)
 
 
 def return_own_posts_json(username: str) -> dict[PostJson]:
@@ -20,15 +32,7 @@ def return_own_posts_json(username: str) -> dict[PostJson]:
         raise ApiException(f"User {username} does not exist.")
 
 
-def check_len_of_post(posts: list[Post], message: str):
-    if len(posts) == 0:
-        raise ApiException(message)
-    else:
-        own_posts_json = iterate_at_posts_array(posts)
-        return own_posts_json
-
-
-def return_post(post_id: int) -> PostJson:
+def return_post_json(post_id: int) -> PostJson:
     try:
         post = Post.objects.get(id=post_id)
         post_json = generate_post_json(post)
@@ -58,6 +62,14 @@ def generate_post_json(post: Post) -> PostJson:
     )
 
     return post_json
+
+
+def check_len_of_post(posts: list[Post], message: str):
+    if len(posts) == 0:
+        raise ApiException(message)
+    else:
+        own_posts_json = iterate_at_posts_array(posts)
+        return own_posts_json
 
 
 def get_comments_from_objects(comments: list[Comment]) -> list[str]:

@@ -16,18 +16,6 @@ class Comment(models.Model):
         return f"{self.creator}: {self.comment}"
 
 
-class Follow(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="user_follow")
-    following = models.ManyToManyField(
-        User, related_name="user_following", blank=True)
-    followers = models.ManyToManyField(
-        User, related_name="user_followers", blank=True)
-
-    def __str__(self) -> str:
-        return f"Edit Follow for {self.user}"
-
-
 class Post(models.Model):
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="post_creator")
@@ -39,3 +27,17 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return f"{self.creator}: {self.content}"
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user_follow")
+    following = models.ManyToManyField(
+        User, related_name="user_following", blank=True)
+    followers = models.ManyToManyField(
+        User, related_name="user_followers", blank=True)
+    following_posts = models.ManyToManyField(
+        Post, related_name="post_following", blank=True)
+
+    def __str__(self) -> str:
+        return f"Edit Follow for {self.user}"
