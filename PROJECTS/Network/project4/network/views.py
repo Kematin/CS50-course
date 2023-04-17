@@ -15,6 +15,7 @@ def index(request):
 # * ------------------------------------------------- API POST
 
 
+# TODO data = request.body
 def create_new_post(request):
     pass
 
@@ -22,6 +23,7 @@ def create_new_post(request):
 # * ------------------------------------------------- API PUT
 
 
+# TODO data = request.body
 def change_likes(request):
     pass
 
