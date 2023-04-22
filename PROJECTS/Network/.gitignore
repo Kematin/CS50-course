@@ -3,4 +3,3 @@ venv
 secret.txt
 __pycache__
 db.sqlite3
-migrations

@@ -13,8 +13,7 @@ def return_all_posts_json() -> dict[PostJson]:
 
 def return_follow_posts_json(username: str) -> dict[PostJson]:
     try:
-        follow = Follow.objects.get(
-            user=User.objects.get(username=username))
+        follow = Follow.objects.get(user=User.objects.get(username=username))
         following_posts = follow.following_posts.all()
         message = f"No following posts for user {username}."
         return check_len_of_post(following_posts, message)

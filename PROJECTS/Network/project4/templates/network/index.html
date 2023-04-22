@@ -5,7 +5,7 @@
 		<h1>All Posts.</h1>
 
 		<div id="dislayPostForm">
-			<form action="{% url 'index' %}" method="post">
+			<form id="sendPostForm" action="{% url 'index' %}" method="post">
 				{% csrf_token %}
 				<h4>New post.</h4>
 				<textarea name="" id="" cols="30" rows="10" placeholder='Write here.'></textarea>

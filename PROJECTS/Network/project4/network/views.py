@@ -2,22 +2,33 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
-from network.services import get_api
+from network.services import get_api, post_api
 from network.services import source_cs50
 from network.services.config import ApiException
 
 
 def index(request):
-    return render(request, "network/index.html")
+    if request.user.is_authenticated:
+        return render(request, "network/inbox.html")
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 
 # * ------------------------------------------------- API POST
 
 
-# TODO data = request.body
+@csrf_exempt
 def create_new_post(request):
-    pass
+    if request.method != "POST":
+        return JsonResponse(
+            {"error": f"{request.method} method is not defined"}, status=400)
+    try:
+        post_api.create_post(request)
+        return JsonResponse({"message": "Succesfull"}, status=200)
+    except ApiException as error:
+        return JsonResponse({"error": str(error)}, status=400)
 
 
 # * ------------------------------------------------- API PUT
