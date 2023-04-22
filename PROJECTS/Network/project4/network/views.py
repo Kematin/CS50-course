@@ -11,7 +11,7 @@ from network.services.config import ApiException
 
 def index(request):
     if request.user.is_authenticated:
-        return render(request, "network/inbox.html")
+        return render(request, "network/index.html")
     else:
         return HttpResponseRedirect(reverse("login"))
 

@@ -126,4 +126,4 @@ class TestClient(TestCase):
         """Test for check get_api page"""
         client = Client()
         response = client.get("/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)

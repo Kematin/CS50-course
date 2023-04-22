@@ -11,4 +11,4 @@ class PostJson(TypedDict):
     content: str
     likes: int
     datetime: str
-    comments: list[str]
+    comments: list[str] | None
