@@ -14,7 +14,9 @@ def create_post(request) -> None:
 
 
 def check_content_exist(content: str | None) -> bool:
-    if content in ("", None):
+    if content is None:
+        return False
+    elif content.strip() == "":
         return False
     else:
         return True
