@@ -16,4 +16,6 @@ urlpatterns = [
          name="get_following"),
 
     path("api/new", views.create_new_post, name="create_post"),
+
+    path("api/likes/<int:post_id>", views.change_likes, name="change_likes"),
 ]

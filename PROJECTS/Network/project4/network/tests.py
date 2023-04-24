@@ -75,6 +75,12 @@ class TestServices(TestCase):
         post_json = get_api.return_follow_posts_json(username="kem")
         self.assertEqual(post_json, checked_post)
 
+    def test_get_own_post(self):
+        """Test for API get own posts"""
+        checked_post = {1: get_api.return_post_json(1)}
+        post_json = get_api.return_follow_posts_json(username="kem")
+        self.assertEqual(post_json, checked_post)
+
 
 class TestExceptions(TestCase):
     def setUp(self) -> None:

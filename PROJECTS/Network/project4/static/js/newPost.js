@@ -1,4 +1,12 @@
-function newPost(form) {
+export function listenerForm() {
+  const form = document.querySelector("#sendPostForm");
+  form.onsubmit = () => {
+    createPost();
+    return false;
+  };
+}
+
+function createPost(form) {
   const content = form.querySelector("textarea").value;
   fetch("/api/new", {
     method: "POST",
@@ -23,11 +31,3 @@ function newPost(form) {
 }
 
 function displayMessage(message) {}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("#sendPostForm");
-  form.onsubmit = () => {
-    newPost(form);
-    return false;
-  };
-});

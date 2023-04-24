@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from network.services import get_api, post_api
+from network.services import get_api, post_api, put_api
 from network.services import source_cs50
 from network.services.config import ApiException
 
@@ -34,9 +34,15 @@ def create_new_post(request):
 # * ------------------------------------------------- API PUT
 
 
-# TODO data = request.body
-def change_likes(request):
-    pass
+@csrf_exempt
+def change_likes(request, post_id: int):
+    if request.method != "PUT":
+        return JsonResponse(
+            {"error": f"{request.method} method is not defined"}, status=400)
+    try:
+        put_api.change_likes(request, post_id)
+    except ApiException as error:
+        return JsonResponse({"error": str(error)}, status=400)
 
 
 # * ------------------------------------------------- API GET
