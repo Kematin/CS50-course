@@ -1,8 +1,6 @@
 from network.models import User, Post
 
 import json
-from json.decoder import JSONDecodeError
-
 from datetime import datetime
 from .config import PostJson, ApiException
 
@@ -14,13 +12,19 @@ def create_post(request) -> None:
 
 def change_data_to_template(request) -> PostJson:
     try:
-        print(request.body)
         data = json.loads(request.body)
+        check_exist_content(data["content"])
         data["creator"] = User.objects.get(username=request.user)
         data["likes"] = 0
         data["datetime"] = datetime.now()
-        return data
-    except JSONDecodeError:
+    except ApiException as e:
+        raise ApiException(e)
+
+    return data
+
+
+def check_exist_content(content: str) -> None:
+    if content.strip() == "":
         raise ApiException("No content for post.")
 
 

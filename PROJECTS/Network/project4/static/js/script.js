@@ -1,5 +1,5 @@
-import { listenerForm } from "./newPost";
-import { listenerLikes } from "./changeLikes";
+import { listenerForm } from "./newPost.js";
+import { listenerLikes } from "./changeLikes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   listenerForm();

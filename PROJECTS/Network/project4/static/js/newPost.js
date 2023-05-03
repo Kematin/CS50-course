@@ -1,7 +1,7 @@
 export function listenerForm() {
   const form = document.querySelector("#sendPostForm");
   form.onsubmit = () => {
-    createPost();
+    createPost(form);
     return false;
   };
 }
