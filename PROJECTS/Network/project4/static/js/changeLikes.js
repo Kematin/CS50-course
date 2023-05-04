@@ -1,11 +1,10 @@
 export function listenerLikes() {
   const changeLikeButton = document.querySelector(".changeLike");
-  console.log(changeLikeButton);
   changeLikeButton.addEventListener("click", changeLike);
 }
 
 function changeLike() {
-  const postId = 5;
+  const postId = 12;
   putApi(postId);
 }
 
