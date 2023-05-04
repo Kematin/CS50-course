@@ -41,6 +41,7 @@ def change_likes(request, post_id: int):
             {"error": f"{request.method} method is not defined"}, status=400)
     try:
         put_api.change_likes(request, post_id)
+        return JsonResponse({"message": "Succesfull"})
     except ApiException as error:
         return JsonResponse({"error": str(error)}, status=400)
 

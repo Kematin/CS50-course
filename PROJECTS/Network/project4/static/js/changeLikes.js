@@ -4,7 +4,7 @@ export function listenerLikes() {
 }
 
 function changeLike() {
-  const postId = 12;
+  const postId = 13;
   putApi(postId);
 }
 

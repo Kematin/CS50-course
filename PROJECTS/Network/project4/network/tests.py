@@ -50,6 +50,7 @@ class TestServices(TestCase):
         """Test for iterate function from services.get_api"""
         checked_post = {
             1: {
+                "id": 1,
                 "creator": "lel",
                 "content": "Hello",
                 "likes": 2,
@@ -65,6 +66,7 @@ class TestServices(TestCase):
         """Test for API get follow posts"""
         checked_post = {
             1: {
+                "id": 1,
                 "creator": "lel",
                 "content": "Hello",
                 "likes": 2,

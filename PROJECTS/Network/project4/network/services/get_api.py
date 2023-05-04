@@ -53,6 +53,7 @@ def generate_post_json(post: Post) -> PostJson:
     comments = get_comments_from_objects(post.comments.all())
     datetime = format_time(post.datetime)
     post_json = PostJson(
+        id=post.id,
         creator=post.creator.username,
         content=post.content,
         likes=post.likes,
