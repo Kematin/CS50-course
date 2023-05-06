@@ -72,8 +72,14 @@ def check_len_of_post(posts: list[Post], message: str):
         return own_posts_json
 
 
-def get_comments_from_objects(comments: list[Comment]) -> list[str]:
-    new_comments = [comment.comment for comment in comments]
+def get_comments_from_objects(comments: list[Comment]) -> list[dict[str, str]]:
+    new_comments = list()
+    for comment in comments:
+        comment_object = Comment.objects.get(id=comment.id)
+        creator = comment_object.creator.username
+        comment = comment_object.comment
+        new_comments.append({creator: comment})
+
     return new_comments
 
 
