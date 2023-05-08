@@ -38,13 +38,14 @@ function addHrefForPost(post) {
   let editUrl = document.createElement("a");
   editUrl.innerHTML = "Edit";
   editUrl.href = "";
+  editUrl.className = "edit";
   post.append(editUrl);
 }
 
 function addButtonForPost(post) {
-  let button = document.createElement("button");
+  let button = document.createElement("img");
   button.className = "changeLike";
-  button.innerHTML = "Like";
+  button.src = "/static/images/unliked.png";
   post.append(button);
 }
 

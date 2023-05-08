@@ -1,8 +1,12 @@
 {% extends "network/layout.html" %}
 
+{% load static %}
+
 {% block body %}
 	<main>
 		<h1>All Posts.</h1>
+		<img src="{% static 'images/liked.png' %}" alt="Like">
+		<img src="{% static 'images/unliked.png' %}" alt="Like">
 
 		<div id="dislayPostForm">
 			<form id="sendPostForm" action="{% url 'create_post' %}" method="post">
