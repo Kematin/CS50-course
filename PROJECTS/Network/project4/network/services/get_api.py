@@ -78,7 +78,7 @@ def get_comments_from_objects(comments: list[Comment]) -> list[dict[str, str]]:
         comment_object = Comment.objects.get(id=comment.id)
         creator = comment_object.creator.username
         comment = comment_object.comment
-        new_comments.append({creator: comment})
+        new_comments.append({"creator": creator, "comment": comment})
 
     return new_comments
 

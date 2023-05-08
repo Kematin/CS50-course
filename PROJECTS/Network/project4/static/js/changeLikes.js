@@ -1,11 +1,20 @@
 export function listenerLikes() {
-  const changeLikeButton = document.querySelector(".changeLike");
-  changeLikeButton.addEventListener("click", changeLike);
+  const postContainer = document.querySelector("#displayPosts");
+  postContainer.addEventListener("click", (event) => {
+    if (event.target.tagName === "BUTTON") {
+      let parentNode = event.target.parentNode;
+      const postId = parentNode.id;
+      putApi(postId);
+      changeLike(parentNode);
+    }
+  });
 }
 
-function changeLike() {
-  const postId = 13;
-  putApi(postId);
+function changeLike(parentNode) {
+  let likesContent = parentNode.querySelector(".likes").innerHTML;
+  let likes = parseInt(likesContent.match(/\d+/)[0]);
+  likes += 1;
+  parentNode.querySelector(".likes").innerHTML = `Likes: ${likes}`;
 }
 
 function putApi(postId) {

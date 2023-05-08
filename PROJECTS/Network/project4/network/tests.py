@@ -55,7 +55,7 @@ class TestServices(TestCase):
                 "content": "Hello",
                 "likes": 2,
                 "datetime": "April 10, 2020, 11:30 AM",
-                "comments": [{"kem": "wow"}],
+                "comments": [{"creator": "kem", "comment": "wow"}],
             }
         }
         post = Post.objects.get(content="Hello")
@@ -71,7 +71,7 @@ class TestServices(TestCase):
                 "content": "Hello",
                 "likes": 2,
                 "datetime": "April 10, 2020, 11:30 AM",
-                "comments": [{"kem": "wow"}],
+                "comments": [{"creator": "kem", "comment": "wow"}],
             }
         }
         post_json = get_api.return_follow_posts_json(username="kem")

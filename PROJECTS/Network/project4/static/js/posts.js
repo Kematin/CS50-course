@@ -1,5 +1,11 @@
 export function displayPosts() {
+  clearPosts();
   getPosts();
+}
+
+function clearPosts() {
+  let allPosts = document.querySelector("#displayPosts");
+  allPosts.innerHTML = "";
 }
 
 async function getPosts() {
@@ -19,13 +25,13 @@ function createPostElements(post, allPostsSection) {
 }
 
 function addContentForPost(newPost, post) {
-  addElementForPost(newPost, "h4", post.creator);
+  addElementForPost(newPost, "h4", post.creator, "creator");
   addHrefForPost(newPost);
-  addElementForPost(newPost, "p", post.content);
-  addElementForPost(newPost, "p", post.datetime);
-  addElementForPost(newPost, "p", `Likes: ${post.likes}`);
+  addElementForPost(newPost, "p", post.content, "content");
+  addElementForPost(newPost, "p", post.datetime, "datetime");
+  addElementForPost(newPost, "p", `Likes: ${post.likes}`, "likes");
   addButtonForPost(newPost);
-  addCommentsForPost(newPost, post.comments);
+  addCommentsForPost(newPost, post.comments, "comments");
 }
 
 function addHrefForPost(post) {
@@ -43,12 +49,28 @@ function addButtonForPost(post) {
 }
 
 function addCommentsForPost(post, comments) {
-  console.log(comments);
+  let commentsSection = document.createElement("div");
+  commentsSection.className = "comments";
+  commentsSection.innerHTML = "Comments:";
+  comments.forEach((comment) => {
+    const creator = comment.creator;
+    const content = comment.comment;
+    const newComment = document.createElement("p");
+    newComment.innerHTML = `<b>${creator}</b>: ${content}`;
+    commentsSection.appendChild(newComment);
+  });
+
+  if (comments.length === 0) {
+    commentsSection.innerHTML = "No comments.";
+  }
+
+  post.append(commentsSection);
 }
 
-function addElementForPost(post, tag, content) {
+function addElementForPost(post, tag, content, className) {
   let newElement = document.createElement(tag);
   newElement.innerHTML = content;
+  newElement.className = className;
   post.append(newElement);
 }
 
