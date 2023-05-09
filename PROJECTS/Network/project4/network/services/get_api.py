@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from network.models import Post, Comment, User, Follow
+from network.models import Post, Comment, User, Follow, Liked
 from datetime import datetime
 
 from .config import ApiException, PostJson
@@ -9,6 +9,16 @@ from .config import ApiException, PostJson
 def return_all_posts_json() -> dict[PostJson]:
     all_posts = Post.objects.all()
     return check_len_of_post(all_posts, "No posts.")
+
+
+def return_liked_posts_json(username: str) -> list[int]:
+    try:
+        liked = Liked.objects.get(user=User.objects.get(username=username))
+        liked_posts = liked.liked_post.all()
+        return liked_posts
+    except ObjectDoesNotExist:
+        error_message = f'Object "Liked" for user {username} does not exist.'
+        raise ApiException(error_message)
 
 
 def return_follow_posts_json(username: str) -> dict[PostJson]:

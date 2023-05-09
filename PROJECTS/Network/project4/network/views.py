@@ -48,6 +48,13 @@ def change_likes(request, post_id: int):
 
 # * ------------------------------------------------- API GET
 
+def get_liked_post(request, username: str):
+    try:
+        liked_posts = get_api.return_liked_posts_json(username)
+        return JsonResponse({username: liked_posts}, status=200)
+    except ApiException as error:
+        return JsonResponse({"error": str(error)}, status=400)
+
 
 def get_following_posts(request, username: str):
     try:

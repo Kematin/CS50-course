@@ -41,3 +41,13 @@ class Follow(models.Model):
 
     def __str__(self) -> str:
         return f"Edit Follow for {self.user}"
+
+
+class Liked(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user_liked")
+    liked_post = models.ManyToManyField(
+        Post, related_name="post_liked", blank=True)
+
+    def __str__(self) -> str:
+        return f"Edit Likes for {self.user}"

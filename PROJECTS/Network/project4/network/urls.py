@@ -14,6 +14,8 @@ urlpatterns = [
     path("api/post/<int:post_id>", views.get_post, name="get_post"),
     path("api/follow/<str:username>", views.get_following_posts,
          name="get_following"),
+    path("api/liked/<str:username>", views.get_liked_post,
+         name="get_liked"),
 
     path("api/new", views.create_new_post, name="create_post"),
 
