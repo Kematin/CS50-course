@@ -13,12 +13,17 @@ def return_all_posts_json() -> dict[PostJson]:
 
 def return_liked_posts_json(username: str) -> list[int]:
     try:
-        liked = Liked.objects.get(user=User.objects.get(username=username))
-        liked_posts = liked.liked_post.all()
-        return liked_posts
+        user = User.objects.get(username=username)
     except ObjectDoesNotExist:
-        error_message = f'Object "Liked" for user {username} does not exist.'
-        raise ApiException(error_message)
+        raise ApiException(f"User {username} does not exist.")
+
+    try:
+        liked = Liked.objects.get(user=user)
+        liked_posts = liked.liked_post.all()
+        return list(liked_posts)
+    except ObjectDoesNotExist:
+        Liked.objects.create(user=user)
+        return []
 
 
 def return_follow_posts_json(username: str) -> dict[PostJson]:

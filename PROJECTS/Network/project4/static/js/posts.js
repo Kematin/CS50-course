@@ -30,7 +30,8 @@ function addContentForPost(newPost, post) {
   addElementForPost(newPost, "p", post.content, "content");
   addElementForPost(newPost, "p", post.datetime, "datetime");
   addElementForPost(newPost, "p", `Likes: ${post.likes}`, "likes");
-  addButtonForPost(newPost);
+  addChangeLikeButtonForPost(newPost);
+  addDeleteButtonForPost(newPost);
   addCommentsForPost(newPost, post.comments, "comments");
 }
 
@@ -42,10 +43,17 @@ function addHrefForPost(post) {
   post.append(editUrl);
 }
 
-function addButtonForPost(post) {
+function addChangeLikeButtonForPost(post) {
   let button = document.createElement("img");
   button.className = "changeLike";
   button.src = "/static/images/unliked.png";
+  post.append(button);
+}
+
+function addDeleteButtonForPost(post) {
+  let button = document.createElement("button");
+  button.className = "deletePost";
+  button.innerHTML = "Delete";
   post.append(button);
 }
 

@@ -1,7 +1,10 @@
+import { displayPosts } from "./posts.js";
+
 export function listenerForm() {
   const form = document.querySelector("#sendPostForm");
   form.onsubmit = () => {
     createPost(form);
+    setTimeout(displayPosts, 500);
     return false;
   };
 }

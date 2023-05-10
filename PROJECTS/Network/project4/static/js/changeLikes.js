@@ -4,7 +4,7 @@ export function listenerLikes() {
     if (event.target.tagName === "IMG") {
       let parentNode = event.target.parentNode;
       const postId = parentNode.id;
-      putApi(postId);
+      putApi(postId, false);
       changeLike(parentNode, true);
     }
   });
@@ -23,10 +23,10 @@ function changeLike(parentNode, isLiked) {
   parentNode.querySelector(".likes").innerHTML = `Likes: ${likes}`;
 }
 
-function putApi(postId) {
+function putApi(postId, isLiked) {
   fetch(`api/likes/${postId}`, {
     method: "PUT",
-    // TODO set value for like - or like +
+    isLiked: isLiked,
   })
     .then((response) => {
       if (!response.ok) {
@@ -45,4 +45,4 @@ function putApi(postId) {
 }
 
 // TODO
-function checkClicked() {}
+function checkLiked() {}
