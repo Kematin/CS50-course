@@ -20,7 +20,8 @@ def return_liked_posts_json(username: str) -> list[int]:
     try:
         liked = Liked.objects.get(user=user)
         liked_posts = liked.liked_post.all()
-        return list(liked_posts)
+        liked_posts_id = [post.id for post in liked_posts]
+        return liked_posts_id
     except ObjectDoesNotExist:
         Liked.objects.create(user=user)
         return []

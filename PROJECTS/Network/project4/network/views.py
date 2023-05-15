@@ -51,7 +51,7 @@ def change_likes(request, post_id: int):
 def get_liked_post(request, username: str):
     try:
         liked_posts = get_api.return_liked_posts_json(username)
-        return JsonResponse({"Liked": liked_posts}, status=200)
+        return JsonResponse({"liked": liked_posts}, status=200)
     except ApiException as error:
         return JsonResponse({"error": str(error)}, status=400)
 
