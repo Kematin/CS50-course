@@ -15,6 +15,14 @@ def index(request):
     else:
         return HttpResponseRedirect(reverse("login"))
 
+# * ------------------------------------------------- API DELETE
+
+
+def delete_post(request, post_id: int):
+    if request.method != "POST":
+        return JsonResponse(
+            {"error": f"{request.method} method is not defined"}, status=400)
+
 
 # * ------------------------------------------------- API POST
 
