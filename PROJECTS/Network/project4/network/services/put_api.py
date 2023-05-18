@@ -5,12 +5,13 @@ from network.models import Post, Liked, User
 from .config import ApiException
 
 import json
+from time import sleep
 
 
 def change_likes(request, post_id: int):
     try:
-        isLiked = get_username_and_is_liked(request)
-        change_like_value(post_id, isLiked)
+        isLiked, username = get_username_and_is_liked(request)
+        change_like_value(post_id, isLiked, username)
     except ObjectDoesNotExist:
         raise ApiException(f"Post with id {post_id} does not exist")
 
@@ -25,17 +26,33 @@ def change_like_value(post_id: int, isLiked: bool, username: str):
     liked_posts_id = [post.id for post in liked_posts]
 
     if isLiked:
-        delete_from_liked(liked_posts_id, post_id)
+        delete_from_liked(liked_posts_id, post_id, liked)
     else:
-        add_to_liked(liked_posts_id, post_id)
+        add_to_liked(liked_posts_id, post_id, liked)
 
 
-def delete_from_liked(liked_posts: list, post_id: int):
-    pass
+def delete_from_liked(liked_posts: list, post_id: int, liked: Liked):
+    del liked_posts[liked_posts.index(post_id)]
+    liked.liked_post.set(liked_posts)
+    liked.save()
+    sleep(0.3)
+
+    post = Post.objects.get(id=post_id)
+    post.likes -= 1
+    post.save()
+    sleep(0.3)
 
 
-def add_to_liked(liked_posts: list, post_id: int):
-    pass
+def add_to_liked(liked_posts: list, post_id: int, liked: Liked):
+    liked_posts.append(post_id)
+    liked.liked_post.set(liked_posts)
+    liked.save()
+    sleep(0.3)
+
+    post = Post.objects.get(id=post_id)
+    post.likes += 1
+    post.save()
+    sleep(0.3)
 
 
 def get_username_and_is_liked(request) -> tuple[bool, str]:

@@ -10,26 +10,43 @@ export function listenerLikes() {
   });
 }
 
+export async function getIsLikedValue(postId) {
+  const isLiked = await getIsLiked(postId);
+  return isLiked;
+}
+
 async function changeLike(parentNode, postId) {
   const isLiked = await getIsLiked(postId);
 
   let likesContent = parentNode.querySelector(".likes").innerHTML;
   let likes = parseInt(likesContent.match(/\d+/)[0]);
 
-  if (isLiked) {
-    const src = "/static/images/unliked.png";
-    changeLikeIcon(parentNode, src);
-    likes -= 1;
-  } else {
-    const src = "/static/images/liked.png";
-    changeLikeIcon(parentNode, src);
-    likes += 1;
-  }
+  changeLikeIcon(parentNode, isLiked);
+  likes = changeLikesValue(likes, isLiked);
 
   parentNode.querySelector(".likes").innerHTML = `Likes: ${likes}`;
 }
 
-function changeLikeIcon(parentNode, src) {
+function changeLikeIcon(parentNode, isLiked) {
+  if (isLiked) {
+    const src = "/static/images/unliked.png";
+    setupLikeIcon(parentNode, src);
+  } else {
+    const src = "/static/images/liked.png";
+    setupLikeIcon(parentNode, src);
+  }
+}
+
+function changeLikesValue(likes, isLiked) {
+  if (isLiked) {
+    likes -= 1;
+  } else {
+    likes += 1;
+  }
+  return likes;
+}
+
+function setupLikeIcon(parentNode, src) {
   let buttonLike = parentNode.querySelector(".changeLike");
   buttonLike.src = src;
 }
@@ -78,6 +95,3 @@ async function getApi(username) {
   const data = await response.json();
   return data;
 }
-
-// TODO
-function checkLiked() {}

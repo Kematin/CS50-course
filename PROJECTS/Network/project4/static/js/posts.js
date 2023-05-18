@@ -1,3 +1,5 @@
+import { getIsLikedValue } from "./changeLikes.js";
+
 export function displayPosts() {
   clearPosts();
   getPosts();
@@ -30,7 +32,7 @@ function addContentForPost(newPost, post) {
   addElementForPost(newPost, "p", post.content, "content");
   addElementForPost(newPost, "p", post.datetime, "datetime");
   addElementForPost(newPost, "p", `Likes: ${post.likes}`, "likes");
-  addChangeLikeButtonForPost(newPost);
+  addChangeLikeButtonForPost(newPost, post.id);
   addDeleteButtonForPost(newPost);
   addCommentsForPost(newPost, post.comments, "comments");
 }
@@ -43,11 +45,16 @@ function addHrefForPost(post) {
   post.append(editUrl);
 }
 
-function addChangeLikeButtonForPost(post) {
+async function addChangeLikeButtonForPost(postElement, postId) {
   let button = document.createElement("img");
   button.className = "changeLike";
-  button.src = "/static/images/unliked.png";
-  post.append(button);
+  const isLiked = await getIsLikedValue(postId);
+  if (isLiked) {
+    button.src = "/static/images/liked.png";
+  } else {
+    button.src = "/static/images/unliked.png";
+  }
+  postElement.append(button);
 }
 
 function addDeleteButtonForPost(post) {
