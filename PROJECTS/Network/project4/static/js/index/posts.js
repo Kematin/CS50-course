@@ -28,6 +28,7 @@ function createPostElements(post, allPostsSection) {
 
 function addContentForPost(newPost, post) {
   addElementForPost(newPost, "h4", post.creator, "creator");
+  addElementForPost(newPost, "button", "Follow", "follow");
   addHrefForPost(newPost);
   addElementForPost(newPost, "p", post.content, "content");
   addElementForPost(newPost, "p", post.datetime, "datetime");

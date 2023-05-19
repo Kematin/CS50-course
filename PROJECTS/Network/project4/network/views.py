@@ -15,6 +15,14 @@ def index(request):
     else:
         return HttpResponseRedirect(reverse("login"))
 
+
+def follow(request):
+    if request.user.is_authenticated:
+        return render(request, "network/follow.html")
+    else:
+        return HttpResponseRedirect(reverse("login"))
+
+
 # * ------------------------------------------------- API DELETE
 
 
