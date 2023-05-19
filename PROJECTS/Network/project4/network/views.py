@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from network.services import get_api, post_api, put_api
+from network.services import get_api, post_api, put_api, delete_api
 from network.services import source_cs50
 from network.services.config import ApiException
 
@@ -18,10 +18,18 @@ def index(request):
 # * ------------------------------------------------- API DELETE
 
 
+@csrf_exempt
 def delete_post(request, post_id: int):
-    if request.method != "POST":
+    if request.method != "DELETE":
         return JsonResponse(
             {"error": f"{request.method} method is not defined"}, status=400)
+
+    try:
+        delete_api.delete_post(post_id)
+        return JsonResponse({"message": "Succesfull"})
+    except ApiException as error:
+        print(error)
+        return JsonResponse({"error": error}, status=400)
 
 
 # * ------------------------------------------------- API POST

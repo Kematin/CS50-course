@@ -7,5 +7,5 @@ document.addEventListener("DOMContentLoaded", () => {
   displayPosts();
   listenerForm();
   listenerLikes();
-  listenerDelete();
+  setTimeout(listenerDelete, 500);
 });
