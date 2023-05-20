@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block script %}
+	<script type="module" src="{% static 'js/follow/script.js' %}"></script>
+{% endblock %}
+
 {% block body %}
 	<main>
 		<h1>{{ user.username }} follow posts</h1>

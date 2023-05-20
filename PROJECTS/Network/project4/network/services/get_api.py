@@ -34,8 +34,9 @@ def return_follow_posts_json(username: str) -> dict[PostJson]:
         message = f"No following posts for user {username}."
         return check_len_of_post(following_posts, message)
     except ObjectDoesNotExist:
-        error_message = f'Object "Follow" for user {username} does not exist.'
-        raise ApiException(error_message)
+        user = User.objects.get(username=username)
+        Follow.objects.create(user=user)
+        return {"posts": []}
 
 
 def return_own_posts_json(username: str) -> dict[PostJson]:
