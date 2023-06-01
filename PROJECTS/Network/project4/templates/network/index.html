@@ -1,0 +1,25 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block script %}
+	<script type="module" src="{% static 'js/index/script.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1>All Posts.</h1>
+
+		<div id="dislayPostForm">
+			<form id="sendPostForm" action="{% url 'create_post' %}" method="post">
+				{% csrf_token %}
+				<h4>New post.</h4>
+				<textarea name="" id="" cols="30" rows="10" placeholder='Write here.'></textarea>
+				<input type="submit" value="Post">
+			</form>
+		</div>
+
+		<div id="displayPosts">
+		</div>
+	</main>
+{% endblock %}

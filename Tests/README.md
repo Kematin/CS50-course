@@ -1,13 +1,13 @@
-- [Testing](#Testing)
-- [Assert](#Assert)
-  - [Test-Driven Development](#TestDriven)
-- [Unit Testing](#UnitTest)
-- [Django Testing](#DjangoTest)
-- [Client Testing](#ClientTest)
-- [Selenium](#Selenium)
-- [CI/CD](#CI/CD)
-- [GitHub Auctions](#Auctions)
-- [Docker](#Docker)
+- [Testing](#testing)
+- [Assert](#assert)
+	- [TestDriven](#testdriven)
+- [UnitTest](#unittest)
+- [DjangoTest](#djangotest)
+- [ClientTest](#clienttest)
+- [Selenium](#selenium)
+- [CI/CD](#cicd)
+- [Auctions](#auctions)
+- [Docker](#docker)
 
 # Testing
 
@@ -188,17 +188,34 @@ jobs:
 контейнерами можно делится и запускать в _один клик_, что крайне упращает процесс
 сборки.
 
+По сути docker - это способ разгроничения памяти в качестве хоста, в который
+входит сеть, юзер, ipc, mount и т.д. Docker изолирует процесс в рамке
+машины (main host`а).
+
+_Docker Image_ - образ докер контейнера.
+
 [Установка](https://docs.docker.com/get-docker/)
 
-Команды докер:
+Работа с докер:
 
 ```bash
-# Create container
+# Create simple container
 docker run hello-world
 
-# Run docker container
-docker run -it ubuntu bash
-
-# Check list of contaniers
+# See all working containers
 docker ps
+
+# See all docker images
+docker images
+
+# Create contanier with template (mongo)
+docker run --name=mongo mongo -d
+
+# Run container and stop its
+docker start mongo
+docker stop mongo
+
+# Restart and delete container (image will not be deleted)
+docker restart mongo
+docker rm mongo
 ```
